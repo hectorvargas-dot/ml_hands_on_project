@@ -1,0 +1,23 @@
+artifact_path: /Users/hector.vargas/repos/hop_ds_transition/notebooks/mlruns/1/models/m-5493705a8de940f2a193e0f114631219/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.12.10
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.12.0
+model_id: m-5493705a8de940f2a193e0f114631219
+model_size_bytes: 6533934
+model_uuid: m-5493705a8de940f2a193e0f114631219
+prompts: null
+run_id: e431689f5db04af199ee55f7ebd4ef3c
+utc_time_created: '2026-05-08 18:08:41.659366'
