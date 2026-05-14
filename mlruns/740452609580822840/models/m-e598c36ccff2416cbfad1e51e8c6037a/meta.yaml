@@ -1,0 +1,10 @@
+artifact_location: file:///Users/hector.vargas/repos/ml_hands_on_project/mlruns/740452609580822840/models/m-e598c36ccff2416cbfad1e51e8c6037a/artifacts
+creation_timestamp: 1778794019874
+experiment_id: '740452609580822840'
+last_updated_timestamp: 1778794026203
+model_id: m-e598c36ccff2416cbfad1e51e8c6037a
+model_type: null
+name: best_model
+source_run_id: c75e7a16c7124554b36b5ed580e78243
+status: 2
+status_message: null
