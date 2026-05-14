@@ -1,0 +1,18 @@
+{
+  "input_features": [
+    "Card Type",
+    "NumOfProducts",
+    "Geography",
+    "Gender",
+    "Balance",
+    "Point Earned",
+    "CreditScore",
+    "Age",
+    "Tenure",
+    "Satisfaction Score",
+    "HasCrCard",
+    "IsActiveMember",
+    "Complain"
+  ],
+  "output_features": "['cat__Card Type_DIAMOND' 'cat__Card Type_GOLD' 'cat__Card Type_PLATINUM'\n 'cat__Card Type_SILVER' 'cat__NumOfProducts_1' 'cat__NumOfProducts_2'\n 'cat__NumOfProducts_3' 'cat__NumOfProducts_4' 'cat__Geography_France'\n 'cat__Geography_Germany' 'cat__Geography_Spain' 'cat__Gender_Female'\n 'cat__Gender_Male' 'num__Balance' 'num__Point Earned' 'num__CreditScore'\n 'num__Age' 'num__Tenure' 'num__Satisfaction Score' 'pass__HasCrCard'\n 'pass__IsActiveMember' 'pass__Complain']"
+}

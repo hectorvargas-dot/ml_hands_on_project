@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/hector.vargas/repos/ml_hands_on_project/mlruns/740452609580822840/da062b8f4cfe47ee8ba5c263f523c2a6/artifacts
+end_time: 1778793999527
+entry_point_name: ''
+experiment_id: '740452609580822840'
+lifecycle_stage: active
+run_id: da062b8f4cfe47ee8ba5c263f523c2a6
+run_name: '186'
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1778793999519
+status: 3
+tags: []
+user_id: hector.vargas
