@@ -1,1 +1,7 @@
 env/
+# macOS Finder metadata
+.DS_Store
+
+# Build / generated artifacts
+mlartifacts/
+mlflow.db
