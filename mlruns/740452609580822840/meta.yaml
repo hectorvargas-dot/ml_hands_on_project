@@ -1,8 +1,0 @@
-artifact_location: file:///Users/hector.vargas/repos/ml_hands_on_project/mlruns/740452609580822840
-creation_time: 1778793978691
-experiment_id: '740452609580822840'
-last_update_time: 1778793978691
-lifecycle_stage: active
-name: customer-churn-optuna
-trace_location: null
-workspace: default
