@@ -12,6 +12,7 @@ optuna-integration[mlflow]
 mlflow==3.12.0
 shap
 notebook
+xgboost
 numpy
 pip
 pytest
