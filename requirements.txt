@@ -4,6 +4,7 @@ ipython
 isort
 jupyterlab
 loguru
+mlxtend
 matplotlib==3.10.8
 pandas
 seaborn==0.13.2

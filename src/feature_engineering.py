@@ -1,208 +1,182 @@
-import os
+import mlflow
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-from copy import deepcopy
-
-import mlflow
 from sklearn.base import BaseEstimator, TransformerMixin, clone
-from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.metrics import (
-    accuracy_score, precision_score, recall_score, f1_score,
-    roc_auc_score, average_precision_score, classification_report, 
-    confusion_matrix, roc_curve, precision_recall_curve
-)
+from sklearn.metrics import average_precision_score
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler, FunctionTransformer
 
-class FeatureEngineer(BaseEstimator, TransformerMixin):
-    """Custom Scikit-Learn Transformer for modular Churn feature generation."""
-    def fit(self, X, y=None):
-        return self
+from src import mlflow_utils
 
-    def transform(self, X):
-        X = X.copy()
-
-        # Binary Flag Identifiers
-        X["no_balance"] = (X["Balance"] == 0)
-        X["NumOfProducts_1"] = (X["NumOfProducts"] == 1)
-        X["NumOfProducts_2"] = (X["NumOfProducts"] == 2)
-        
-        # Polynomial & Interaction Terms
-        X["Balance_x_Tenure"] = X["Balance"] * X["Tenure"]
-        X["Age_x_IsActive"] = X["Age"] * X["IsActiveMember"]
-
-        # Financial & Engagement Ratios
-        X["Balance_to_Salary"] = X["Balance"] / (X["EstimatedSalary"] + 1)
-        X["Balance_per_Product"] = X["Balance"] / (X["NumOfProducts"] + 1)
-        X["Salary_per_Product"] = X["EstimatedSalary"] / (X["NumOfProducts"] + 1)
-        X["CreditScore_per_Age"] = X["CreditScore"] / (X["Age"] + 1)
-        X["Tenure_per_Age"] = X["Tenure"] / (X["Age"] + 1)
-
-        # Behavioral Cross-Products
-        X["Inactive_x_Balance"] = (1 - X["IsActiveMember"]) * X["Balance"]
-        X["Inactive_x_Age"] = (1 - X["IsActiveMember"]) * X["Age"]
-        X["Products_x_Active"] = X["NumOfProducts"] * X["IsActiveMember"]
-
-        # Monetary Accumulations & Non-linear scaling
-        X["Balance_plus_Salary"] = X["Balance"] + X["EstimatedSalary"]
-        X["WealthScore"] = 0.6 * X["Balance"] + 0.4 * X["EstimatedSalary"]
-        X["CreditScore_x_Age"] = X["CreditScore"] * X["Age"]
-        X["LogBalance"] = np.log1p(X["Balance"])
-        X["LogAge"] = np.log1p(X["Age"])
-
-        # Polynomial Degrees
-        X["Age2"] = X["Age"] ** 2
-        X["Balance2"] = X["Balance"] ** 2
-        X["Tenure2"] = X["Tenure"] ** 2
-
-        # Temporal Product Densities
-        X["Products_per_Tenure"] = X["NumOfProducts"] / (X["Tenure"] + 1)
-        X["Balance_per_Tenure"] = X["Balance"] / (X["Tenure"] + 1)
-
-        return X
+def init_mlflow_experiment(experiment_name: str, db_path: str, artifacts_dir: str) -> None:
+    """Sets up connection parameters and creates experiment contexts inside MLflow (delegates to mlflow_utils)."""
+    mlflow_utils.init_mlflow_experiment(experiment_name, db_path, artifacts_dir)
 
 
-def init_mlflow_experiment(experiment_name: str, db_path: str, artifacts_dir: str):
-    """Sets up connection parameters and creates experiment contexts inside MLflow."""
-    mlflow.set_tracking_uri(f"sqlite:///{db_path}")
-    experiment = mlflow.get_experiment_by_name(experiment_name)
-    if experiment is None:
-        mlflow.create_experiment(name=experiment_name, artifact_location=f"file://{artifacts_dir}")
-    mlflow.set_experiment(experiment_name)
+def log_classification_curves(y_true, y_proba) -> None:
+    """Saves visualization summaries directly to the active MLflow run tracking window (delegates to mlflow_utils)."""
+    mlflow_utils.log_classification_curves(y_true, y_proba)
 
 
-def log_classification_curves(y_true, y_proba):
-    """Saves visualization summaries directly to the active MLflow run tracking window."""
-    # ROC Curve
-    fpr, tpr, _ = roc_curve(y_true, y_proba)
-    roc_auc = roc_auc_score(y_true, y_proba)
-    plt.figure(figsize=(6, 5))
-    plt.plot(fpr, tpr, label=f"ROC AUC = {roc_auc:.4f}")
-    plt.plot([0, 1], [0, 1], linestyle="--")
-    plt.xlabel("False Positive Rate")
-    plt.ylabel("True Positive Rate")
-    plt.title("ROC Curve")
-    plt.legend(loc="lower right")
-    mlflow.log_figure(plt.gcf(), "roc_curve.png")
-    plt.close()
-
-    # Precision-Recall Curve
-    precision, recall, _ = precision_recall_curve(y_true, y_proba)
-    pr_auc = average_precision_score(y_true, y_proba)
-    plt.figure(figsize=(6, 5))
-    plt.plot(recall, precision, label=f"PR AUC = {pr_auc:.4f}")
-    plt.xlabel("Recall")
-    plt.ylabel("Precision")
-    plt.title("Precision-Recall Curve")
-    plt.legend(loc="lower left")
-    mlflow.log_figure(plt.gcf(), "pr_curve.png")
-    plt.close()
-
-
-def train_and_log_pipeline(models: dict, preprocessor, X_train, y_train, X_test, y_test, input_feature_list: list):
-    """Trains arbitrary configurations and outputs artifacts, schemas, and metrics."""
-    for model_name, model in models.items():
-        with mlflow.start_run(run_name=model_name):
-            pipeline = Pipeline([
-                ("feature_engineering", FeatureEngineer()),
-                ("preprocessing", preprocessor),
-                ("model", model)
-            ])
-
-            pipeline.fit(X_train, y_train)
-            y_pred = pipeline.predict(X_test)
-
-            metrics = {
-                "accuracy": accuracy_score(y_test, y_pred),
-                "precision": precision_score(y_test, y_pred, zero_division=0),
-                "recall": recall_score(y_test, y_pred, zero_division=0),
-                "f1_score": f1_score(y_test, y_pred, zero_division=0)
-            }
-
-            if hasattr(pipeline, "predict_proba"):
-                y_proba = pipeline.predict_proba(X_test)[:, 1]
-                metrics["roc_auc"] = roc_auc_score(y_test, y_proba)
-                metrics["pr_auc"] = average_precision_score(y_test, y_proba)
-                log_classification_curves(y_test, y_proba)
-
-            mlflow.log_metrics(metrics)
-            mlflow.log_params(model.get_params())
-
-            # Schema Extraction Tracking
-            fitted_prep = pipeline.named_steps['preprocessing']
-            mlflow.log_dict(
-                {"input_features": input_feature_list, "output_features": fitted_prep.get_feature_names_out().tolist()},
-                "feature_schema.json"
-            )
-            mlflow.log_dict(classification_report(y_test, y_pred, output_dict=True, zero_division=0), "classification_report.json")
-            mlflow.log_dict(confusion_matrix(y_test, y_pred).tolist(), "confusion_matrix.json")
-            mlflow.sklearn.log_model(sk_model=pipeline, name="model", serialization_format="cloudpickle")
-
-            print(f"Finished Logging Pipeline Execution: {model_name} | PR-AUC: {metrics.get('pr_auc', 0.0):.4f}")
-
-
-def get_experiment_summary(experiment_name: str):
+def get_experiment_summary(experiment_name: str) -> pd.DataFrame | None:
     """Returns a formatted tracking summary sorted by PR-AUC performance metrics."""
-    experiment = mlflow.get_experiment_by_name(experiment_name)
-    runs_df = mlflow.search_runs(experiment_ids=[experiment.experiment_id])
-    
-    keep_cols = [
-        "run_id", "tags.mlflow.runName", "metrics.accuracy", "metrics.precision",
-        "metrics.recall", "metrics.f1_score", "metrics.roc_auc", "metrics.pr_auc", "start_time"
-    ]
-    return runs_df[[c for c in keep_cols if c in runs_df.columns]].sort_values(by="metrics.pr_auc", ascending=False)
+    return mlflow_utils.get_experiment_summary(experiment_name)
 
 
-def remove_recent_runs(experiment_name: str, count: int):
+def remove_recent_runs(experiment_name: str, count: int) -> None:
     """Deletes the latest sequence of tracking iterations from the active database log."""
-    experiment = mlflow.get_experiment_by_name(experiment_name)
-    client = mlflow.tracking.MlflowClient()
-    runs = mlflow.search_runs(experiment_ids=[experiment.experiment_id], order_by=["start_time DESC"])
+    mlflow_utils.remove_recent_runs(experiment_name, count)
+
+def dynamic_feature_engineer(X: pd.DataFrame, selected_features: list = None, FULL_REGISTRY: dict = None) -> pd.DataFrame:
+    """Applies binary and continuous features from the registries to the DataFrame."""
+    X = X.copy()
+    features_to_build = selected_features if selected_features is not None else FULL_REGISTRY.keys()
     
-    for run_id in runs.head(count)["run_id"]:
-        client.delete_run(run_id)
-        print(f"Purged tracking history for run reference element: {run_id}")
+    for feature_name in features_to_build:
+        if feature_name in FULL_REGISTRY:
+            X[feature_name] = FULL_REGISTRY[feature_name](X)
+            
+    return X
 
 
-def evaluate_engineered_features(engineered_features: list, base_nomod_columns: list, dummyfy_columns: list, 
-                                 norm_std_columns: list, model, X_train, y_train, X_test, y_test) -> pd.DataFrame:
-    """Evaluates the incremental performance contribution of engineered features one-by-one."""
-    results = []
+def run_sequential_selection(
+    X, 
+    y, 
+    routing_config: dict, 
+    base_model, 
+    forward: bool = True, 
+    k_features: int = 5, 
+    FULL_REGISTRY: dict = None):
+    """
+    Combines engineering and preprocessing, extracts transformed feature names, 
+    and applies mlxtend's SequentialFeatureSelector.
+    """
+    # 1. Deduce engineered features needed for this experiment layout
+    all_layout_cols = (
+        routing_config.get("passthrough", []) +
+        routing_config.get("standard_scale", []) +
+        routing_config.get("one_hot_encode", [])
+    )
+    needed_engineered = [col for col in all_layout_cols if col in FULL_REGISTRY]
+    
+    # 2. Assemble End-to-End Feature Generation & Transformation Pipelines
+    fe_step = FunctionTransformer(
+        dynamic_feature_engineer, 
+        kw_args={"selected_features": needed_engineered, "FULL_REGISTRY": FULL_REGISTRY}
+    )
+    
+    prep_step = ColumnTransformer(
+        transformers=[
+            ("cat", OneHotEncoder(handle_unknown="ignore", drop="first", sparse_output=False), routing_config.get("one_hot_encode", [])),
+            ("num", StandardScaler(), routing_config.get("standard_scale", [])),
+            ("pass", "passthrough", routing_config.get("passthrough", []))
+        ],
+        remainder="drop"
+    )
+    
+    transform_pipe = Pipeline([("fe", fe_step), ("prep", prep_step)])
+    
+    # 3. Fit-Transform Data & Map Correct Post-Encoded String Headings
+    X_transformed = transform_pipe.fit_transform(X, y)
+    feature_names = transform_pipe.named_steps["prep"].get_feature_names_out()
+    X_transformed_df = pd.DataFrame(X_transformed, columns=feature_names)
+    
+    # 4. Configure Sequential Selector Engine
+    direction = "Forward" if forward else "Backward"
+    sfs = SFS(
+        clone(base_model),
+        k_features=k_features,
+        forward=forward,
+        floating=False,
+        scoring="average_precision", # Optimizing directly for PR-AUC
+        cv=5,
+        n_jobs=-1
+    )
+    
+    print(f"\n--- Running {direction} Feature Selection on {base_model.__class__.__name__} ---")
+    sfs.fit(X_transformed_df, y)
+    
+    print(f"Optimal Feature Subset Size: {len(sfs.k_feature_idx_)}")
+    print(f"Optimal Feature Names: {sfs.k_feature_names_}")
+    print(f"Best CV Score (PR-AUC): {sfs.k_score_:.4f}")
+    
+    return sfs, X_transformed_df
 
-    # Target Baseline Setup Evaluation Block
-    baseline_prep = ColumnTransformer(transformers=[
-        ('cat', OneHotEncoder(handle_unknown='ignore', drop='first'), dummyfy_columns),
-        ('num', StandardScaler(), norm_std_columns),
-        ('pass', 'passthrough', base_nomod_columns)
-    ], remainder='drop')
+def run_and_log_sequential_selection(
+    X,
+    y,
+    routing_config,
+    base_model,
+    experiment_label,
+    forward=True,
+    k_features=10,
+    FULL_REGISTRY=None
+):
+    """
+    Runs SFS and logs results to MLflow.
+    """
 
-    baseline_pipe = Pipeline([
-        ("feature_engineering", FeatureEngineer()),
-        ("preprocessing", baseline_prep),
-        ("model", clone(model))
-    ])
-    baseline_pipe.fit(X_train, y_train)
-    base_proba = baseline_pipe.predict_proba(X_test)[:, 1]
-    results.append({"feature_added": "BASELINE", "pr_auc": average_precision_score(y_test, base_proba)})
+    sfs, X_transformed_df = run_sequential_selection(
+        X=X,
+        y=y,
+        routing_config=routing_config,
+        base_model=base_model,
+        forward=forward,
+        k_features=k_features,
+        FULL_REGISTRY=FULL_REGISTRY
+    )
 
-    # Incremental Singular Feature Search Loop Evaluation Block
-    for feature in engineered_features:
-        current_numeric_scope = norm_std_columns + [feature]
-        
-        loop_prep = ColumnTransformer(transformers=[
-            ('cat', OneHotEncoder(handle_unknown='ignore', drop='first'), dummyfy_columns),
-            ('num', StandardScaler(), current_numeric_scope),
-            ('pass', 'passthrough', base_nomod_columns)
-        ], remainder='drop')
+    method = "forward" if forward else "backward"
 
-        loop_pipe = Pipeline([
-            ("feature_engineering", FeatureEngineer()),
-            ("preprocessing", loop_prep),
-            ("model", clone(model))
-        ])
-        loop_pipe.fit(X_train, y_train)
-        y_proba = loop_pipe.predict_proba(X_test)[:, 1]
-        results.append({"feature_added": feature, "pr_auc": average_precision_score(y_test, y_proba)})
+    with mlflow.start_run(
+        run_name=f"{experiment_label}_{method}"
+    ):
 
-    return pd.DataFrame(results).sort_values(by="pr_auc", ascending=False).reset_index(drop=True)
+        mlflow.log_param(
+            "model",
+            base_model.__class__.__name__
+        )
+
+        mlflow.log_param(
+            "selection_method",
+            method
+        )
+
+        mlflow.log_param(
+            "target_features",
+            k_features
+        )
+
+        mlflow.log_metric(
+            "pr_auc_cv",
+            sfs.k_score_
+        )
+
+        mlflow.log_metric(
+            "selected_feature_count",
+            len(sfs.k_feature_names_)
+        )
+
+        selected_features = list(sfs.k_feature_names_)
+
+        mlflow.log_text(
+            "\n".join(selected_features),
+            "selected_features.txt"
+        )
+
+        feature_df = pd.DataFrame(
+            {"selected_feature": selected_features}
+        )
+
+        feature_df.to_csv(
+            "selected_features.csv",
+            index=False
+        )
+
+        mlflow.log_artifact(
+            "selected_features.csv"
+        )
+
+    return sfs

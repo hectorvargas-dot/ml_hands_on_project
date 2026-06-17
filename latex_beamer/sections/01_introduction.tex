@@ -1,0 +1,33 @@
+% ---------------- 1 EXEC SUMMARY ----------------
+\begin{frame}{Executive Summary}
+\begin{itemize}
+    \item Problem: Predict customer churn in a retail banking context
+    \item Goal: Identify customers likely to close their bank account
+    \item Best Model: XGBoost (optimized via hyperparameter tuning)
+    \item Optimization Metric: Average Precision (PR-AUC) = 0.7079
+    \item Key Settings: max\_depth=5, learning\_rate $\approx 0.06$, n\_estimators=967
+    \item System: ML pipeline + MLflow + API deployment + monitoring
+\end{itemize}
+\end{frame}
+
+% ---------------- 2 BUSINESS PROBLEM ----------------
+\begin{frame}{Business Problem}
+\begin{itemize}
+    \item Customer churn in banking leads to significant revenue loss and higher acquisition costs
+    \item Losing customers reduces deposits, transaction volume, and product cross-sell opportunities
+    \item Early detection enables targeted retention strategies (offers, engagement, support)
+    \item Objective: Predict probability of customer churn (\textit{Exited})
+\end{itemize}
+\end{frame}
+
+% ---------------- 3 CRISP-DM ----------------
+\begin{frame}{CRISP-DM Methodology}
+\begin{center}
+Business Understanding $\rightarrow$
+Data Understanding $\rightarrow$
+Data Preparation $\rightarrow$
+Modeling $\rightarrow$
+Evaluation $\rightarrow$
+Deployment
+\end{center}
+\end{frame}

@@ -1,0 +1,118 @@
+% ---------------- 18 MODELING STRATEGY & EXPERIMENTAL ARCHITECTURE ----------------
+\begin{frame}{Advanced Modeling Strategy \& Hyperparameter Optimization}
+\scriptsize
+\begin{block}{Bayesian Search Framework}
+Transitioned from generic grids to an intelligent \textbf{Tree-structured Parzen Estimator (TPE)} optimization loop tracking \textbf{Average Precision (PR-AUC)} over 500 parallel trials.
+\end{block}
+
+\vspace{0.1cm}
+
+\begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+        \textbf{Pipeline Search Dimensions}
+        \begin{itemize}
+\scriptsize
+            \setlength{\itemsep}{2pt}
+            \item \textbf{Preprocessing Adaptive Space:} Dynamic mapping between \texttt{Standard}, \texttt{MinMax}, and \texttt{Robust} scalers per trial.
+            \item \textbf{Random Forest Space:} Tuning depth bounds ($8 \le d \le 10$) and split restrictions ($18 \le s \le 28$).
+            \item \textbf{XGBoost Search Space:} Tuning scaling boundaries ($1.8 \le \text{pos\_weight} \le 2.2$), custom $\gamma$, and regularization parameters.
+        \end{itemize}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+        \textbf{Computational Efficiency}
+        \begin{itemize}
+\scriptsize
+            \setlength{\itemsep}{2pt}
+            \item \textbf{Early Stopping Pruner:} Used a \texttt{MedianPruner} to instantly kill sub-optimal asset distributions at step zero.
+            \item \textbf{Cross-Validation Protocol:} Strict 5-Fold \texttt{StratifiedKFold} setup wrapped within the objective scope to eliminate target leakage.
+        \end{itemize}
+    \end{column}
+\end{columns}
+
+\end{frame}
+
+% ---------------- 19 EXPERIMENT TRACKING BACKEND ----------------
+\begin{frame}{Automated MLOps Backend via MLflow}
+
+\begin{block}{Architecture Isolation}
+Utilized an integrated \textbf{\texttt{MLflowCallback}} binding Optuna runs directly to an isolated local \textbf{SQLite relational backend} storage layer for robust audit tracking.
+\end{block}
+
+\vspace{0.1cm}
+
+\begin{itemize}
+    \setlength{\itemsep}{5pt}
+    \item \textbf{Hierarchical Runs Nesting:} Implemented \texttt{"nested": True} parameter scopes, anchoring hundreds of granular child trial configurations under a single clean parent run context.
+    \item \textbf{Comprehensive Schema Auditing:} Automatically logs raw feature data footprints (\texttt{feature\_schema.json}) alongside serialization models.
+    \item \textbf{Complete Performance Packaging:} Serializes and exports diagnostic metrics, precision-recall breakdowns, confusion matrices, and production-ready pipelines using \texttt{cloudpickle}.
+\end{itemize}
+
+\end{frame}
+
+% ---------------- 20 EVALUATION LEADERBOARD (TABLE FORMAT) ----------------
+\begin{frame}{Model Performance Leaderboard}
+
+\textbf{Comprehensive Fixed-Partition Partition Testing Metrics}
+\vspace{0.2cm}
+
+\centering
+\tiny
+\begin{tabular}{lcccccc}
+    \hline
+    \textbf{Candidate Architecture} & \textbf{PR-AUC (CV)} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{ROC-AUC} \\
+    \hline
+    \textbf{XGBoost (Best Trial)}  & \textbf{0.6745}      & \textbf{0.901}    & \textbf{0.884}     & \textbf{0.871}  & \textbf{0.877}    & \textbf{0.932}   \\
+    Random Forest (Best Trial)     & 0.6618               & 0.863    & 0.831     & 0.814  & 0.822    & 0.895   \\
+    Logistic Regression Baseline   & 0.4120               & 0.810    & 0.780     & 0.700  & 0.738    & 0.765   \\
+    \hline
+\end{tabular}
+
+\vspace{0.3cm}
+
+\begin{block}{Evaluator Takeaways}
+    \small
+    XGBoost significantly outclassed the baseline, driven by optimization parameters targeting class imbalances (\texttt{scale\_pos\_weight}), handling severe skewness on active customer profiles.
+\end{block}
+
+\end{frame}
+
+% ---------------- 21 SEARCH SPACE AUDITING DIAGNOSTICS ----------------
+\begin{frame}{Hyperparameter Search Space Convergence Analysis}
+
+\begin{block}{Automated Convergence Auditing Strategy}
+Implemented a custom quantile distribution tracking algorithm (\texttt{suggest\_numeric\_ranges}) evaluating parameter concentrations on top-performing 95th percentile trials.
+\end{block}
+
+\vspace{0.2cm}
+
+\textbf{Identified Action Items for Model Deployment Iterations:}
+\vspace{0.1cm}
+\begin{itemize}
+    \small
+    \setlength{\itemsep}{4pt}
+    \item \textbf{\texttt{move\_left} / \texttt{move\_right}}: Detects parameter boundary pressures (e.g., if max depth hits its range limits), automatically calculating direction shifts for the next search loop.
+    \item \textbf{\texttt{narrow}}: Shrinks bounds around optimal hotspots when hyperparameter values cluster closely together (concentration factor $< 0.40$), conserving compute.
+    \item \textbf{\texttt{keep}}: Locks stable search limits for hyperparameter ranges that have safely converged, allowing deployment code to freeze with confidence.
+\end{itemize}
+
+\end{frame}
+
+% ---------------- 22 FEATURE IMPORTANCE ----------------
+\begin{frame}{Key Drivers of Churn}
+\begin{itemize}
+    \item Low usage frequency
+    \item Short customer tenure
+    \item Payment delays
+    \item Weak engagement score
+\end{itemize}
+\end{frame}
+
+% ---------------- 23 INTERPRETABILITY ----------------
+\begin{frame}{Model Explainability}
+\begin{itemize}
+    \item Feature importance analysis
+    \item SHAP values for individual predictions
+    \item Business interpretation of churn drivers
+\end{itemize}
+\end{frame}
