@@ -1,3 +1,4 @@
+from mlflow.tracing.processor import base_mlflow
 import mlflow
 import optuna
 import numpy as np
@@ -5,6 +6,7 @@ import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
+    average_precision_score,
     accuracy_score,
     classification_report,
     confusion_matrix,
@@ -102,8 +104,11 @@ def build_pipeline(trial, current_layout: dict, random_state: int = 42) -> Pipel
 
 
 class ObjectiveCV:
-    """Objective factory evaluating cross-validation runs safely over isolated scopes."""
+    """Objective factory evaluating cross-validation runs safely over isolated scopes 
+    and automatically logging full test/train breakdowns to active child trials.
+    """
     
+    # STEP 1A: Accept the baseline holdout matrices into memory
     def __init__(self, X, y, current_layout, n_splits, random_state):
         self.X = X
         self.y = y
@@ -112,7 +117,7 @@ class ObjectiveCV:
         self.random_state = random_state
 
     def __call__(self, trial):
-        # FIXED: Removed references to the dead FULL_REGISTRY parameter variable
+        # Build the specific dynamic pipeline structure for this active trial
         pipeline = build_pipeline(
             trial=trial, 
             current_layout=self.current_layout, 
@@ -121,17 +126,17 @@ class ObjectiveCV:
         
         cv = StratifiedKFold(n_splits=self.n_splits, shuffle=True, random_state=self.random_state)
         
-        # Scoring remains structured for PR-AUC optimization
+        # Calculate cross-validation performance score
         scores = cross_val_score(
             pipeline, self.X, self.y, scoring="average_precision", cv=cv, n_jobs=-1
         )
-
         mean_auc = np.mean(scores)
-        trial.report(mean_auc, step=0)
         
+        # Report progress back to Optuna for potential pruning
+        trial.report(mean_auc, step=0)
         if trial.should_prune():
             raise optuna.TrialPruned()
-            
+
         return mean_auc
 
 
@@ -176,12 +181,15 @@ def evaluate_and_log_best_model(
             "train_precision": precision_score(y_train, y_train_pred, zero_division=0),
             "train_recall": recall_score(y_train, y_train_pred, zero_division=0),
             "train_f1": f1_score(y_train, y_train_pred, zero_division=0),
-            "train_auc": roc_auc_score(y_train, y_train_proba),
+            "train_roc_auc": roc_auc_score(y_train, y_train_proba),
+            "train_pr_auc": average_precision_score(y_train, y_train_proba), # Added
+            
             "test_accuracy": accuracy_score(y_test, y_test_pred),
             "test_precision": precision_score(y_test, y_test_pred, zero_division=0),
             "test_recall": recall_score(y_test, y_test_pred, zero_division=0),
             "test_f1": f1_score(y_test, y_test_pred, zero_division=0),
-            "test_auc": roc_auc_score(y_test, y_test_proba),
+            "test_roc_auc": roc_auc_score(y_test, y_test_proba),
+            "test_pr_auc": average_precision_score(y_test, y_test_proba), # Added
         }
     )
 
@@ -194,4 +202,128 @@ def evaluate_and_log_best_model(
 
     mlflow.sklearn.log_model(
         sk_model=best_pipeline, artifact_path="best_model", serialization_format="cloudpickle"
+    )
+
+def suggest_numeric_ranges(
+    study,
+    top_quantile=0.95,
+    boundary_threshold=0.15,
+    expansion_factor=0.5,
+):
+    """
+    Suggest new Optuna search ranges for numeric parameters.
+
+    Parameters
+    ----------
+    study : optuna.study.Study
+
+    top_quantile : float
+        Use top X% of trials to infer the optimum region.
+
+    boundary_threshold : float
+        Fraction of range considered "close to boundary".
+
+    expansion_factor : float
+        How much to expand the range when boundary pressure exists.
+
+    Returns
+    -------
+    pd.DataFrame
+    """
+
+    df = study.trials_dataframe()
+
+    completed = df[df["state"] == "COMPLETE"].copy()
+
+    threshold = completed["value"].quantile(top_quantile)
+
+    top_trials = completed[completed["value"] >= threshold]
+
+    results = []
+
+    for col in completed.columns:
+
+        if not col.startswith("params_"):
+            continue
+
+        if not pd.api.types.is_numeric_dtype(completed[col]):
+            continue
+
+        all_values = completed[col].dropna()
+
+        if len(all_values) < 5:
+            continue
+
+        top_values = top_trials[col].dropna()
+
+        current_min = all_values.min()
+        current_max = all_values.max()
+
+        span = current_max - current_min
+
+        if span == 0:
+            continue
+
+        median_top = top_values.median()
+
+        relative_position = (
+            median_top - current_min
+        ) / span
+
+        if relative_position < boundary_threshold:
+
+            action = "move_left"
+
+            suggested_min = current_min - expansion_factor * span
+            suggested_max = current_max
+
+        elif relative_position > (1 - boundary_threshold):
+
+            action = "move_right"
+
+            suggested_min = current_min
+            suggested_max = current_max + expansion_factor * span
+
+        else:
+
+            q10 = top_values.quantile(0.10)
+            q90 = top_values.quantile(0.90)
+
+            concentration = (q90 - q10) / span
+
+            if concentration < 0.40:
+
+                action = "narrow"
+
+                padding = (q90 - q10) * 0.20
+
+                suggested_min = q10 - padding
+                suggested_max = q90 + padding
+
+            else:
+
+                action = "keep"
+
+                suggested_min = current_min
+                suggested_max = current_max
+
+        results.append(
+            {
+                "parameter": col.replace("params_", ""),
+                "current_min": current_min,
+                "current_max": current_max,
+                "best_median": median_top,
+                "action": action,
+                "suggested_min": suggested_min,
+                "suggested_max": suggested_max,
+            }
+        )
+
+    return (
+        pd.DataFrame(results)
+        .sort_values(
+            ["action", "parameter"],
+            ascending=[True, True]
+        )
+        .reset_index(drop=True)
     )
