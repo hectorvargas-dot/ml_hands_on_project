@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import mlflow
 import numpy as np
 import pandas as pd
+from pathlib import Path
 from sklearn.metrics import (
     accuracy_score,
     average_precision_score,
@@ -15,16 +16,26 @@ from sklearn.metrics import (
     roc_curve,
 )
 
-
-def init_mlflow_experiment(experiment_name: str, db_path: str, artifacts_dir: str) -> None:
+def init_mlflow_experiment(
+    experiment_name: str,
+    db_path: str,
+    artifacts_dir: str
+) -> str:
     """Initializes tracking configurations and establishes backend experiment isolation."""
     mlflow.set_tracking_uri(f"sqlite:///{db_path}")
 
     experiment = mlflow.get_experiment_by_name(experiment_name)
     if experiment is None:
-        mlflow.create_experiment(name=experiment_name, artifact_location=f"file://{artifacts_dir}")
+        mlflow.create_experiment(
+            name=experiment_name,
+            artifact_location=Path(artifacts_dir).resolve().as_uri()
+        )
+
+    experiment = mlflow.get_experiment_by_name(experiment_name)
+
     mlflow.set_experiment(experiment_name)
 
+    return experiment.experiment_id
 
 def log_classification_curves(
     y_true: pd.Series | np.ndarray, y_proba: pd.Series | np.ndarray

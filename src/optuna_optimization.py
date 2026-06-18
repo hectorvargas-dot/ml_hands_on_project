@@ -1,5 +1,5 @@
-from optuna.samplers import _lazy_random_state
 import mlflow
+import optuna
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
@@ -26,145 +26,70 @@ from xgboost import XGBClassifier
 
 from src import feature_engineering as fe
 
-def build_pipeline(
-    trial, 
-    FULL_REGISTRY: dict,
-    current_layout:dict,
-    random_state: int = 42
-) -> Pipeline:
-    """Constructs an end-to-end pipeline containing dynamic feature engineering 
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
 
-    and modeling parameters tailored to an active Optuna trial space.
-    """
-
+def build_pipeline(trial, current_layout: dict, random_state: int = 42) -> Pipeline:
+    """Constructs an end-to-end pipeline using the class-based feature transformer."""
+    
     cat_cols = current_layout['one_hot_encode']
     num_cols = current_layout['standard_scale']
     pass_cols = current_layout['passthrough']
 
-    # 1. ADDED: Deduce which engineered features are expected by this configuration layout
+    # Deduce which engineered features are needed by checking what columns exist in our configuration layout
     all_layout_cols = cat_cols + num_cols + pass_cols
-    needed_engineered = [col for col in all_layout_cols if col in FULL_REGISTRY]
     
-    fe_step = FunctionTransformer(
-        fe.dynamic_feature_engineer,
-        kw_args={
-            "selected_features": needed_engineered,
-            "FULL_REGISTRY": FULL_REGISTRY,
-        },
+    # Instantiate the class transformer directly
+    # It dynamically infers which rules to apply based on your layout strings!
+    dummy_instance = fe.DynamicFeatureEngineer()
+    available_transformations = (
+        dummy_instance._get_all_binary_features() + 
+        dummy_instance._get_all_continuous_features()
     )
+    needed_engineered = [col for col in all_layout_cols if col in available_transformations]
+    
+    fe_step = fe.DynamicFeatureEngineer(selected_features=needed_engineered)
 
-    # 2. Preprocessing Space Selection
+    # Preprocessing Space Selection
     scaler_name = trial.suggest_categorical("scaler", ["std", "minmax", "robust"])
     encoder_name = trial.suggest_categorical("encoder", ["drop_first", "no_drop"])
-
     scalers = {"std": StandardScaler(), "minmax": MinMaxScaler(), "robust": RobustScaler()}
-
-    encoder = OneHotEncoder(
-        handle_unknown="ignore", drop="first" if encoder_name == "drop_first" else None
-    )
+    encoder = OneHotEncoder(handle_unknown="ignore", drop="first" if encoder_name == "drop_first" else None)
 
     preprocessor = ColumnTransformer(
         transformers=[
             ("cat", encoder, cat_cols),
             ("num", scalers[scaler_name], num_cols),
-            ("pass", "pass_through" if isinstance(pass_cols, str) else "passthrough", pass_cols),
+            ("pass", "passthrough", pass_cols),
         ],
         remainder="drop",
     )
 
-    # 3. Model Search Space Selection
-    model_name = trial.suggest_categorical("model", ["rf"])#, "xgb"])
-
+    # Model Search Space Selection (Remains identical)
+    model_name = trial.suggest_categorical("model", ["rf", "xgb"])
     if model_name == "rf":
         model = RandomForestClassifier(
-            n_estimators=trial.suggest_int(
-                "rf_n_estimators",
-                280,
-                320
-            ),
-
-            max_depth=trial.suggest_int(
-                "rf_max_depth",
-                8,
-                10
-            ),
-
-            min_samples_split=trial.suggest_int(
-                "rf_min_samples_split",
-                18,
-                28
-            ),
-
-            min_samples_leaf=trial.suggest_int(
-                "rf_min_samples_leaf",
-                1,
-                3
-            ),
-
-            random_state=random_state,
+            n_estimators=trial.suggest_int("rf_n_estimators", 280, 295),
+            max_depth=trial.suggest_int("rf_max_depth", 9, 13),
+            min_samples_split=trial.suggest_int("rf_min_samples_split", 18, 28),
+            min_samples_leaf=trial.suggest_int("rf_min_samples_leaf", 1, 3),
+            random_state=random_state, 
             n_jobs=-1,
         )
     else:
         model = XGBClassifier(
-            n_estimators=trial.suggest_int(
-                "xgb_n_estimators",
-                800,
-                1400
-            ),
-
-            # Fixed after convergence
+            n_estimators=trial.suggest_int("xgb_n_estimators", 800, 1400),
             max_depth=5,
-
-            learning_rate=trial.suggest_float(
-                "xgb_learning_rate",
-                0.025,
-                0.045,
-                log=True
-            ),
-
-            subsample=trial.suggest_float(
-                "xgb_subsample",
-                0.94,
-                0.98
-            ),
-
-            colsample_bytree=trial.suggest_float(
-                "xgb_colsample_bytree",
-                0.45,
-                0.60
-            ),
-
-            # Fixed after convergence
+            learning_rate=trial.suggest_float("xgb_learning_rate", 0.025, 0.045, log=True),
+            subsample=trial.suggest_float("xgb_subsample", 0.94, 0.98),
+            colsample_bytree=trial.suggest_float("xgb_colsample_bytree", 0.45, 0.60),
             min_child_weight=2,
-
-            gamma=trial.suggest_float(
-                "xgb_gamma",
-                1.5,
-                3.5
-            ),
-
-            reg_alpha=trial.suggest_float(
-                "xgb_reg_alpha",
-                1e-8,
-                1e-3,
-                log=True
-            ),
-
-            reg_lambda=trial.suggest_float(
-                "xgb_reg_lambda",
-                1e-9,
-                1e-4,
-                log=True
-            ),
-
-            scale_pos_weight=trial.suggest_float(
-                "xgb_scale_pos_weight",
-                1.8,
-                2.2
-            ),
-
-            random_state=random_state,
-            n_jobs=-1,
+            gamma=trial.suggest_float("xgb_gamma", 1.5, 3.5),
+            reg_alpha=trial.suggest_float("xgb_reg_alpha", 1e-8, 1e-3, log=True),
+            reg_lambda=trial.suggest_float("xgb_reg_lambda", 1e-9, 1e-4, log=True),
+            scale_pos_weight=trial.suggest_float("xgb_scale_pos_weight", 1.6, 2.1),
+            random_state=random_state, 
+            n_jobs=-1, 
             eval_metric="aucpr",
         )
 
@@ -178,45 +103,35 @@ def build_pipeline(
 
 class ObjectiveCV:
     """Objective factory evaluating cross-validation runs safely over isolated scopes."""
-
-    def __init__(
-        self,
-        X,
-        y,
-        FULL_REGISTRY,
-        current_layout,
-        n_splits,
-        random_state,
-    ):
+    
+    def __init__(self, X, y, current_layout, n_splits, random_state):
         self.X = X
         self.y = y
-        self.FULL_REGISTRY = FULL_REGISTRY
         self.current_layout = current_layout
         self.n_splits = n_splits
         self.random_state = random_state
 
     def __call__(self, trial):
+        # FIXED: Removed references to the dead FULL_REGISTRY parameter variable
         pipeline = build_pipeline(
-            trial,
-            self.FULL_REGISTRY,
-            self.current_layout,
-            self.random_state,
+            trial=trial, 
+            current_layout=self.current_layout, 
+            random_state=self.random_state
         )
-
+        
         cv = StratifiedKFold(n_splits=self.n_splits, shuffle=True, random_state=self.random_state)
-
+        
+        # Scoring remains structured for PR-AUC optimization
         scores = cross_val_score(
             pipeline, self.X, self.y, scoring="average_precision", cv=cv, n_jobs=-1
         )
 
         mean_auc = np.mean(scores)
         trial.report(mean_auc, step=0)
-
-        import optuna
-
+        
         if trial.should_prune():
             raise optuna.TrialPruned()
-
+            
         return mean_auc
 
 
@@ -226,11 +141,13 @@ def evaluate_and_log_best_model(
     y_train: pd.Series,
     X_test: pd.DataFrame,
     y_test: pd.Series,
-    cat_cols: list,
-    num_cols: list,
-    pass_cols: list,
+    current_layout: dict,
 ):
     """Fits the best model, logs train/test performance indicators, and packages runtime artifacts."""
+
+    cat_cols = current_layout['one_hot_encode']
+    num_cols = current_layout['standard_scale']
+    pass_cols = current_layout['passthrough']
 
     best_pipeline.fit(X_train, y_train)
     preprocessor = best_pipeline.named_steps["preprocessing"]

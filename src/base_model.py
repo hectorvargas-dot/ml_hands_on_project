@@ -5,16 +5,6 @@ from sklearn.pipeline import Pipeline
 from src import mlflow_utils
 
 
-def init_mlflow_experiment(experiment_name: str, db_path: str, artifacts_dir: str) -> None:
-    """Initializes tracking configurations and establishes backend experiment isolation (delegates to mlflow_utils)."""
-    mlflow_utils.init_mlflow_experiment(experiment_name, db_path, artifacts_dir)
-
-
-def log_classification_curves(y_test: pd.Series, y_proba: pd.Series) -> None:
-    """Generates, validates, and serializes performance curves directly to MLflow (delegates to mlflow_utils)."""
-    mlflow_utils.log_classification_curves(y_test, y_proba)
-
-
 def train_and_log_models(
     models: dict,
     preprocessor,
@@ -45,8 +35,3 @@ def train_and_log_models(
                 artifact_path="model",
             )
             print(f"Successfully processed and logged: {model_name}")
-
-
-def generate_experiment_summary(experiment_name: str) -> pd.DataFrame | None:
-    """Aggregates active telemetry information and returns a structured DataFrame sorted by PR-AUC."""
-    return mlflow_utils.get_experiment_summary(experiment_name)
