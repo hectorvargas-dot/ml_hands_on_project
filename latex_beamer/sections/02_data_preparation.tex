@@ -226,6 +226,7 @@ Inactive customers churn at much higher rates than active members.
 
 % ---------------- 11 FEATURE IMPORTANCE ANALYSIS ----------------
 \begin{frame}{Feature Importance Analysis}
+    \footnotesize
 \begin{itemize}
 \item Feature importance was evaluated using the selected XGBoost model.
 
@@ -283,7 +284,7 @@ Inactive customers churn at much higher rates than active members.
 \begin{columns}[T]
 
 \begin{column}{0.55\textwidth}
-\small
+\footnotesize
 \begin{itemize}
     \item SHAP values were used to explain feature contributions to churn predictions.
 
@@ -331,7 +332,7 @@ Inactive customers churn at much higher rates than active members.
 % ---------------- 15 AGE EFFECT ANALYSIS: Key Findings ----------------
 \begin{frame}{Age Effect on Churn Prediction: Key Findings}
 
-\small
+\footnotesize
 \begin{itemize}
     \item Customer age exhibits a strong non-linear relationship with churn predictions.
 
@@ -350,7 +351,6 @@ Inactive customers churn at much higher rates than active members.
     \end{itemize}
 \end{itemize}
 
-\vspace{0.3cm}
 \begin{block}{Business Insight}
 Prioritize retention campaigns for middle-age customers, while older and younger customers represent a relatively low-risk segment.
 \end{block}
@@ -361,7 +361,7 @@ Prioritize retention campaigns for middle-age customers, while older and younger
 \begin{frame}{Sequential Feature Selection Results}
 
 \begin{block}{Methodology}
-\small Sequential Feature Selection (Forward and Backward) was applied to Random Forest and XGBoost models, optimizing PR-AUC through 5-Fold Cross-Validation.
+\scriptsize Sequential Feature Selection (Forward and Backward) was applied to Random Forest and XGBoost models, optimizing PR-AUC through 5-Fold Cross-Validation.
 \end{block}
 
 \begin{columns}[T]
@@ -380,8 +380,6 @@ XGB + Forward & 12 & 0.6678 \\
 RF + Forward & 27 & 0.6656 \\
 \hline
 \end{tabular}
-
-\vspace{0.3cm}
 
 \textbf{Observations}
 
@@ -412,11 +410,12 @@ RF + Forward & 27 & 0.6656 \\
 \begin{frame}{Best Feature Subset Analysis}
 
 \begin{block}{Winning Model}
+\scriptsize
 Random Forest with Backward Sequential Feature Selection achieved the highest
 PR-AUC (\textbf{0.6742}) using a subset of \textbf{17 predictors}.
 \end{block}
 
-\footnotesize
+\scriptsize
 
 \begin{columns}[T]
 
@@ -425,7 +424,7 @@ PR-AUC (\textbf{0.6742}) using a subset of \textbf{17 predictors}.
 \textbf{Selected Feature Groups}
 
 \scriptsize
-\begin{tabular}{p{2cm} p{3.3cm}}
+\begin{tabular}{p{1.7cm} p{3.3cm}}
 \hline
 \textbf{Category} & \textbf{Selected Features} \\
 \hline
@@ -455,7 +454,7 @@ Silver Card \\
 
 \end{column}
 
-\begin{column}{0.50\textwidth}
+\begin{column}{0.55\textwidth}
 
 \textbf{Key Findings}
 

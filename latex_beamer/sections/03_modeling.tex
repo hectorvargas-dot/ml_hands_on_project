@@ -97,6 +97,14 @@ indicating good generalization on unseen customer data.
     
     % Left Column: The Plot Visualization Placeholder
     \begin{column}{0.52\textwidth}
+        \textbf{Champion Model Performance}
+        \scriptsize
+        \begin{itemize}
+            \setlength{\itemsep}{4pt}
+            \item \textbf{PR-AUC Metric:} \alert{\textbf{0.734}}
+            \item \textbf{Direct Alignment:} Evaluates the exact metric targeted during the 5000-trial Bayesian search space loop.
+        \end{itemize}
+
         \begin{center}
             % Replace 'image_8e2bca.png' with your exported plot filename
             \includegraphics[width=\textwidth]{figures/pr_auc_curve_best model.png}
@@ -105,26 +113,17 @@ indicating good generalization on unseen customer data.
     
     % Right Column: Core Metrics & Business Value
     \begin{column}{0.45\textwidth}
-        \textbf{Champion Model Performance}
-        \vspace{0.1cm}
-        \begin{itemize}
-            \small
-            \setlength{\itemsep}{4pt}
-            \item \textbf{PR-AUC Metric:} \alert{\textbf{0.734}}
-            \item \textbf{Direct Alignment:} Evaluates the exact metric targeted during the 5000-trial Bayesian search space loop.
-        \end{itemize}
         
-        \vspace{0.2cm}
         
         \begin{block}{Why PR-AUC Over ROC-AUC?}
-            \footnotesize
+            \scriptsize
             Because our churn target is highly imbalanced, ROC-AUC can present an overly optimistic view by factoring in true negatives. The Precision-Recall curve focuses strictly on the minority class, tracking false positives and false negatives without distortion.
         \end{block}
         
         \vspace{0.1cm}
         
         \begin{exampleblock}{Business Trajectory Context}
-            \footnotesize
+            \scriptsize
             Allows executive stakeholders to dynamically tune model probability thresholds to balance marketing outreach costs (Precision) vs. capturing actual churning clients (Recall).
         \end{exampleblock}
     \end{column}
@@ -169,7 +168,7 @@ Average Precision (PR-AUC).
 
 \begin{columns}[T]
 
-\begin{column}{0.42\textwidth}
+\begin{column}{0.50\textwidth}
 
 \begin{block}{Global SHAP Interpretation}
     \scriptsize
@@ -177,26 +176,20 @@ SHAP values quantify the contribution of each feature
 to the model output across all customers.
 \end{block}
 
-\vspace{0.15cm}
-
 \begin{itemize}
     \scriptsize
     \setlength{\itemsep}{4pt}
 
     \item \textbf{Product Relationship}
-    \\
     Number of products is the strongest predictor of churn risk.
 
     \item \textbf{Financial Profile}
-    \\
     Credit score interactions with age provide strong predictive signals.
 
     \item \textbf{Customer Engagement}
-    \\
     Inactivity combined with balance identifies disengaged profiles.
 
     \item \textbf{Lower Impact Variables}
-    \\
     Salary, satisfaction score, and card type have limited influence.
 
 \end{itemize}
@@ -220,7 +213,7 @@ to the model output across all customers.
 
 \begin{columns}[T]
 
-\begin{column}{0.50\textwidth}
+\begin{column}{0.55\textwidth}
 
 \scriptsize
 \begin{block}{SHAP Waterfall Interpretation}

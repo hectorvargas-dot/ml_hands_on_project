@@ -1,2 +1,5 @@
-\beamer@sectionintoc {1}{System Architecture \& MLOps}{2}{0}{1}
-\beamer@sectionintoc {2}{Conclusion \& Outlook}{7}{0}{2}
+\beamer@sectionintoc {1}{Introduction}{2}{0}{1}
+\beamer@sectionintoc {2}{Data \& EDA}{5}{0}{2}
+\beamer@sectionintoc {3}{Modeling \& Evaluation}{22}{0}{3}
+\beamer@sectionintoc {4}{System Architecture \& MLOps}{29}{0}{4}
+\beamer@sectionintoc {5}{Conclusion \& Outlook}{34}{0}{5}
