@@ -1,14 +1,32 @@
 % ---------------- 1 EXEC SUMMARY ----------------
 \begin{frame}{Executive Summary}
+
+    \scriptsize
 \begin{itemize}
-    \item Problem: Predict customer churn in a retail banking context
-    \item Goal: Identify customers likely to close their bank account
-    \item Best Model: XGBoost (optimized via hyperparameter tuning)
-    \item Optimization Metric: Average Precision (PR-AUC) = 0.7079
-    \item Key Settings: max\_depth=5, learning\_rate $\approx 0.06$, n\_estimators=967
-    \item System: ML pipeline + MLflow + API deployment + monitoring
+\item \textbf{Problem:} Predict customer churn in a retail banking environment.
+
+\item \textbf{Objective:} Identify customers at risk of closing their accounts to support proactive retention strategies.
+
+\item \textbf{Best Model:} XGBoost optimized using Bayesian hyperparameter tuning (Optuna TPE).
+
+\item \textbf{Optimization Metric:} Average Precision (PR-AUC) = 0.698 (5-Fold Cross-Validation).
+
+\item \textbf{Test Performance:} PR-AUC = 0.734, ROC-AUC = 0.874, Accuracy = 87.3\%.
+
+\item \textbf{Best Configuration:}
+RobustScaler, 1,403 trees, learning rate = 0.028,
+subsample = 0.97, column sample rate = 0.52,
+scale\_pos\_weight = 1.19.
+
+\item \textbf{Production System:}
+End-to-end ML pipeline with feature engineering,
+MLflow experiment tracking, (model deployment API,
+and monitoring framework - PENDING).
+
 \end{itemize}
+
 \end{frame}
+
 
 % ---------------- 2 BUSINESS PROBLEM ----------------
 \begin{frame}{Business Problem}

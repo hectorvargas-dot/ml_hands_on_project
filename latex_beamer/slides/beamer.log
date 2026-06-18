@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  18 JUN 2026 16:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  18 JUN 2026 16:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -886,20 +886,20 @@ Dictionary: translator-theorem-dictionary, Language: English
 map/pdftex.map}
 
 ] (./sections/01_introduction.tex
-LaTeX Font Info:    Trying to load font information for U+msa on input line 11.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 28.
 
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 11.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 28.
 
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
-ut line 11.
+ut line 28.
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
@@ -915,7 +915,7 @@ thkerncmss.
 ] [6
 
 ]
-<figures/churn_distribution.png, id=234, 601.24625pt x 469.755pt>
+<figures/churn_distribution.png, id=225, 601.24625pt x 469.755pt>
 File: figures/churn_distribution.png Graphic file (type png)
 <use figures/churn_distribution.png>
 Package pdftex.def Info: figures/churn_distribution.png  used on input line 92.
@@ -924,7 +924,7 @@ Package pdftex.def Info: figures/churn_distribution.png  used on input line 92.
  [7
 
  <./figures/churn_distribution.png>]
-<figures/complain_churn.png, id=269, 982.872pt x 354.123pt>
+<figures/complain_churn.png, id=260, 982.872pt x 354.123pt>
 File: figures/complain_churn.png Graphic file (type png)
 <use figures/complain_churn.png>
 Package pdftex.def Info: figures/complain_churn.png  used on input line 111.
@@ -936,7 +936,7 @@ Overfull \vbox (14.40784pt too high) detected at line 111
 [8
 
  <./figures/complain_churn.png>]
-<figures/products_churn.png, id=303, 982.872pt x 354.123pt>
+<figures/products_churn.png, id=294, 982.872pt x 354.123pt>
 File: figures/products_churn.png Graphic file (type png)
 <use figures/products_churn.png>
 Package pdftex.def Info: figures/products_churn.png  used on input line 129.
@@ -944,7 +944,7 @@ Package pdftex.def Info: figures/products_churn.png  used on input line 129.
  [9
 
  <./figures/products_churn.png>]
-<figures/geography_churn.png, id=336, 983.5947pt x 354.123pt>
+<figures/geography_churn.png, id=327, 983.5947pt x 354.123pt>
 File: figures/geography_churn.png Graphic file (type png)
 <use figures/geography_churn.png>
 Package pdftex.def Info: figures/geography_churn.png  used on input line 147.
@@ -952,7 +952,7 @@ Package pdftex.def Info: figures/geography_churn.png  used on input line 147.
  [10
 
  <./figures/geography_churn.png>]
-<figures/active_churn.png, id=369, 983.5947pt x 354.123pt>
+<figures/active_churn.png, id=360, 983.5947pt x 354.123pt>
 File: figures/active_churn.png Graphic file (type png)
 <use figures/active_churn.png>
 Package pdftex.def Info: figures/active_churn.png  used on input line 165.
@@ -971,7 +971,7 @@ Package pdftex.def Info: figures/active_churn.png  used on input line 165.
 ] [16
 
 ]
-<figures/shap_xgboost.png, id=561, 565.1514pt x 620.7993pt>
+<figures/shap_xgboost.png, id=552, 565.1514pt x 620.7993pt>
 File: figures/shap_xgboost.png Graphic file (type png)
 <use figures/shap_xgboost.png>
 Package pdftex.def Info: figures/shap_xgboost.png  used on input line 318.
@@ -979,7 +979,7 @@ Package pdftex.def Info: figures/shap_xgboost.png  used on input line 318.
  [17
 
  <./figures/shap_xgboost.png>]
-<figures/shap_dependence_num_age.png, id=594, 506.6127pt x 354.123pt>
+<figures/shap_dependence_num_age.png, id=585, 506.6127pt x 354.123pt>
 File: figures/shap_dependence_num_age.png Graphic file (type png)
 <use figures/shap_dependence_num_age.png>
 Package pdftex.def Info: figures/shap_dependence_num_age.png  used on input lin
@@ -990,7 +990,7 @@ e 330.
  <./figures/shap_dependence_num_age.png>] [19
 
 ]
-<figures/sequential_feature_selection.png, id=663, 783.4068pt x 458.1918pt>
+<figures/sequential_feature_selection.png, id=654, 783.4068pt x 458.1918pt>
 File: figures/sequential_feature_selection.png Graphic file (type png)
 <use figures/sequential_feature_selection.png>
 Package pdftex.def Info: figures/sequential_feature_selection.png  used on inpu
@@ -1047,7 +1047,7 @@ Overfull \hbox (27.98427pt too wide) in paragraph at lines 478--478
 ] [24
 
 ]
-<figures/pr_auc_curve_best model.png, id=822, 570.933pt x 426.393pt>
+<figures/pr_auc_curve_best model.png, id=811, 570.933pt x 426.393pt>
 File: figures/pr_auc_curve_best model.png Graphic file (type png)
 <use figures/pr_auc_curve_best model.png>
 Package pdftex.def Info: figures/pr_auc_curve_best model.png  used on input lin
@@ -1058,7 +1058,7 @@ e 133.
  <./figures/pr_auc_curve_best model.png>] [26
 
 ]
-<figures/final_model_shap.png, id=887, 645.3711pt x 537.6888pt>
+<figures/final_model_shap.png, id=877, 645.3711pt x 537.6888pt>
 File: figures/final_model_shap.png Graphic file (type png)
 <use figures/final_model_shap.png>
 Package pdftex.def Info: figures/final_model_shap.png  used on input line 209.
@@ -1066,7 +1066,7 @@ Package pdftex.def Info: figures/final_model_shap.png  used on input line 209.
  [27
 
  <./figures/final_model_shap.png>]
-<figures/explain_customer_0.png, id=920, 751.608pt x 573.1011pt>
+<figures/explain_customer_0.png, id=910, 751.608pt x 573.1011pt>
 File: figures/explain_customer_0.png Graphic file (type png)
 <use figures/explain_customer_0.png>
 Package pdftex.def Info: figures/explain_customer_0.png  used on input line 268
@@ -1074,26 +1074,7 @@ Package pdftex.def Info: figures/explain_customer_0.png  used on input line 268
 (pdftex.def)             Requested size: 153.64493pt x 117.15417pt.
  [28
 
- <./figures/explain_customer_0.png>]) (./sections/04_deployment.tex [29
-
-] [30
-
-] [31
-
-] [32
-
-] [33
-
-])
-(./sections/05_conclusion.tex [34
-
-] [35
-
-] [36
-
-] [37
-
-])
+ <./figures/explain_customer_0.png>])
 \tf@nav=\write6
 \openout6 = `beamer.nav'.
 
@@ -1109,35 +1090,34 @@ LaTeX2e <2026-06-01>
 L3 programming layer <2026-05-26>
  ***********
 Package rerunfilecheck Info: File `beamer.out' has not changed.
-(rerunfilecheck)             Checksum: C62904500860F5095842C7EBCA17231A;704.
+(rerunfilecheck)             Checksum: D8F1EA351D73669DFF82757A11968FD5;362.
  ) 
 Here is how much of TeX's memory you used:
- 22124 strings out of 467167
- 428040 string characters out of 5409448
+ 22064 strings out of 467167
+ 427269 string characters out of 5409448
  818557 words of memory out of 5000000
- 50840 multiletter control sequences out of 15000+600000
- 642867 words of font info for 95 fonts, out of 8000000 for 9000
+ 50807 multiletter control sequences out of 15000+600000
+ 642561 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,14n,123p,381b,724s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 ></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><
 /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></
 usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></u
-sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></us
-r/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/
-local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/lo
-cal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/l
-ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/l
-ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
-cal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/loca
-l/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/
-texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/t
-exlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/tex
-live/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on slides/beamer.pdf (37 pages, 862860 bytes).
+sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr
+/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/l
+ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/
+local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/
+local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
+ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/loc
+al/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local
+/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/
+texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/te
+xlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on slides/beamer.pdf (28 pages, 839674 bytes).
 PDF statistics:
- 1317 PDF objects out of 1440 (max. 8388607)
- 1063 compressed objects within 11 object streams
- 80 named destinations out of 1000 (max. 500000)
- 138 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1014 PDF objects out of 1200 (max. 8388607)
+ 809 compressed objects within 9 object streams
+ 60 named destinations out of 1000 (max. 500000)
+ 122 words of extra memory for PDF output out of 10000 (max. 10000000)
 
