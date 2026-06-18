@@ -1,4 +1,3 @@
-from mlflow.tracing.processor import base_mlflow
 import mlflow
 import optuna
 import numpy as np
@@ -22,14 +21,10 @@ from sklearn.preprocessing import (
     OneHotEncoder,
     RobustScaler,
     StandardScaler,
-    FunctionTransformer,
 )
 from xgboost import XGBClassifier
 
 from src import feature_engineering as fe
-
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
 
 def build_pipeline(trial, current_layout: dict, random_state: int = 42) -> Pipeline:
     """Constructs an end-to-end pipeline using the class-based feature transformer."""
@@ -82,14 +77,14 @@ def build_pipeline(trial, current_layout: dict, random_state: int = 42) -> Pipel
         model = XGBClassifier(
             n_estimators=trial.suggest_int("xgb_n_estimators", 800, 1400),
             max_depth=5,
-            learning_rate=trial.suggest_float("xgb_learning_rate", 0.025, 0.045, log=True),
-            subsample=trial.suggest_float("xgb_subsample", 0.94, 0.98),
+            learning_rate=trial.suggest_float("xgb_learning_rate", 0.018, 0.042, log=True),
+            subsample=trial.suggest_float("xgb_subsample", 0.92, 0.97),
             colsample_bytree=trial.suggest_float("xgb_colsample_bytree", 0.45, 0.60),
             min_child_weight=2,
-            gamma=trial.suggest_float("xgb_gamma", 1.5, 3.5),
-            reg_alpha=trial.suggest_float("xgb_reg_alpha", 1e-8, 1e-3, log=True),
+            gamma=trial.suggest_float("xgb_gamma", 1.9, 4.1),
+            reg_alpha=trial.suggest_float("xgb_reg_alpha", 1e-9, 1e-6, log=True),
             reg_lambda=trial.suggest_float("xgb_reg_lambda", 1e-9, 1e-4, log=True),
-            scale_pos_weight=trial.suggest_float("xgb_scale_pos_weight", 1.6, 2.1),
+            scale_pos_weight=trial.suggest_float("xgb_scale_pos_weight", 1.3, 1.8),
             random_state=random_state, 
             n_jobs=-1, 
             eval_metric="aucpr",
