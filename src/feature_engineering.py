@@ -63,10 +63,10 @@ class DynamicFeatureEngineer(BaseEstimator, TransformerMixin):
     def _compute_bin_middle_age(self, X):       return X["Age"].between(25, 45, inclusive="neither")
 
     # PRODUCT COUNTS
-    def _compute_cont_Num_Of_Products_1(self, X):  return X["NumOfProducts"] == 1
-    def _compute_cont_Num_Of_Products_2(self, X):  return X["NumOfProducts"] == 2
-    def _compute_cont_Num_Of_Products_3(self, X):  return X["NumOfProducts"] == 3
-    def _compute_cont_Num_Of_Products_4(self, X):  return X["NumOfProducts"] == 4
+    def _compute_bin_Num_Of_Products_1(self, X):  return X["NumOfProducts"] == 1
+    def _compute_bin_Num_Of_Products_2(self, X):  return X["NumOfProducts"] == 2
+    def _compute_bin_Num_Of_Products_3(self, X):  return X["NumOfProducts"] == 3
+    def _compute_bin_Num_Of_Products_4(self, X):  return X["NumOfProducts"] == 4
 
     # POLYNOMIAL & INTERACTION TERMS
     def _compute_cont_Age_x_IsActive(self, X):     return X["Age"] * X["IsActiveMember"]

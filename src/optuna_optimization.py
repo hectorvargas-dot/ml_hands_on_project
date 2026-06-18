@@ -75,16 +75,16 @@ def build_pipeline(trial, current_layout: dict, random_state: int = 42) -> Pipel
         )
     else:
         model = XGBClassifier(
-            n_estimators=trial.suggest_int("xgb_n_estimators", 800, 1400),
+            n_estimators=trial.suggest_int("xgb_n_estimators", 900, 1700),
             max_depth=5,
             learning_rate=trial.suggest_float("xgb_learning_rate", 0.018, 0.042, log=True),
-            subsample=trial.suggest_float("xgb_subsample", 0.92, 0.97),
+            subsample=trial.suggest_float("xgb_subsample", 0.94, 0.99),
             colsample_bytree=trial.suggest_float("xgb_colsample_bytree", 0.45, 0.60),
             min_child_weight=2,
-            gamma=trial.suggest_float("xgb_gamma", 1.9, 4.1),
+            gamma=trial.suggest_float("xgb_gamma", 3.1, 3.5),
             reg_alpha=trial.suggest_float("xgb_reg_alpha", 1e-9, 1e-6, log=True),
             reg_lambda=trial.suggest_float("xgb_reg_lambda", 1e-9, 1e-4, log=True),
-            scale_pos_weight=trial.suggest_float("xgb_scale_pos_weight", 1.3, 1.8),
+            scale_pos_weight=trial.suggest_float("xgb_scale_pos_weight", 1.1, 1.7),
             random_state=random_state, 
             n_jobs=-1, 
             eval_metric="aucpr",

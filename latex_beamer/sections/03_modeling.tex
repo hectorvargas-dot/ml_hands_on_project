@@ -58,8 +58,7 @@ hyperparameter optimization experiments.
 \end{itemize}
 
 \end{frame}
-
-% ---------------- 20 EVALUATION LEADERBOARD (TABLE FORMAT) ----------------
+% ---------------- 20 BEST MODEL PERFORMANCE ----------------
 \begin{frame}{Best Model Performance}
 
 \centering
@@ -67,73 +66,210 @@ hyperparameter optimization experiments.
 \small
 \begin{tabular}{lc}
 \hline
-Metric & Value \\
+\textbf{Metric} & \textbf{Value} \\
 \hline
-Cross-Validation PR-AUC & 0.701 \\
-Test PR-AUC & 0.736 \\
-Accuracy & 0.865 \\
-Precision & 0.781 \\
-Recall & 0.598 \\
-F1 Score & 0.666 \\
-ROC-AUC & 0.876 \\
+Cross-Validation PR-AUC & 0.698 \\
+Train PR-AUC & 0.797 \\
+Test PR-AUC & 0.734 \\
+Accuracy & 0.873 \\
+Precision & 0.749 \\
+Recall & 0.564 \\
+F1 Score & 0.643 \\
+ROC-AUC & 0.874 \\
 \hline
 \end{tabular}
 
-\vspace{0.3cm}
+\vspace{0.35cm}
 
-\begin{block}{Best Configuration}
-XGBoost with Robust Scaling, 1,193 trees, learning rate 0.0267,
-and class imbalance correction using
-\texttt{scale\_pos\_weight = 1.67}.
+\begin{block}{Model Generalization}
+\small
+The final XGBoost model achieved a Test PR-AUC of 0.734,
+with a limited gap compared to training performance (Train PR-AUC = 0.797),
+indicating good generalization on unseen customer data.
 \end{block}
 
 \end{frame}
 
-% ---------------- 21 SEARCH SPACE AUDITING DIAGNOSTICS ----------------
+% ------------------ 20.5 SLIDE: PRECISION-RECALL CURVE EVALUATION ------------------
+\begin{frame}{Model Diagnostics: Precision-Recall Curve}
+
+\begin{columns}[c]
+    
+    % Left Column: The Plot Visualization Placeholder
+    \begin{column}{0.52\textwidth}
+        \begin{center}
+            % Replace 'image_8e2bca.png' with your exported plot filename
+            \includegraphics[width=\textwidth]{figures/pr_auc_curve_best model.png}
+        \end{center}
+    \end{column}
+    
+    % Right Column: Core Metrics & Business Value
+    \begin{column}{0.45\textwidth}
+        \textbf{Champion Model Performance}
+        \vspace{0.1cm}
+        \begin{itemize}
+            \small
+            \setlength{\itemsep}{4pt}
+            \item \textbf{PR-AUC Metric:} \alert{\textbf{0.734}}
+            \item \textbf{Direct Alignment:} Evaluates the exact metric targeted during the 5000-trial Bayesian search space loop.
+        \end{itemize}
+        
+        \vspace{0.2cm}
+        
+        \begin{block}{Why PR-AUC Over ROC-AUC?}
+            \footnotesize
+            Because our churn target is highly imbalanced, ROC-AUC can present an overly optimistic view by factoring in true negatives. The Precision-Recall curve focuses strictly on the minority class, tracking false positives and false negatives without distortion.
+        \end{block}
+        
+        \vspace{0.1cm}
+        
+        \begin{exampleblock}{Business Trajectory Context}
+            \footnotesize
+            Allows executive stakeholders to dynamically tune model probability thresholds to balance marketing outreach costs (Precision) vs. capturing actual churning clients (Recall).
+        \end{exampleblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% ---------------- 21 SEARCH SPACE INSIGHTS ----------------
 \begin{frame}{Hyperparameter Search Insights}
 
-\begin{block}{Best Configuration Identified by Optuna}
+\begin{block}{Optimal Search Outcome}
 \small
-
-\begin{itemize}
-    \item Model: XGBoost
-    \item Scaler: RobustScaler
-    \item Trees: 1,193
-    \item Learning Rate: 0.0267
-    \item Subsample: 0.94
-    \item Column Sample Rate: 0.51
-    \item Gamma: 3.33
-    \item Scale Positive Weight: 1.67
-\end{itemize}
-
+Optuna's Bayesian optimization identified XGBoost as the most
+effective architecture after 5,000 trials, maximizing
+Average Precision (PR-AUC).
 \end{block}
 
 \vspace{0.2cm}
 
 \begin{itemize}
-    \item XGBoost consistently outperformed Random Forest across the search space.
-    \item Robust scaling produced the strongest results.
-    \item Moderate class weighting improved minority-class detection.
-    \item Bayesian optimization efficiently converged toward a stable high-performing region.
+    \item \textbf{Model Selection:} XGBoost consistently achieved the highest PR-AUC compared with Random Forest alternatives.
+
+    \item \textbf{Preprocessing:} Robust scaling provided the most stable performance under feature distribution variability.
+
+    \item \textbf{Class Imbalance:} A moderate positive-class weight
+    (\texttt{scale\_pos\_weight = 1.19}) improved minority-class detection.
+
+    \item \textbf{Optimization Behavior:} The search converged around:
+    \begin{itemize}
+        \item learning rate $\approx 0.028$
+        \item subsampling $\approx 0.97$
+        \item feature sampling $\approx 0.52$
+    \end{itemize}
+
 \end{itemize}
 
 \end{frame}
 
 % ---------------- 22 FEATURE IMPORTANCE ----------------
-\begin{frame}{Key Drivers of Churn}
+\begin{frame}{Key Drivers of Churn Prediction}
+
+\begin{columns}[T]
+
+\begin{column}{0.42\textwidth}
+
+\begin{block}{Global SHAP Interpretation}
+    \scriptsize
+SHAP values quantify the contribution of each feature
+to the model output across all customers.
+\end{block}
+
+\vspace{0.15cm}
+
 \begin{itemize}
-    \item Low usage frequency
-    \item Short customer tenure
-    \item Payment delays
-    \item Weak engagement score
+    \scriptsize
+    \setlength{\itemsep}{4pt}
+
+    \item \textbf{Product Relationship}
+    \\
+    Number of products is the strongest predictor of churn risk.
+
+    \item \textbf{Financial Profile}
+    \\
+    Credit score interactions with age provide strong predictive signals.
+
+    \item \textbf{Customer Engagement}
+    \\
+    Inactivity combined with balance identifies disengaged profiles.
+
+    \item \textbf{Lower Impact Variables}
+    \\
+    Salary, satisfaction score, and card type have limited influence.
+
 \end{itemize}
+
+\end{column}
+
+\begin{column}{0.58\textwidth}
+
+\centering
+\vspace{1.0cm}
+\includegraphics[width=\textwidth]{figures/final_model_shap.png}
+
+\end{column}
+
+\end{columns}
+
 \end{frame}
 
 % ---------------- 23 INTERPRETABILITY ----------------
-\begin{frame}{Model Explainability}
+\begin{frame}{Individual Prediction Explanation Using SHAP}
+
+\begin{columns}[T]
+
+\begin{column}{0.50\textwidth}
+
+\scriptsize
+\begin{block}{SHAP Waterfall Interpretation}
+SHAP values explain how individual features move the prediction
+from the average model output toward the final customer risk score.
+\end{block}
+
+\textbf{Example Customer Explanation}
+
+    \scriptsize
 \begin{itemize}
-    \item Feature importance analysis
-    \item SHAP values for individual predictions
-    \item Business interpretation of churn drivers
+    \setlength{\itemsep}{3pt}
+
+    \item Features increasing churn probability:
+    \begin{itemize}
+    \scriptsize
+        \item CreditScore $\times$ Age interaction
+        \item CreditScore per Age
+        \item Inactive balance interaction
+        \item Age and activity relationship
+    \end{itemize}
+
+    \item Features reducing churn probability:
+    \begin{itemize}
+    \scriptsize
+        \item Balance per product
+        \item Point earned
+        \item Gender contribution
+    \end{itemize}
+
 \end{itemize}
+
+
+\textbf{Business Value:}
+\newline
+    \scriptsize
+Provides transparent explanations that can support targeted customer retention strategies.
+
+\end{column}
+
+
+\begin{column}{0.50\textwidth}
+
+\centering
+\vspace{1.5cm}
+\includegraphics[width=\textwidth]{figures/explain_customer_0.png}
+
+\end{column}
+
+\end{columns}
+
 \end{frame}
