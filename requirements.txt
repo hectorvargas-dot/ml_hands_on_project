@@ -12,6 +12,10 @@ optuna
 optuna-integration[mlflow]
 mlflow==3.12.0
 shap
+fastapi
+pydantic
+uvicorn
+python-multipart
 notebook
 xgboost
 numpy

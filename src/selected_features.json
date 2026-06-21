@@ -1,0 +1,25 @@
+{
+    "selected_features": [
+        "Age2",
+        "Inactive_x_Age",
+        "LogAge",
+        "Products_x_Active",
+        "Num_Of_Products_1",
+        "Num_Of_Products_2",
+        "Num_Of_Products_3",
+        "Num_Of_Products_4",
+        "is_france",
+        "is_germany",
+        "middle_age",
+        "no_balance"
+    ],
+    "nomod_columns": [
+        "IsActiveMember"
+    ],
+    "dummyfy_columns": [
+        "Gender"
+    ],
+    "norm_std_columns": [
+        "Age"
+    ]
+}

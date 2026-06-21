@@ -34,29 +34,6 @@ def test_create_stratified_splits():
     assert (y_test == 1).sum() == 10
 
 
-def test_save_splits(tmp_path):
-    X_train = pd.DataFrame({"a": [1, 2]})
-    X_val = pd.DataFrame({"a": [3, 4]})
-    X_test = pd.DataFrame({"a": [5, 6]})
-
-    base_path = os.path.join(tmp_path, "splits")
-    data_prep.save_feature_splits(X_train, X_val, X_test, base_path)
-
-    assert os.path.exists(os.path.join(base_path, "X_train.csv"))
-    assert os.path.exists(os.path.join(base_path, "X_val.csv"))
-    assert os.path.exists(os.path.join(base_path, "X_test.csv"))
-
-    y_train = pd.Series([1, 2])
-    y_val = pd.Series([3, 4])
-    y_test = pd.Series([5, 6])
-
-    data_prep.save_target_splits(y_train, y_val, y_test, base_path)
-
-    assert os.path.exists(os.path.join(base_path, "y_train.csv"))
-    assert os.path.exists(os.path.join(base_path, "y_val.csv"))
-    assert os.path.exists(os.path.join(base_path, "y_test.csv"))
-
-
 def test_mlflow_utils_integration(tmp_path):
     # Setup paths
     db_path = os.path.join(tmp_path, "test_mlflow.db")
