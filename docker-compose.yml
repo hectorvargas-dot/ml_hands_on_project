@@ -1,0 +1,25 @@
+services:
+  api:
+    build: .
+    container_name: hop_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - MLFLOW_TRACKING_URI=sqlite:///mlflow.db
+    # Using --reload for development purposes
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+
+  mlflow:
+    build: .
+    container_name: hop_mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - MLFLOW_TRACKING_URI=sqlite:///mlflow.db
+    command: mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db
+    restart: unless-stopped

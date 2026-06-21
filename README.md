@@ -9,6 +9,8 @@ Hands on project to show data science capabiities.
 ## Project Organization
 
 ```
+├── Dockerfile         <- Dockerfile to containerize the application
+├── docker-compose.yml <- Docker Compose configuration to run the API and MLflow
 ├── LICENSE            <- Open-source license if one is chosen
 ├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
 ├── README.md          <- The top-level README for developers using this project.
@@ -83,7 +85,18 @@ Hands on project to show data science capabiities.
    make requirements
    ```
 
-## Running the API
+## Running with Docker
+
+You can easily start both the FastAPI server and the MLflow UI using Docker Compose. This setup will also mount your local directory to enable hot-reloading and save MLflow runs locally.
+
+```bash
+docker-compose up --build
+```
+
+- **API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **MLflow UI**: [http://localhost:5000](http://localhost:5000)
+
+## Running the API locally
 
 You can start the FastAPI server to serve the models using `uvicorn`:
 
