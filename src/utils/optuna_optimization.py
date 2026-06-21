@@ -5,6 +5,7 @@ import mlflow.sklearn
 import numpy as np
 import optuna
 import pandas as pd
+from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import average_precision_score
 from sklearn.model_selection import StratifiedKFold, cross_val_score
@@ -22,13 +23,61 @@ from src.utils import feature_engineering_utils as fe
 logger = logging.getLogger(__name__)
 
 
+class XGBNumericCaster(BaseEstimator, TransformerMixin):
+    """Safely converts object matrix outputs to float32 right before XGBoost ingestion.
+    
+    This transformer addresses issues where scikit-learn's ColumnTransformer or
+    external interpretability frameworks (like SHAP) alter underlying types to
+    generic pandas objects, causing type validation errors in XGBoost.
+    """
+
+    def fit(self, X, y=None):
+        """Fits the transformer.
+
+        Args:
+            X: Input feature space.
+            y: Target label space. Defaults to None.
+
+        Returns:
+            XGBNumericCaster: The fitted instance itself.
+        """
+        return self
+
+    def transform(self, X):
+        """Forces the input dataset into a float32 representation.
+
+        Args:
+            X (pd.DataFrame or np.ndarray): Input feature matrices.
+
+        Returns:
+            pd.DataFrame or np.ndarray: Datasets cast directly to float32.
+        """
+        if isinstance(X, pd.DataFrame):
+            return X.apply(pd.to_numeric, errors="coerce").astype("float32")
+        elif hasattr(X, "astype"):
+            return X.astype("float32")
+        return np.asarray(X, dtype=np.float32)
+
+
 def build_pipeline(
     trial,
     current_layout: dict,
     random_state: int = 42,
     override_ranges: dict = None,
 ) -> Pipeline:
-    """Build a complete machine learning pipeline with XGBoost."""
+    """Builds a complete machine learning pipeline with XGBoost.
+
+    Args:
+        trial: Optuna trial object used to sample hyperparameters.
+        current_layout (dict): Feature layout mapping structural columns.
+        random_state (int, optional): Random seed for reproducibility.
+            Defaults to 42.
+        override_ranges (dict, optional): Search space parameter overrides.
+            Defaults to None.
+
+    Returns:
+        Pipeline: Configured sklearn pipeline ready for training.
+    """
     if override_ranges is None:
         override_ranges = {}
 
@@ -47,8 +96,6 @@ def build_pipeline(
     needed_engineered = [
         col for col in all_layout_cols if col in available_transformations
     ]
-
-    logger.info("Selected engineered features: %s", needed_engineered)
 
     feature_engineering = fe.DynamicFeatureEngineer(
         selected_features=needed_engineered
@@ -80,7 +127,6 @@ def build_pipeline(
         remainder="drop",
     )
 
-    # Dynamic boundary helper for XGBoost parameters
     def get_xgb_bounds(param, default_min, default_max):
         if param in override_ranges:
             return override_ranges[param]["min"], override_ranges[param]["max"]
@@ -95,10 +141,9 @@ def build_pipeline(
     xgb_lam_min, xgb_lam_max = get_xgb_bounds("xgb_reg_lambda", 1e-9, 1e-4)
     xgb_spw_min, xgb_spw_max = get_xgb_bounds("xgb_scale_pos_weight", 1.1, 1.7)
 
-    # Ensure integer bounds stay valid integers
     xgb_n_min, xgb_n_max = max(1, int(xgb_n_min)), max(1, int(xgb_n_max))
 
-    model = XGBClassifier(
+    raw_xgb_model = XGBClassifier(
         n_estimators=trial.suggest_int("xgb_n_estimators", xgb_n_min, xgb_n_max),
         max_depth=5,
         learning_rate=trial.suggest_float(
@@ -128,6 +173,12 @@ def build_pipeline(
         eval_metric="aucpr",
     )
 
+    # Wrap the model with our numeric type caster to guarantee type safety
+    model = Pipeline([
+        ("cast_to_numeric", XGBNumericCaster()),
+        ("xgb", raw_xgb_model)
+    ])
+
     return Pipeline(
         [
             ("feature_engineering", feature_engineering),
@@ -143,6 +194,7 @@ class ObjectiveCV:
     def __init__(
         self, X, y, current_layout, n_splits, random_state, override_ranges=None
     ):
+        """Initializes the objective function."""
         self.X = X
         self.y = y
         self.current_layout = current_layout
@@ -151,6 +203,7 @@ class ObjectiveCV:
         self.override_ranges = override_ranges
 
     def __call__(self, trial):
+        """Executes one Optimization trial cycle."""
         logger.info("Starting Optuna trial %s", trial.number)
 
         pipeline = build_pipeline(
@@ -191,7 +244,7 @@ def evaluate_and_log_best_model(
     y_test: pd.Series,
     current_layout: dict,
 ):
-    """Train final pipeline, evaluate metrics, and log artifacts."""
+    """Trains final pipeline, evaluates metrics, and logs artifacts to MLflow."""
     logger.info("Training final optimized pipeline")
     best_pipeline.fit(X_train, y_train)
 
@@ -216,7 +269,7 @@ def suggest_numeric_ranges(
     boundary_threshold=0.15,
     expansion_factor=0.5,
 ):
-    """Suggest new Optuna search ranges for numeric parameters."""
+    """Suggests new Optuna search ranges for numeric parameters."""
     df = study.trials_dataframe()
     completed = df[df["state"] == "COMPLETE"].copy()
     threshold = completed["value"].quantile(top_quantile)

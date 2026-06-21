@@ -12,6 +12,8 @@ Hands on project to show data science capabiities.
 ├── LICENSE            <- Open-source license if one is chosen
 ├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
 ├── README.md          <- The top-level README for developers using this project.
+├── app                <- FastAPI application for model serving
+│   └── main.py        <- Main application entrypoint
 ├── data
 │   ├── external       <- Data from third party sources.
 │   ├── interim        <- Intermediate data that has been transformed.
@@ -19,6 +21,8 @@ Hands on project to show data science capabiities.
 │   └── raw            <- The original, immutable data dump.
 │
 ├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+│
+├── latex_beamer       <- LaTeX Beamer presentation files
 │
 ├── models             <- Trained and serialized models, model predictions, or model summaries
 │
@@ -39,6 +43,13 @@ Hands on project to show data science capabiities.
 │
 ├── setup.cfg          <- Configuration file for flake8
 │
+├── src                <- Additional source code for training and prediction
+│   ├── predict        <- Code to run model inference with trained models
+│   ├── train          <- Code to train models
+│   └── utils          <- Utility functions
+│
+├── tests              <- Test cases for the project
+│
 └── hop   <- Source code for use in this project.
     │
     ├── __init__.py             <- Makes hop a Python module
@@ -56,6 +67,60 @@ Hands on project to show data science capabiities.
     │
     └── plots.py                <- Code to create visualizations
 ```
+
+## Setup Environment
+
+1. Create a virtual environment:
+   ```bash
+   make create_environment
+   ```
+2. Activate the environment:
+   ```bash
+   source env/bin/activate
+   ```
+3. Install the dependencies:
+   ```bash
+   make requirements
+   ```
+
+## Running the API
+
+You can start the FastAPI server to serve the models using `uvicorn`:
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+## API Endpoints
+
+Once the API is running, you can access the automatic interactive API documentation at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs). 
+
+The following main endpoints are available:
+- `GET /experiments/best_runs`: Retrieves the best performing runs from MLflow.
+- `POST /train`: Upload a CSV file to trigger the training pipeline.
+- `POST /predict`: Upload a CSV file and specify MLflow experiment parameters to run predictions.
+
+## Experiment Tracking
+
+This project uses MLflow to track experiments and Optuna for hyperparameter tuning. To view the MLflow UI:
+
+```bash
+mlflow ui --backend-store-uri sqlite:///mlflow.db
+```
+Then navigate to `http://127.0.0.1:5000` in your browser.
+
+## Running Tests
+
+To run the pytest suite, execute:
+```bash
+make test
+```
+
+## Useful Commands
+
+- `make lint`: Run flake8, isort, and black checks.
+- `make format`: Auto-format code using isort and black.
+- `make clean`: Remove compiled python files and caches.
 
 --------
 

@@ -1,25 +1,25 @@
 {
     "selected_features": [
-        "Age2",
+        "Balance_per_Product",
         "Inactive_x_Age",
-        "LogAge",
-        "Products_x_Active",
+        "WealthScore",
         "Num_Of_Products_1",
         "Num_Of_Products_2",
-        "Num_Of_Products_3",
-        "Num_Of_Products_4",
         "is_france",
-        "is_germany",
-        "middle_age",
-        "no_balance"
+        "is_germany"
     ],
     "nomod_columns": [
-        "IsActiveMember"
+        "HasCrCard"
     ],
     "dummyfy_columns": [
+        "Card Type",
         "Gender"
     ],
     "norm_std_columns": [
-        "Age"
+        "Age",
+        "Balance",
+        "CreditScore",
+        "Point Earned",
+        "Satisfaction Score"
     ]
 }

@@ -3,12 +3,11 @@ import time
 
 import numpy as np
 import pandas as pd
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from sklearn.base import BaseEstimator, TransformerMixin, clone
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from mlxtend.feature_selection import SequentialFeatureSelector as SFS
-
 
 logger = logging.getLogger(__name__)
 
@@ -26,13 +25,13 @@ class DynamicFeatureEngineer(BaseEstimator, TransformerMixin):
     The transformer is stateless and can be serialized inside sklearn
     pipelines.
 
-    Args:
+    Attributes:
         selected_features (list, optional): Specific engineered features to
             generate. If None, all available features are generated.
-            Defaults to None.
     """
 
     def __init__(self, selected_features: list = None):
+        """Initializes the DynamicFeatureEngineer."""
         self.selected_features = selected_features
 
     def fit(self, X, y=None):
@@ -83,10 +82,9 @@ class DynamicFeatureEngineer(BaseEstimator, TransformerMixin):
             )
 
             for feature in features_to_run:
-                computation_method = (
-                    getattr(self, f"_compute_bin_{feature}", None)
-                    or getattr(self, f"_compute_cont_{feature}", None)
-                )
+                computation_method = getattr(
+                    self, f"_compute_bin_{feature}", None
+                ) or getattr(self, f"_compute_cont_{feature}", None)
 
                 if computation_method:
                     X[feature] = computation_method(X)
@@ -100,9 +98,7 @@ class DynamicFeatureEngineer(BaseEstimator, TransformerMixin):
             return X
 
         except Exception:
-            logger.exception(
-                "Feature engineering transformation failed."
-            )
+            logger.exception("Feature engineering transformation failed.")
             raise
 
     def _get_all_binary_features(self) -> list:
@@ -130,50 +126,50 @@ class DynamicFeatureEngineer(BaseEstimator, TransformerMixin):
         ]
 
     # BINARY FLAGS
-    def _compute_bin_is_silver(self, X):        return X["Card Type"] == "SILVER"
-    def _compute_bin_is_germany(self, X):       return X["Geography"] == "Germany"
-    def _compute_bin_is_spain(self, X):         return X["Geography"] == "Spain"
-    def _compute_bin_is_france(self, X):        return X["Geography"] == "France"
-    def _compute_bin_no_balance(self, X):       return X["Balance"] < 2500
-    def _compute_bin_middle_age(self, X):       return X["Age"].between(25, 45, inclusive="neither")
+    def _compute_bin_is_silver(self, X): return X["Card Type"] == "SILVER"
+    def _compute_bin_is_germany(self, X): return X["Geography"] == "Germany"
+    def _compute_bin_is_spain(self, X): return X["Geography"] == "Spain"
+    def _compute_bin_is_france(self, X): return X["Geography"] == "France"
+    def _compute_bin_no_balance(self, X): return X["Balance"] < 2500
+    def _compute_bin_middle_age(self, X): return X["Age"].between(25, 45, inclusive="neither")
 
     # PRODUCT COUNTS
-    def _compute_bin_Num_Of_Products_1(self, X):  return X["NumOfProducts"] == 1
-    def _compute_bin_Num_Of_Products_2(self, X):  return X["NumOfProducts"] == 2
-    def _compute_bin_Num_Of_Products_3(self, X):  return X["NumOfProducts"] == 3
-    def _compute_bin_Num_Of_Products_4(self, X):  return X["NumOfProducts"] == 4
+    def _compute_bin_Num_Of_Products_1(self, X): return X["NumOfProducts"] == 1
+    def _compute_bin_Num_Of_Products_2(self, X): return X["NumOfProducts"] == 2
+    def _compute_bin_Num_Of_Products_3(self, X): return X["NumOfProducts"] == 3
+    def _compute_bin_Num_Of_Products_4(self, X): return X["NumOfProducts"] == 4
 
     # POLYNOMIAL & INTERACTION TERMS
-    def _compute_cont_Age_x_IsActive(self, X):     return X["Age"] * X["IsActiveMember"]
-    def _compute_cont_Balance_x_Tenure(self, X):   return X["Balance"] * X["Tenure"]
-    def _compute_cont_CreditScore_x_Age(self, X):  return X["CreditScore"] * X["Age"]
+    def _compute_cont_Age_x_IsActive(self, X): return X["Age"] * X["IsActiveMember"]
+    def _compute_cont_Balance_x_Tenure(self, X): return X["Balance"] * X["Tenure"]
+    def _compute_cont_CreditScore_x_Age(self, X): return X["CreditScore"] * X["Age"]
 
     # FINANCIAL & ENGAGEMENT RATIOS
-    def _compute_cont_Balance_to_Salary(self, X):    return X["Balance"] / (X["EstimatedSalary"] + 1)
-    def _compute_cont_Balance_per_Product(self, X):  return X["Balance"] / (X["NumOfProducts"] + 1)
-    def _compute_cont_Salary_per_Product(self, X):   return X["EstimatedSalary"] / (X["NumOfProducts"] + 1)
-    def _compute_cont_CreditScore_per_Age(self, X):  return X["CreditScore"] / (X["Age"] + 1)
-    def _compute_cont_Tenure_per_Age(self, X):       return X["Tenure"] / (X["Age"] + 1)
+    def _compute_cont_Balance_to_Salary(self, X): return X["Balance"] / (X["EstimatedSalary"] + 1)
+    def _compute_cont_Balance_per_Product(self, X): return X["Balance"] / (X["NumOfProducts"] + 1)
+    def _compute_cont_Salary_per_Product(self, X): return X["EstimatedSalary"] / (X["NumOfProducts"] + 1)
+    def _compute_cont_CreditScore_per_Age(self, X): return X["CreditScore"] / (X["Age"] + 1)
+    def _compute_cont_Tenure_per_Age(self, X): return X["Tenure"] / (X["Age"] + 1)
 
     # BEHAVIORAL CROSS-PRODUCTS
-    def _compute_cont_Inactive_x_Balance(self, X):   return (1 - X["IsActiveMember"]) * X["Balance"]
-    def _compute_cont_Inactive_x_Age(self, X):       return (1 - X["IsActiveMember"]) * X["Age"]
-    def _compute_cont_Products_x_Active(self, X):    return X["NumOfProducts"] * X["IsActiveMember"]
+    def _compute_cont_Inactive_x_Balance(self, X): return (1 - X["IsActiveMember"]) * X["Balance"]
+    def _compute_cont_Inactive_x_Age(self, X): return (1 - X["IsActiveMember"]) * X["Age"]
+    def _compute_cont_Products_x_Active(self, X): return X["NumOfProducts"] * X["IsActiveMember"]
 
     # MONETARY ACCUMULATIONS & NON-LINEAR SCALING
-    def _compute_cont_Balance_plus_Salary(self, X):  return X["Balance"] + X["EstimatedSalary"]
-    def _compute_cont_WealthScore(self, X):          return 0.6 * X["Balance"] + 0.4 * X["EstimatedSalary"]
-    def _compute_cont_LogBalance(self, X):           return np.log1p(X["Balance"])
-    def _compute_cont_LogAge(self, X):               return np.log1p(X["Age"])
+    def _compute_cont_Balance_plus_Salary(self, X): return X["Balance"] + X["EstimatedSalary"]
+    def _compute_cont_WealthScore(self, X): return 0.6 * X["Balance"] + 0.4 * X["EstimatedSalary"]
+    def _compute_cont_LogBalance(self, X): return np.log1p(X["Balance"])
+    def _compute_cont_LogAge(self, X): return np.log1p(X["Age"])
 
     # POLYNOMIAL DEGREES
-    def _compute_cont_Age2(self, X):                 return X["Age"] ** 2
-    def _compute_cont_Balance2(self, X):             return X["Balance"] ** 2
-    def _compute_cont_Tenure2(self, X):              return X["Tenure"] ** 2
+    def _compute_cont_Age2(self, X): return X["Age"] ** 2
+    def _compute_cont_Balance2(self, X): return X["Balance"] ** 2
+    def _compute_cont_Tenure2(self, X): return X["Tenure"] ** 2
 
     # TEMPORAL PRODUCT DENSITIES
-    def _compute_cont_Products_per_Tenure(self, X):  return X["NumOfProducts"] / (X["Tenure"] + 1)
-    def _compute_cont_Balance_per_Tenure(self, X):   return X["Balance"] / (X["Tenure"] + 1)
+    def _compute_cont_Products_per_Tenure(self, X): return X["NumOfProducts"] / (X["Tenure"] + 1)
+    def _compute_cont_Balance_per_Tenure(self, X): return X["Balance"] / (X["Tenure"] + 1)
 
 
 def run_sequential_selection(
@@ -187,31 +183,28 @@ def run_sequential_selection(
     """Runs preprocessing and sequential feature selection.
 
     The function dynamically engineers features, applies preprocessing,
-    transforms the dataset, and searches for the optimal feature subset using
-    mlxtend SequentialFeatureSelector.
+    transforms the dataset, ensures type compatibility for downstream models,
+    and searches for the optimal feature subset using mlxtend
+    SequentialFeatureSelector.
 
     Args:
         X (pd.DataFrame): Input feature dataframe.
         y (pd.Series): Target variable.
-        routing_config (dict): Feature routing configuration containing:
-            - passthrough
-            - standard_scale
-            - one_hot_encode
+        routing_config (dict): Feature routing configuration containing keys:
+            'passthrough', 'standard_scale', and 'one_hot_encode'.
         base_model: Estimator used for feature selection.
-        forward (bool): Selection direction.
-            True performs forward selection.
-            False performs backward selection.
-        k_features (int): Number of features to select.
+        forward (bool): Selection direction. True performs forward selection;
+            False performs backward elimination. Defaults to True.
+        k_features (int): Number of features to select. Defaults to 5.
 
     Returns:
-        tuple:
-            sfs (SequentialFeatureSelector): Fitted selector.
-            X_transformed_df (pd.DataFrame): Preprocessed feature matrix.
+        tuple: A two-element tuple containing:
+            - sfs (SequentialFeatureSelector): Fitted selector.
+            - X_transformed_df (pd.DataFrame): Preprocessed numeric float32 matrix.
 
     Raises:
         Exception: If preprocessing or feature selection fails.
     """
-
     start_time = time.time()
 
     try:
@@ -237,19 +230,12 @@ def run_sequential_selection(
         )
 
         needed_engineered = [
-            col
-            for col in all_layout_cols
-            if col in available_transformations
+            col for col in all_layout_cols if col in available_transformations
         ]
 
-        logger.debug(
-            "Selected engineered features: %s",
-            needed_engineered,
-        )
+        logger.debug("Selected engineered features: %s", needed_engineered)
 
-        fe_step = DynamicFeatureEngineer(
-            selected_features=needed_engineered
-        )
+        fe_step = DynamicFeatureEngineer(selected_features=needed_engineered)
 
         prep_step = ColumnTransformer(
             transformers=[
@@ -276,30 +262,22 @@ def run_sequential_selection(
             remainder="drop",
         )
 
-        transform_pipe = Pipeline(
-            [
-                ("fe", fe_step),
-                ("prep", prep_step),
-            ]
-        )
+        transform_pipe = Pipeline([("fe", fe_step), ("prep", prep_step)])
 
         logger.info("Applying preprocessing pipeline.")
-
         X_transformed = transform_pipe.fit_transform(X, y)
 
         feature_names = (
-            transform_pipe
-            .named_steps["prep"]
-            .get_feature_names_out()
+            transform_pipe.named_steps["prep"].get_feature_names_out()
         )
 
+        # FIX: Explicitly cast to float32 to eliminate 'object' dtype conversions
         X_transformed_df = pd.DataFrame(
-            X_transformed,
-            columns=feature_names,
-        )
+            X_transformed, columns=feature_names
+        ).astype("float32")
 
         logger.info(
-            "Transformation completed. Shape=%s",
+            "Transformation completed. Shape=%s, Dtypes verified as Float32.",
             X_transformed_df.shape,
         )
 
@@ -314,10 +292,8 @@ def run_sequential_selection(
         )
 
         logger.info(
-            "Running Sequential Feature Selection. k_features=%s",
-            k_features,
+            "Running Sequential Feature Selection. k_features=%s", k_features
         )
-
         sfs.fit(X_transformed_df, y)
 
         logger.info(
@@ -326,20 +302,13 @@ def run_sequential_selection(
             sfs.k_score_,
         )
 
-        logger.debug(
-            "Selected features: %s",
-            sfs.k_feature_names_,
-        )
-
+        logger.debug("Selected features: %s", sfs.k_feature_names_)
         logger.info(
-            "Total feature selection runtime %.2fs",
-            time.time() - start_time,
+            "Total feature selection runtime %.2fs", time.time() - start_time
         )
 
         return sfs, X_transformed_df
 
     except Exception:
-        logger.exception(
-            "Sequential feature selection failed."
-        )
+        logger.exception("Sequential feature selection failed.")
         raise
