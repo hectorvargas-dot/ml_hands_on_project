@@ -131,7 +131,13 @@ def log_shap_artifacts(
     X_test: pd.DataFrame,
     sample_size: int = 500,
 ) -> None:
-    """Generate SHAP visualizations and log them as MLflow artifacts."""
+    """Generate SHAP visualizations and log them as MLflow artifacts.
+
+    Args:
+        pipeline: Trained scikit-learn pipeline.
+        X_test: Raw test dataframe.
+        sample_size: Number of rows used for generating SHAP profiles.
+    """
     logger.info("Generating SHAP explanations.")
 
     X_sample = X_test.sample(
@@ -154,11 +160,12 @@ def log_shap_artifacts(
         pipeline.named_steps["preprocessing"].get_feature_names_out()
     )
 
+    # Convert directly to float32 to prevent passing object types to the raw estimator
     X_processed_df = pd.DataFrame(
         X_processed,
         columns=feature_names,
         index=X_sample.index,
-    )
+    ).astype("float32")
 
     model_step = pipeline.named_steps["model"]
 
@@ -167,21 +174,34 @@ def log_shap_artifacts(
     else:
         raw_xgb_estimator = model_step
 
-    X_background = pipeline.named_steps["feature_engineering"].transform(X_test)
-    X_background = pipeline.named_steps["preprocessing"].transform(X_background)
+    # Initialize TreeExplainer using tree path dependent feature perturbation
+    explainer = shap.TreeExplainer(
+        raw_xgb_estimator, 
+        feature_perturbation="tree_path_dependent"
+    )
 
-    if isinstance(model_step, Pipeline) and "cast_to_numeric" in model_step.named_steps:
-        X_background = model_step.named_steps["cast_to_numeric"].transform(X_background)
+    shap_values_raw = explainer.shap_values(X_processed_df)
+    
+    expected_value = explainer.expected_value
+    if isinstance(expected_value, (list, np.ndarray)) and len(expected_value) > 1:
+        expected_value = expected_value[1]
+        if isinstance(shap_values_raw, list):
+            shap_values_raw = shap_values_raw[1]
 
-    explainer = shap.TreeExplainer(raw_xgb_estimator, data=X_background)
-    shap_values = explainer(X_processed_df)
+    shap_explanation = shap.Explanation(
+        values=shap_values_raw,
+        base_values=expected_value,
+        data=X_processed_df.values,
+        feature_names=feature_names
+    )
 
     artifact_dir = "shap_artifacts"
     os.makedirs(artifact_dir, exist_ok=True)
 
     # 1. Beeswarm plot
+    plt.figure()
     shap.plots.beeswarm(
-        shap_values,
+        shap_explanation,
         max_display=20,
         show=False,
     )
@@ -189,12 +209,12 @@ def log_shap_artifacts(
     plt.tight_layout()
     plt.savefig(beeswarm_path, bbox_inches="tight")
     plt.close()
-
     mlflow.log_artifact(beeswarm_path, artifact_path="shap")
 
     # 2. Importance plot
+    plt.figure()
     shap.plots.bar(
-        shap_values,
+        shap_explanation,
         max_display=20,
         show=False,
     )
@@ -202,12 +222,12 @@ def log_shap_artifacts(
     plt.tight_layout()
     plt.savefig(importance_path, bbox_inches="tight")
     plt.close()
-
     mlflow.log_artifact(importance_path, artifact_path="shap")
 
     # 3. Waterfall plot
+    plt.figure()
     shap.plots.waterfall(
-        shap_values[0],
+        shap_explanation[0],
         max_display=15,
         show=False,
     )
@@ -215,10 +235,8 @@ def log_shap_artifacts(
     plt.tight_layout()
     plt.savefig(waterfall_path, bbox_inches="tight")
     plt.close()
-
     mlflow.log_artifact(waterfall_path, artifact_path="shap")
 
-    # FIX: Recursively remove directory containing artifacts
     if os.path.exists(artifact_dir):
         shutil.rmtree(artifact_dir)
 

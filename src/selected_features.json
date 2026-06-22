@@ -1,10 +1,11 @@
 {
     "selected_features": [
-        "Inactive_x_Age",
-        "WealthScore",
+        "Age_x_IsActive",
+        "Balance_plus_Salary",
+        "Balance_x_Tenure",
+        "Products_per_Tenure",
         "Num_Of_Products_1",
         "Num_Of_Products_2",
-        "is_france",
         "is_germany"
     ],
     "nomod_columns": [
@@ -18,7 +19,6 @@
         "Age",
         "Balance",
         "CreditScore",
-        "Point Earned",
         "Satisfaction Score"
     ]
 }
