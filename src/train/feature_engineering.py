@@ -155,7 +155,7 @@ def run_feature_engineering() -> None:
                     direction_label,
                 )
 
-                for target_features in range(14, 18):
+                for target_features in range(14, 16):
 
                     logger.info(
                         "Evaluating subset size=%s",

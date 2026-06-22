@@ -1,14 +1,14 @@
-from aiohttp._websocket import models
 import logging
 import os
+import shutil
 from pathlib import Path
 from typing import Dict, Tuple
 
 import matplotlib.pyplot as plt
 import mlflow
-import shap
 import numpy as np
 import pandas as pd
+import shap
 from sklearn.metrics import average_precision_score, precision_recall_curve
 from sklearn.pipeline import Pipeline
 
@@ -20,18 +20,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
 def find_project_root() -> Path:
-    """Finds the project root directory by looking for pyproject.toml.
-
-    Starting from the current working directory, this function traverses upward
-    through parent directories until it locates a 'pyproject.toml' file.
-
-    Returns:
-        Path: The absolute path to the project root directory.
-
-    Raises:
-        FileNotFoundError: If 'pyproject.toml' cannot be found in any parent.
-    """
+    """Finds the project root directory by looking for pyproject.toml."""
     current = Path.cwd()
     for parent in [current] + list(current.parents):
         if (parent / "pyproject.toml").exists():
@@ -41,13 +32,7 @@ def find_project_root() -> Path:
 
 
 def setup_paths() -> Dict[str, Path]:
-    """Generates and maps absolute paths required for the optimization workflow.
-
-    Returns:
-        Dict[str, Path]: A dictionary containing resolved project directory paths
-            mapped to keys: 'project_root', 'db_path', 'artifacts_dir',
-            'raw_features', 'target', and 'feature_registry'.
-    """
+    """Generates and maps absolute paths required for the optimization workflow."""
     logger.info("Initializing system directory mappings.")
     project_root = find_project_root()
     return {
@@ -60,53 +45,49 @@ def setup_paths() -> Dict[str, Path]:
     }
 
 
-def get_or_create_experiment(experiment_name: str) -> str:
-    client = mlflow.tracking.MlflowClient()
+def get_or_create_experiment(experiment_name: str, artifact_location: Path) -> str:
+    """Retrieves an existing MLflow experiment ID or creates a new one with a custom artifact store.
 
+    Args:
+        experiment_name (str): Name of the experiment.
+        artifact_location (Path): Target local directory path for saving file artifacts.
+
+    Returns:
+        str: The registered experiment ID string.
+    """
+    client = mlflow.tracking.MlflowClient()
     experiment = client.get_experiment_by_name(experiment_name)
 
     if experiment is not None:
         return experiment.experiment_id
 
-    return client.create_experiment(experiment_name)
+    # Convert the Path object to a file URI so MLflow registers it correctly
+    artifact_uri = artifact_location.as_uri()
+
+    return client.create_experiment(
+        name=experiment_name,
+        artifact_location=artifact_uri
+    )
 
 
 def initialize_mlflow(paths: Dict[str, Path], experiment_name: str) -> str:
-    """Initializes the MLflow tracking environment and backend storage tables.
-
-    Args:
-        paths (Dict[str, Path]): Dictionary containing project filesystem paths.
-
-    Returns:
-        str: The registered MLflow experiment ID string.
-    """
+    """Initializes the MLflow tracking environment and backend storage tables."""
     tracking_uri = f"sqlite:///{paths['db_path']}"
     
     logger.info(f"Setting MLflow tracking URI backend to: {tracking_uri}")
     mlflow.set_tracking_uri(tracking_uri)
 
-    experiment_id = get_or_create_experiment(experiment_name)
-
+    experiment_id = get_or_create_experiment(experiment_name, paths["artifacts_dir"])
     mlflow.set_experiment(experiment_name)
 
     logger.info(
-        f"MLflow active experiment set to '{experiment_name}' "
-        f"(ID: {experiment_id})"
+        f"MLflow active experiment set to '{experiment_name}' (ID: {experiment_id})"
     )
-
     return experiment_id
 
 
 def load_dataset(paths: Dict[str, Path]) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
-    """Loads split training and test matrices from data directories.
-
-    Args:
-        paths (Dict[str, Path]): Dictionary containing project filesystem paths.
-
-    Returns:
-        Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]: A 4-element tuple
-            containing X_train, X_test, y_train, and y_test.
-    """
+    """Loads split training and test matrices from data directories."""
     logger.info("Loading processing datasets from disk storage layers.")
     X_train = pd.read_csv(paths["raw_features"] / "X_train.csv")
     X_test = pd.read_csv(paths["raw_features"] / "X_test.csv")
@@ -117,16 +98,7 @@ def load_dataset(paths: Dict[str, Path]) -> Tuple[pd.DataFrame, pd.DataFrame, pd
 
 
 def log_and_artifact_pr_curve(pipeline: Pipeline, X_test: pd.DataFrame, y_test: pd.Series) -> float:
-    """Generates, saves, and logs a Precision-Recall Curve artifact to MLflow.
-
-    Args:
-        pipeline (Pipeline): The final optimized model pipeline.
-        X_test (pd.DataFrame): Test feature matrix.
-        y_test (pd.Series): True test labels.
-
-    Returns:
-        float: Calculated Test Precision-Recall Area Under the Curve (PR-AUC).
-    """
+    """Generates, saves, and logs a Precision-Recall Curve artifact to MLflow."""
     logger.info("Computing Precision-Recall curves across independent test sets.")
     probabilities = pipeline.predict_proba(X_test)[:, 1]
     precision, recall, _ = precision_recall_curve(y_test, probabilities)
@@ -141,7 +113,6 @@ def log_and_artifact_pr_curve(pipeline: Pipeline, X_test: pd.DataFrame, y_test: 
     plt.legend()
     plt.tight_layout()
 
-    # Save to a temporary file path and log directly as an MLflow artifact
     plot_path = "precision_recall_curve.png"
     plt.savefig(plot_path)
     plt.close()
@@ -154,19 +125,13 @@ def log_and_artifact_pr_curve(pipeline: Pipeline, X_test: pd.DataFrame, y_test: 
 
     return test_pr_auc
 
+
 def log_shap_artifacts(
     pipeline: Pipeline,
     X_test: pd.DataFrame,
     sample_size: int = 500,
 ) -> None:
-    """
-    Generate SHAP visualizations and log them as MLflow artifacts.
-
-    Args:
-        pipeline: Trained pipeline.
-        X_test: Raw test dataframe.
-        sample_size: Number of rows used for SHAP.
-    """
+    """Generate SHAP visualizations and log them as MLflow artifacts."""
     logger.info("Generating SHAP explanations.")
 
     X_sample = X_test.sample(
@@ -174,32 +139,19 @@ def log_shap_artifacts(
         random_state=42,
     )
 
-    # Transform through feature engineering
     X_engineered = (
-        pipeline.named_steps["feature_engineering"]
-        .transform(X_sample)
+        pipeline.named_steps["feature_engineering"].transform(X_sample)
     )
 
-    # Transform through preprocessing
     X_processed = (
-        pipeline.named_steps["preprocessing"]
-        .transform(X_engineered)
-    )
-
-    model = pipeline.named_steps["model"]
-
-    # Recover feature names
-    feature_names = (
-        pipeline.named_steps["preprocessing"]
-        .get_feature_names_out()
+        pipeline.named_steps["preprocessing"].transform(X_engineered)
     )
 
     if hasattr(X_processed, "toarray"):
         X_processed = X_processed.toarray()
 
     feature_names = (
-        pipeline.named_steps["preprocessing"]
-        .get_feature_names_out()
+        pipeline.named_steps["preprocessing"].get_feature_names_out()
     )
 
     X_processed_df = pd.DataFrame(
@@ -208,102 +160,66 @@ def log_shap_artifacts(
         index=X_sample.index,
     )
 
-    # 1. Extract your compound model pipeline step
     model_step = pipeline.named_steps["model"]
 
-    # 2. Extract the actual XGBClassifier instance nested inside it
     if isinstance(model_step, Pipeline) and "xgb" in model_step.named_steps:
         raw_xgb_estimator = model_step.named_steps["xgb"]
     else:
         raw_xgb_estimator = model_step
 
-    # 3. Transform your background data through the preprocessing stages up to the model step
-    # (Make sure to pass the features through the caster so SHAP uses the right dtypes!)
     X_background = pipeline.named_steps["feature_engineering"].transform(X_test)
     X_background = pipeline.named_steps["preprocessing"].transform(X_background)
 
     if isinstance(model_step, Pipeline) and "cast_to_numeric" in model_step.named_steps:
         X_background = model_step.named_steps["cast_to_numeric"].transform(X_background)
 
-    # 4. Initialize TreeExplainer cleanly with the raw estimator
     explainer = shap.TreeExplainer(raw_xgb_estimator, data=X_background)
-
     shap_values = explainer(X_processed_df)
 
     artifact_dir = "shap_artifacts"
     os.makedirs(artifact_dir, exist_ok=True)
 
-    #
     # 1. Beeswarm plot
-    #
     shap.plots.beeswarm(
         shap_values,
         max_display=20,
         show=False,
     )
-
     beeswarm_path = f"{artifact_dir}/shap_beeswarm.png"
-
     plt.tight_layout()
     plt.savefig(beeswarm_path, bbox_inches="tight")
     plt.close()
 
-    mlflow.log_artifact(
-        beeswarm_path,
-        artifact_path="shap",
-    )
+    mlflow.log_artifact(beeswarm_path, artifact_path="shap")
 
-    #
     # 2. Importance plot
-    #
     shap.plots.bar(
         shap_values,
         max_display=20,
         show=False,
     )
-
-    importance_path = (
-        f"{artifact_dir}/shap_importance.png"
-    )
-
+    importance_path = f"{artifact_dir}/shap_importance.png"
     plt.tight_layout()
-    plt.savefig(
-        importance_path,
-        bbox_inches="tight",
-    )
+    plt.savefig(importance_path, bbox_inches="tight")
     plt.close()
 
-    mlflow.log_artifact(
-        importance_path,
-        artifact_path="shap",
-    )
+    mlflow.log_artifact(importance_path, artifact_path="shap")
 
-    #
     # 3. Waterfall plot
-    #
     shap.plots.waterfall(
         shap_values[0],
         max_display=15,
         show=False,
     )
-
-    waterfall_path = (
-        f"{artifact_dir}/shap_waterfall.png"
-    )
-
+    waterfall_path = f"{artifact_dir}/shap_waterfall.png"
     plt.tight_layout()
-    plt.savefig(
-        waterfall_path,
-        bbox_inches="tight",
-    )
+    plt.savefig(waterfall_path, bbox_inches="tight")
     plt.close()
 
-    mlflow.log_artifact(
-        waterfall_path,
-        artifact_path="shap",
-    )
+    mlflow.log_artifact(waterfall_path, artifact_path="shap")
 
+    # FIX: Recursively remove directory containing artifacts
     if os.path.exists(artifact_dir):
-        os.remove(artifact_dir)
+        shutil.rmtree(artifact_dir)
 
     logger.info("SHAP artifacts logged successfully.")

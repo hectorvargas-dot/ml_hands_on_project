@@ -106,10 +106,10 @@ def optimize_model_multi_stage(
             and the final modified search boundary parameter constraints dictionary.
     """
     stages = [
-        (2000, "Base Phase"),
-        (1000, "Phase 2 Adaptive Step"),
-        (500, "Phase 3 Adaptive Step"),
-        (250, "Phase 4 Adaptive Step"),
+        (200, "Base Phase"),
+        (100, "Phase 2 Adaptive Step"),
+        (50, "Phase 3 Adaptive Step"),
+        (25, "Phase 4 Adaptive Step"),
     ]
 
     current_override_ranges = {}
