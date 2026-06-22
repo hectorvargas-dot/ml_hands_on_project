@@ -1,47 +1,142 @@
-% ---------------- 13 SYSTEM ARCHITECTURE ----------------
+% ---------------------------------------------------------
+% PACKAGE CONFIGURATIONS
+% ---------------------------------------------------------
+\lstset{
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true,
+    keywordstyle=\color{blue},
+    stringstyle=\color{darkgray},
+    commentstyle=\color{gray},
+    frame=single,
+    showstringspaces=false
+}
+
+% ---------------------------------------------------------
+% SYSTEM ARCHITECTURE
+% ---------------------------------------------------------
 \begin{frame}{System Architecture}
-\begin{itemize}
-    \item Data ingestion pipeline
-    \item Feature engineering pipeline
-    \item ML model training (MLflow tracking)
-    \item Model registry
-    \item API inference service
-\end{itemize}
+    \begin{block}{Platform Components}
+        An end-to-end MLOps ecosystem designed for dynamic feature extraction, hyperparameter shifting, and localized storage.
+    \end{block}
+    \begin{itemize}\scriptsize
+        \item \textbf{Data Ingestion Pipeline:} Handles modular ingestion via structured CSV files securely bounded by project root configurations.
+        \item \textbf{Feature Engineering Pipeline:} \texttt{DynamicFeatureEngineer} transforms raw inputs into interaction terms and indicators.
+        \item \textbf{Adaptive ML Optimization:} Runs sequential multi-stage Optuna tuning loops with real-time MLflow Tracking metrics.
+        \item \textbf{Model Registry:} Tracks parameters and logs serialized cloudpickle models to a dedicated SQLite storage layer.
+        \item \textbf{API Inference Service:} Implements microservices using FastAPI to deliver endpoints for execution and runtime statistics.
+    \end{itemize}
 \end{frame}
 
-% ---------------- 14 PREDICTION FLOW ----------------
+% ---------------------------------------------------------
+% CHURN PREDICTION WORKFLOW
+% ---------------------------------------------------------
 \begin{frame}{Churn Prediction Workflow}
-\begin{itemize}
-    \item Customer data input
-    \item Feature transformation
-    \item Model inference
-    \item Churn probability output
-    \item Business action (retention campaign)
-\end{itemize}
+    \begin{alertblock}{Data Lifecycle Execution}
+        From raw transaction parameters to calculated strategic customer retention campaigns.
+    \end{alertblock}
+    \begin{enumerate}\scriptsize
+        \item \textbf{Customer Input Data:} Raw structured vectors pass through validation checks upon reaching API micro-routers.
+        \item \textbf{Feature Transformation:} Preprocessors construct feature names out, scaling variables using target encodings.
+        \item \textbf{Pipeline Type Defense:} An implicit \texttt{XGBNumericCaster} layer forces features into \texttt{float32} shapes to shield the base boosting trees.
+        \item \textbf{Model Inference:} High-velocity tree tracking models run predictive passes to assign probability weights.
+        \item \textbf{X-Ray Explanations:} Triggers localized tree-path dependent SHAP routines to serialize feature importances back to MLflow.
+    \end{enumerate}
 \end{frame}
 
-% ---------------- 15 DEPLOYMENT ----------------
-\begin{frame}{Deployment}
-\begin{itemize}
-    \item REST API (FastAPI)
-    \item Docker containerization
-    \item Model served from MLflow registry
-\end{itemize}
+% ---------------------------------------------------------
+% MULTI-STAGE TRAINING ENGINE
+% ---------------------------------------------------------
+\begin{frame}{Adaptive Multi-Stage Optimization Loop}
+    \begin{itemize}
+        \item Implements sequential search boundary adjustment loops over 4 key phases to scale parameter ranges dynamically:
+    \end{itemize}
+    \begin{table}\scriptsize
+        \centering
+        \begin{tabular}{lcl}
+            \toprule
+            \textbf{Optimization Phase} & \textbf{Trials Run} & \textbf{Search Boundary Strategy} \\
+            \midrule
+            Base Phase & 200 & Explores baseline hyperparam defaults \\
+            Phase 2 Step & 100 & Quantile profiling and range movement \\
+            Phase 3 Step & 50 & Concentrates boundaries on optimum zones \\
+            Phase 4 Step & 25 & Fine-tunes localized high-perf vectors \\
+            \bottomrule
+        \end{tabular}
+        \caption{Sequential Parameter Convergence Lifecycle}
+    \end{table}
+    \begin{block}{Model Promotion \& Champion Guardrails}
+        The tracking server queries all parent runs inside the SQLite environment. The platform automatically promotes new models only if the calculated test PR-AUC surpasses the highest historical metric.
+    \end{block}
 \end{frame}
 
-% ---------------- 16 MONITORING ----------------
+% ---------------------------------------------------------
+% CORE INTERFACE ROUTING (FASTAPI)
+% ---------------------------------------------------------
+\begin{frame}[fragile]{Microservice Interface Endpoints}
+    The delivery layer exposes clean REST schemas managed by Uvicorn.
+    \begin{lstlisting}[language=Python]
+# Ingestion and Retraining 
+@app.post("/train")
+async def train(file: UploadFile, experiment_name: str):
+    # Runs ingestion, engineering, and multi-stage loops
+
+# Real-Time Operational Predictor
+@app.post("/predict")
+async def predict(file: UploadFile, run_id: str):
+    # Transforms arrays and produces XGBoost probabilities
+
+# Analytics and Audit
+@app.get("/experiments/best_runs")
+def get_best_runs():
+    # Returns history tracking logs via BestRunResponse Pydantic schema
+    \end{lstlisting}
+\end{frame}
+
+% ---------------------------------------------------------
+% CONTAINERIZED DEPLOYMENT
+% ---------------------------------------------------------
+\begin{frame}{Containerized Deployment Architecture}
+    \begin{block}{Reproducible Ecosystem Environment}
+        The application is packaged inside a lightweight \texttt{python:3.12-slim} container, ensuring quick start-up times and isolation.
+    \end{block}
+    \begin{itemize}
+        \item \textbf{FastAPI Application Container (\texttt{hop\_api}):} Exposes internal operational processing functions via port \texttt{8000}.
+        \item \textbf{MLflow Dashboard Service (\texttt{hop\_mlflow}):} Mounts unified workspace directory binds to expose the visualization engine UI on port \texttt{5000}.
+        \item \textbf{Persistent Storage Layer:} Mounts localized shared system volumes to maintain tracking information inside \texttt{mlflow.db} and model plots under \texttt{mlartifacts/}.
+    \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------
+% PRODUCTION MONITORING
+% ---------------------------------------------------------
 \begin{frame}{Production Monitoring}
-\begin{itemize}
-    \item API latency and error tracking
-    \item Data drift detection
-    \item Prediction distribution monitoring
-    \item Model performance degradation alerts
-\end{itemize}
+    \begin{block}{System Health \& Observability Metrics}
+        Proactive telemetry strategy deployed across the serving instance to protect model health over time.
+    \end{block}
+    \begin{itemize}
+        \item \textbf{API Performance Tracking:} Real-time latency profiling, hardware footprint utilization, and HTTP error code tracking.
+        \item \textbf{Data Drift Detection:} Baseline distribution auditing to capture shifting inputs before performance degradation occurs.
+        \item \textbf{Prediction Profiling:} Continuous logging of predicted churn probabilities to catch out-of-bounds score skews.
+        \item \textbf{Automated Alerting Engine:} Model performance degradation thresholds configured to dispatch infrastructure operational notices.
+    \end{itemize}
 \end{frame}
 
-% ---------------- 17 MLOPS PIPELINE ----------------
+% ---------------------------------------------------------
+% END-TO-END MLOPS PIPELINE
+% ---------------------------------------------------------
 \begin{frame}{End-to-End MLOps Pipeline}
-\begin{center}
-Data $\rightarrow$ Features $\rightarrow$ Training $\rightarrow$ MLflow $\rightarrow$ Deployment $\rightarrow$ Monitoring $\rightarrow$ Retraining
-\end{center}
+    \begin{exampleblock}{Continuous Integration \& Training Loop}
+        Unified architectural lifecycle mapping feedback dependencies from collection to iteration.
+    \end{exampleblock}
+    \vspace{0.3cm}
+    \begin{center}
+        \small
+        \colorbox{gray!15}{\textbf{\strut Data}} $\rightarrow$ 
+        \colorbox{gray!15}{\textbf{\strut Features}} $\rightarrow$ 
+        \colorbox{gray!15}{\textbf{\strut Training}} $\rightarrow$ 
+        \colorbox{gray!15}{\textbf{\strut MLflow}} $\rightarrow$ 
+        \colorbox{gray!15}{\textbf{\strut Deployment}} $\rightarrow$ 
+        \colorbox{gray!15}{\textbf{\strut Monitoring}} $\rightarrow$ 
+        \colorbox{gray!15}{\textbf{\strut Retraining}}
+    \end{center}
 \end{frame}

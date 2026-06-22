@@ -1,0 +1,18 @@
+\frametitle{Microservice Interface Endpoints}
+The delivery layer exposes clean REST schemas managed by Uvicorn.
+    \begin{lstlisting}[language=Python]
+# Ingestion and Retraining
+@app.post("/train")
+async def train(file: UploadFile, experiment_name: str):
+    # Runs ingestion, engineering, and multi-stage loops
+
+# Real-Time Operational Predictor
+@app.post("/predict")
+async def predict(file: UploadFile, run_id: str):
+    # Transforms arrays and produces XGBoost probabilities
+
+# Analytics and Audit
+@app.get("/experiments/best_runs")
+def get_best_runs():
+    # Returns history tracking logs via BestRunResponse Pydantic schema
+    \end{lstlisting}

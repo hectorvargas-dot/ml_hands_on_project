@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  18 JUN 2026 16:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  22 JUN 2026 14:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -718,31 +718,59 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count362
 \@thisrulewidth=\dimen316
 )
+(/usr/local/texlive/2026/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count363
+\lst@gtempboxa=\box78
+\lst@token=\toks46
+\lst@length=\count364
+\lst@currlwidth=\dimen317
+\lst@column=\count365
+\lst@pos=\count366
+\lst@lostspace=\dimen318
+\lst@width=\dimen319
+\lst@newlines=\count367
+\lst@lineno=\count368
+\lst@maxwidth=\dimen320
+
+(/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstpatch.sty
+File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
+\c@lstnumber=\count369
+\lst@skipnumbers=\count370
+\lst@framebox=\box79
+)
+(/usr/local/texlive/2026/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2025/11/14 1.11b listings configuration
+))
+Package: listings 2025/11/14 1.11b (Carsten Heinz)
+
 (/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count363
+\l__color_backend_stack_int=\count371
 )
 (slides/beamer.aux)
 \openout1 = `beamer.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -780,17 +808,17 @@ LaTeX Font Info:    ... okay on input line 15.
 
 (/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count364
-\scratchdimen=\dimen317
-\scratchbox=\box78
-\nofMPsegments=\count365
-\nofMParguments=\count366
-\everyMPshowfont=\toks46
-\MPscratchCnt=\count367
-\MPscratchDim=\dimen318
-\MPnumerator=\count368
-\makeMPintoPDFobject=\count369
-\everyMPtoPDFconversion=\toks47
+\scratchcounter=\count372
+\scratchdimen=\dimen321
+\scratchbox=\box80
+\nofMPsegments=\count373
+\nofMParguments=\count374
+\everyMPshowfont=\toks47
+\MPscratchCnt=\count375
+\MPscratchDim=\dimen322
+\MPnumerator=\count376
+\makeMPintoPDFobject=\count377
+\everyMPtoPDFconversion=\toks48
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -800,64 +828,64 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 15.
+Package hyperref Info: Link coloring OFF on input line 17.
 
 (slides/beamer.out) (slides/beamer.out)
 \@outlinefile=\write5
 \openout5 = `beamer.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 15.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 17.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 17.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 15.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 15.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 15.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 15.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 17.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 15.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 15.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 15.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 17.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 15.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 15.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 15.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 17.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 15.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 15.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 17.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 17.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 15.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 15.
+(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 15.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 15.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 17.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 15.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 15.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 17.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 17.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
 (Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 1
-5.
+7.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 1
-5.
+7.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 15.
+ut line 17.
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/translator/translator-basic-dicti
 onary-English.dict
@@ -882,10 +910,12 @@ Dictionary: translator-numbers-dictionary, Language: English
 (/usr/local/texlive/2026/texmf-dist/tex/latex/translator/translator-theorem-dic
 tionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
-) (slides/beamer.nav) [1{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/upd
-map/pdftex.map}
+)
+\c@lstlisting=\count378
+ (slides/beamer.nav) [1{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updm
+ap/pdftex.map}
 
-] (./sections/01_introduction.tex
+] (./sections/04_deployment.tex
 LaTeX Font Info:    Trying to load font information for U+msa on input line 28.
 
 
@@ -910,171 +940,33 @@ thkerncmss.
 
 ] [4
 
-]) (./sections/02_data_preparation.tex [5
+]
+\openout4 = `beamer.vrb'.
 
-] [6
+ (slides/beamer.vrb
+(/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2025/11/14 1.11b listings language file
+)) [5
 
 ]
-<figures/churn_distribution.png, id=225, 601.24625pt x 469.755pt>
-File: figures/churn_distribution.png Graphic file (type png)
-<use figures/churn_distribution.png>
-Package pdftex.def Info: figures/churn_distribution.png  used on input line 92.
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 107.
 
-(pdftex.def)             Requested size: 184.3758pt x 144.05278pt.
- [7
+[6
 
- <./figures/churn_distribution.png>]
-<figures/complain_churn.png, id=260, 982.872pt x 354.123pt>
-File: figures/complain_churn.png Graphic file (type png)
-<use figures/complain_churn.png>
-Package pdftex.def Info: figures/complain_churn.png  used on input line 111.
-(pdftex.def)             Requested size: 230.46739pt x 83.03519pt.
+] [7
 
-Overfull \vbox (14.40784pt too high) detected at line 111
- []
+] [8
 
-[8
+]) (./sections/05_conclusion.tex [9
 
- <./figures/complain_churn.png>]
-<figures/products_churn.png, id=294, 982.872pt x 354.123pt>
-File: figures/products_churn.png Graphic file (type png)
-<use figures/products_churn.png>
-Package pdftex.def Info: figures/products_churn.png  used on input line 129.
-(pdftex.def)             Requested size: 230.46739pt x 83.03519pt.
- [9
+] [10
 
- <./figures/products_churn.png>]
-<figures/geography_churn.png, id=327, 983.5947pt x 354.123pt>
-File: figures/geography_churn.png Graphic file (type png)
-<use figures/geography_churn.png>
-Package pdftex.def Info: figures/geography_churn.png  used on input line 147.
-(pdftex.def)             Requested size: 230.46739pt x 82.97575pt.
- [10
+] [11
 
- <./figures/geography_churn.png>]
-<figures/active_churn.png, id=360, 983.5947pt x 354.123pt>
-File: figures/active_churn.png Graphic file (type png)
-<use figures/active_churn.png>
-Package pdftex.def Info: figures/active_churn.png  used on input line 165.
-(pdftex.def)             Requested size: 230.46739pt x 82.97575pt.
- [11
+] [12
 
- <./figures/active_churn.png>] [12
-
-] [13
-
-]
-[14
-
-] [15
-
-] [16
-
-]
-<figures/shap_xgboost.png, id=552, 565.1514pt x 620.7993pt>
-File: figures/shap_xgboost.png Graphic file (type png)
-<use figures/shap_xgboost.png>
-Package pdftex.def Info: figures/shap_xgboost.png  used on input line 318.
-(pdftex.def)             Requested size: 138.2795pt x 151.8935pt.
- [17
-
- <./figures/shap_xgboost.png>]
-<figures/shap_dependence_num_age.png, id=585, 506.6127pt x 354.123pt>
-File: figures/shap_dependence_num_age.png Graphic file (type png)
-<use figures/shap_dependence_num_age.png>
-Package pdftex.def Info: figures/shap_dependence_num_age.png  used on input lin
-e 330.
-(pdftex.def)             Requested size: 230.46739pt x 161.09378pt.
- [18
-
- <./figures/shap_dependence_num_age.png>] [19
-
-]
-<figures/sequential_feature_selection.png, id=654, 783.4068pt x 458.1918pt>
-File: figures/sequential_feature_selection.png Graphic file (type png)
-<use figures/sequential_feature_selection.png>
-Package pdftex.def Info: figures/sequential_feature_selection.png  used on inpu
-t line 407.
-(pdftex.def)             Requested size: 153.64493pt x 89.8609pt.
- [20
-
- <./figures/sequential_feature_selection.png>]
-Overfull \hbox (1.62555pt too wide) in paragraph at lines 478--478
-[]\OT1/cmss/m/n/8 Demographics| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 478--478
-[]\OT1/cmss/m/n/8 Customer
- []
-
-
-Underfull \hbox (badness 3690) in paragraph at lines 478--478
-[]\OT1/cmss/m/n/8 Estimated Salary, Point
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 478--478
-[]\OT1/cmss/m/n/8 Age$\OMS/cmsy/m/n/8 ^^B$\OT1/cmss/m/n/8 IsActive,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 478--478
-\OT1/cmss/m/n/8 CreditScore$\OMS/cmsy/m/n/8 ^^B$\OT1/cmss/m/n/8 Age,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 478--478
-[]\OT1/cmss/m/n/8 Balance per Prod-uct,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 478--478
-\OT1/cmss/m/n/8 Cred-itScore per Age,
- []
-
-
-Overfull \hbox (27.98427pt too wide) in paragraph at lines 478--478
-[][]  
- []
-
-[21
-
-]) (./sections/03_modeling.tex [22
-
-] [23
-
-] [24
-
-]
-<figures/pr_auc_curve_best model.png, id=811, 570.933pt x 426.393pt>
-File: figures/pr_auc_curve_best model.png Graphic file (type png)
-<use figures/pr_auc_curve_best model.png>
-Package pdftex.def Info: figures/pr_auc_curve_best model.png  used on input lin
-e 133.
-(pdftex.def)             Requested size: 159.79204pt x 119.33717pt.
- [25
-
- <./figures/pr_auc_curve_best model.png>] [26
-
-]
-<figures/final_model_shap.png, id=877, 645.3711pt x 537.6888pt>
-File: figures/final_model_shap.png Graphic file (type png)
-<use figures/final_model_shap.png>
-Package pdftex.def Info: figures/final_model_shap.png  used on input line 209.
-(pdftex.def)             Requested size: 178.22868pt x 148.49251pt.
- [27
-
- <./figures/final_model_shap.png>]
-<figures/explain_customer_0.png, id=910, 751.608pt x 573.1011pt>
-File: figures/explain_customer_0.png Graphic file (type png)
-<use figures/explain_customer_0.png>
-Package pdftex.def Info: figures/explain_customer_0.png  used on input line 268
-.
-(pdftex.def)             Requested size: 153.64493pt x 117.15417pt.
- [28
-
- <./figures/explain_customer_0.png>])
+])
 \tf@nav=\write6
 \openout6 = `beamer.nav'.
 
@@ -1084,40 +976,36 @@ Package pdftex.def Info: figures/explain_customer_0.png  used on input line 268
 \tf@snm=\write8
 \openout8 = `beamer.snm'.
 
- (slides/beamer.aux)
+
+(slides/beamer.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-05-26>
  ***********
 Package rerunfilecheck Info: File `beamer.out' has not changed.
-(rerunfilecheck)             Checksum: D8F1EA351D73669DFF82757A11968FD5;362.
+(rerunfilecheck)             Checksum: DFD12AD30D58000BDC7D678F8DEB10B1;342.
  ) 
 Here is how much of TeX's memory you used:
- 22064 strings out of 467167
- 427269 string characters out of 5409448
- 818557 words of memory out of 5000000
- 50807 multiletter control sequences out of 15000+600000
- 642561 words of font info for 94 fonts, out of 8000000 for 9000
+ 23687 strings out of 467167
+ 446894 string characters out of 5409448
+ 1152264 words of memory out of 5000000
+ 52453 multiletter control sequences out of 15000+600000
+ 640390 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,14n,123p,381b,724s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
-></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><
-/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></
-usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></u
-sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr
-/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/l
-ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/
-local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/
-local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
-ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/loc
-al/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local
-/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/
-texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/te
-xlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on slides/beamer.pdf (28 pages, 839674 bytes).
+ 128i,14n,123p,381b,1386s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb
+></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb>
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb><
+/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></u
+sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></
+usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
+sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></us
+r/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/
+local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on slides/beamer.pdf (12 pages, 133602 bytes).
 PDF statistics:
- 1014 PDF objects out of 1200 (max. 8388607)
- 809 compressed objects within 9 object streams
- 60 named destinations out of 1000 (max. 500000)
- 122 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 454 PDF objects out of 1000 (max. 8388607)
+ 363 compressed objects within 4 object streams
+ 27 named destinations out of 1000 (max. 500000)
+ 59 words of extra memory for PDF output out of 10000 (max. 10000000)
 
