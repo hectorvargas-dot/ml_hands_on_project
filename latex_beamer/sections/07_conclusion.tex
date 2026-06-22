@@ -1,0 +1,79 @@
+% =============================================================================
+% SECTION 7: CONCLUSION \& OUTLOOK
+% =============================================================================
+
+% ---------------------------------------------------------
+% CHALLENGES
+% ---------------------------------------------------------
+\begin{frame}{Systemic \& Operational Challenges}
+    \begin{alertblock}{Architectural Constraints}
+        Key operational hurdles encountered during the design, development, and deployment phases of the churn platform.
+    \end{alertblock}
+    \begin{itemize}
+        \item \textbf{Class Imbalance Skew:} The minor distribution of the positive churn class ($\approx 20.3\%$) inherently biases traditional objective functions toward the dominant negative class.
+        \item \textbf{Target Feature Leakage:} Highly predictive indicators—such as customer complaint flags—occur downstream of the initial churn signal, risking data contamination if not strictly isolated.
+        \item \textbf{Interpretability vs. Capacity Trade-off:} High-capacity tree ensembles (XGBoost) yield superior non-linear boundaries but sacrifice clear, parametric explainability.
+    \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------
+% NEW SLIDE: MITIGATION STRATEGIES
+% ---------------------------------------------------------
+\begin{frame}{Implemented Engineering Mitigations}
+    \begin{exampleblock}{Algorithmic \& Pipeline Safeguards}
+        How the platform resolved systemic challenges to enforce production-grade reliability.
+    \end{exampleblock}
+    \begin{itemize}
+        \item \textbf{Cost-Sensitive Objective Weighting:} Injected an optimized \texttt{scale\_pos\_weight = 1.19} parameter into the booster to force the loss function to penalize minority-class misclassifications.
+        \item \textbf{Proactive Data Isolation:} Formally stripped downstream target-leaking indicators from the registry configuration prior to modeling to guarantee an honest out-of-sample test setup.
+        \item \textbf{Post-Hoc SHAP Layering:} Integrated localized tree-path dependent Shapley explanations to provide fully auditable, feature-level attribution without sacrificing model complexity.
+    \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------
+% FUTURE IMPROVEMENTS
+% ---------------------------------------------------------
+\begin{frame}{Future Strategic Enhancements}
+    \begin{block}{Platform Evolution Roadmaps}
+        Next-generation milestones focused on automating system scaling and enhancing operational outreach.
+    \end{block}
+    \scriptsize
+    \begin{itemize}
+        \item \textbf{Streaming Inference Engine:} Transitioning the current microservice layer from batch payloads to event-driven, real-time scoring streams.
+        \item \textbf{Closed-Loop Retraining Orchestration:} Automating data collection, training triggers, and champion evaluation steps via a central manager.
+        \item \textbf{Shadow Deployment \& A/B Testing Framework:} Serving alternative retention offerings to parallel customer buckets to test conversion rates under live traffic conditions.
+        \item \textbf{Enterprise Feature Store Integration:} Centralizing feature definitions across processing environments to eliminate serving-skew anomalies.
+    \end{itemize}
+\end{frame}
+
+
+% ---------------------------------------------------------
+% CONCLUSION
+% ---------------------------------------------------------
+\begin{frame}{Conclusion}
+    \begin{exampleblock}{Platform Delivery Milestones}
+        A comprehensive summary of the project's completed technical achievements.
+    \end{exampleblock}
+    \scriptsize
+    \begin{itemize}
+        \item \textbf{End-to-End Delivery Accomplished:} Successfully engineered a type-safe machine learning system, moving seamlessly from raw transactional ingest to API serving structures.
+        \item \textbf{High-Fidelity Model Performance:} Achieved a strong **0.734 Test PR-AUC** (Balanced F1 Score = \textbf{0.643}), outperforming baseline models and ensuring generalizability on unseen data.
+        \item \textbf{Rigorous Model Governance:} Standardized optimization metadata recording using MLflow parent-child structures to secure reproducibility.
+        \item \textbf{Production Integration Ready:} The containerized, microservice-driven framework is fully prepared to provide actionable decision support to executive stakeholders.
+    \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------
+% FINAL SLIDE
+% ---------------------------------------------------------
+\begin{frame}
+    \centering
+    \color{blue!80!black}{\Huge\textbf{Thank You}}
+    \vspace{0.4cm}
+    \begin{center}
+        \small 
+        Questions \& Answers Session \\
+        \vspace{0.2cm}
+        \footnotesize \texttt{jector.vargas@wizeline.com}
+    \end{center}
+\end{frame}

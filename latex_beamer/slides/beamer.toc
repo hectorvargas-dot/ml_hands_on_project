@@ -1,2 +1,13 @@
-\beamer@sectionintoc {1}{System Architecture \& MLOps}{2}{0}{1}
-\beamer@sectionintoc {2}{Conclusion \& Outlook}{10}{0}{2}
+\beamer@sectionintoc {1}{1. Business Case \& Executive Overview}{2}{0}{1}
+\beamer@sectionintoc {2}{Business Case \& Executive Overview}{2}{0}{2}
+\beamer@sectionintoc {3}{2. Data Discovery \& Exploratory Data Analysis}{5}{0}{3}
+\beamer@sectionintoc {4}{Data Discovery \& Exploratory Data Analysis}{5}{0}{4}
+\beamer@sectionintoc {5}{3. Data Preparation \& Feature Engineering}{12}{0}{5}
+\beamer@sectionintoc {6}{Data Preparation \& Feature Engineering}{12}{0}{6}
+\beamer@sectionintoc {7}{4. Model Development \& Optimization}{15}{0}{7}
+\beamer@sectionintoc {8}{Model Development \& Optimization}{15}{0}{8}
+\beamer@sectionintoc {9}{5. Performance Verification \& Interpretability}{20}{0}{9}
+\beamer@sectionintoc {10}{Performance Verification \& Interpretability}{20}{0}{10}
+\beamer@sectionintoc {11}{6. Production Deployment \& Monitoring MLOps}{29}{0}{11}
+\beamer@sectionintoc {12}{Production Deployment \& Monitoring MLOps}{29}{0}{12}
+\beamer@sectionintoc {13}{7. Conclusion \& Outlook}{37}{0}{13}

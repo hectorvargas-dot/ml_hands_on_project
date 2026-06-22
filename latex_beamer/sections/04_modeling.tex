@@ -1,0 +1,85 @@
+% =============================================================================
+% SECTION 4: MODEL DEVELOPMENT & OPTIMIZATION
+% =============================================================================
+\section{Model Development \& Optimization}
+
+% ---------------- 9 BASELINE MODEL COMPARISON ----------------
+\begin{frame}{Baseline Model Performance Evaluation}
+\begin{itemize}
+    \item Diverse algorithmic architectures were evaluated using default hyperparameter baselines:
+    \begin{itemize}
+        \item Linear Estimators (Logistic Regression)
+        \item Non-Linear Trees (Decision Tree, Random Forest)
+        \item Boosting Ensembles (XGBoost)
+    \end{itemize}
+    \item \textbf{Primary Evaluation Metric:} Precision-Recall Area Under the Curve (\textbf{PR-AUC}).
+    \item Proved far more robust than standard accuracy by focusing on minority positive instances over true negatives.
+    \item \textbf{Initial Results:} Random Forest reached the highest out-of-the-box baseline score (\textbf{0.733}), followed closely by XGBoost (\textbf{0.692}).
+\end{itemize}
+\end{frame}
+
+% ---------------- 10 MODEL SELECTION ----------------
+\begin{frame}{Strategic Model Selection for Optimization}
+\begin{itemize}
+    \item Despite Random Forest leading with default settings, \textbf{XGBoost was chosen for the final optimization phase}.
+    \item The baseline margin was narrow, and XGBoost offers distinct architectural advantages:
+    \begin{itemize}
+        \item Fine-grained, deep hyperparameter search space customization.
+        \item Advanced gradient boosting convergence that typically outperforms bagging models after tuning.
+        \item Built-in L1 and L2 regularization parameters to protect against overfitting.
+        \item Highly efficient handling of complex, non-linear feature interactions.
+    \end{itemize}
+    \item XGBoost presented the highest performance ceiling under Bayesian hyperparameter optimization.
+\end{itemize}
+\end{frame}
+
+% ---------------- 18 MODELING STRATEGY & EXPERIMENTAL ARCHITECTURE ----------------
+\begin{frame}{Bayesian Optimization Search Framework}
+\begin{block}{Optuna Hyperparameter Space Exploration Engine}
+Optuna's Tree-structured Parzen Estimator (TPE) sampler ran a intensive \textbf{5,000-trial search space loop} to maximize Average Precision.
+\end{block}
+\begin{itemize}
+    \item Encapsulated the entire workflow into a single robust pipeline:
+    \begin{itemize}
+        \item Dynamic feature engineering extraction steps.
+        \item Adaptive scaler routing selections (\texttt{Standard}, \texttt{MinMax}, \texttt{Robust}).
+        \item Categorical encoding constraints and automated tree structures.
+    \end{itemize}
+    \item Cross-validation used a 5-Fold Stratified strategy to enforce out-of-sample consistency.
+    \item Optuna's \texttt{MedianPruner} monitored unpromising learning steps early to minimize unnecessary computational overhead.
+\end{itemize}
+\end{frame}
+
+% ---------------- 19 EXPERIMENT TRACKING BACKEND ----------------
+\begin{frame}{Auditability via MLflow Experiment Tracking}
+\begin{block}{Reproducible Pipeline State Governance}
+MLflow tracking handles full logging for every individual Optuna trial.
+\end{block}
+\begin{itemize}
+    \item Backed by a local persistent SQLite DB to guarantee run auditability.
+    \item Structured via a clear Parent-Child run architecture:
+    \begin{itemize}
+        \item \textbf{Parent Run:} Logs overall run metrics, optimized parameters, and production deployment pipeline artifacts.
+        \item \textbf{Child Runs:} Capture individual hyperparameter permutations from each Optuna trial.
+    \end{itemize}
+    \item Automatic telemetry capture logs parameters, scores, schemas, and serialization formats.
+\end{itemize}
+\end{frame}
+
+% ---------------- 21 SEARCH SPACE INSIGHTS ----------------
+\begin{frame}{Hyperparameter Space Search Insights}
+\begin{exampleblock}{Bayesian Optimization Trajectory Convergence}
+The TPE search converged on the XGBoost architecture as the most effective framework for maximizing minority-class resolution.
+\end{exampleblock}
+\vspace{0.1cm}
+\begin{itemize}
+    \item \textbf{Preprocessing Strategy:} Robust scaling emerged as the optimal preprocessor to manage outliers.
+    \item \textbf{Imbalance Tuning:} Setting \texttt{scale\_pos\_weight = 1.19} adjusted minority-class cost parameters effectively.
+    \item \textbf{Parameter Convergence Boundaries:}
+    \begin{itemize}
+        \item Learning Rate stabilized around $\approx 0.028$.
+        \item Row Subsampling converged around $\approx 0.97$.
+        \item Column Feature Sampling centered around $\approx 0.52$.
+    \end{itemize}
+\end{itemize}
+\end{frame}

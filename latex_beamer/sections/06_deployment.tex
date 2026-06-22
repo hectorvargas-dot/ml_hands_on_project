@@ -1,20 +1,10 @@
-% ---------------------------------------------------------
-% PACKAGE CONFIGURATIONS
-% ---------------------------------------------------------
-\lstset{
-    basicstyle=\ttfamily\scriptsize,
-    breaklines=true,
-    keywordstyle=\color{blue},
-    stringstyle=\color{darkgray},
-    commentstyle=\color{gray},
-    frame=single,
-    showstringspaces=false
-}
+% =============================================================================
+% SECTION 6: PRODUCTION DEPLOYMENT & MONITORING MLOPS
+% =============================================================================
+\section{Production Deployment \& Monitoring MLOps}
 
-% ---------------------------------------------------------
-% SYSTEM ARCHITECTURE
-% ---------------------------------------------------------
-\begin{frame}{System Architecture}
+% ---------------- System Architecture ----------------
+\begin{frame}{Production System Architecture}
     \begin{block}{Platform Components}
         An end-to-end MLOps ecosystem designed for dynamic feature extraction, hyperparameter shifting, and localized storage.
     \end{block}
@@ -27,9 +17,7 @@
     \end{itemize}
 \end{frame}
 
-% ---------------------------------------------------------
-% CHURN PREDICTION WORKFLOW
-% ---------------------------------------------------------
+% ---------------- Prediction Workflow ----------------
 \begin{frame}{Churn Prediction Workflow}
     \begin{alertblock}{Data Lifecycle Execution}
         From raw transaction parameters to calculated strategic customer retention campaigns.
@@ -43,9 +31,7 @@
     \end{enumerate}
 \end{frame}
 
-% ---------------------------------------------------------
-% MULTI-STAGE TRAINING ENGINE
-% ---------------------------------------------------------
+% ---------------- Multi-Stage Training Engine ----------------
 \begin{frame}{Adaptive Multi-Stage Optimization Loop}
     \begin{itemize}
         \item Implements sequential search boundary adjustment loops over 4 key phases to scale parameter ranges dynamically:
@@ -69,11 +55,10 @@
     \end{block}
 \end{frame}
 
-% ---------------------------------------------------------
-% CORE INTERFACE ROUTING (FASTAPI)
-% ---------------------------------------------------------
+% ---------------- Core Interface Routing ----------------
 \begin{frame}[fragile]{Microservice Interface Endpoints}
     The delivery layer exposes clean REST schemas managed by Uvicorn.
+    \scriptsize
     \begin{lstlisting}[language=Python]
 # Ingestion and Retraining 
 @app.post("/train")
@@ -88,33 +73,29 @@ async def predict(file: UploadFile, run_id: str):
 # Analytics and Audit
 @app.get("/experiments/best_runs")
 def get_best_runs():
-    # Returns history tracking logs via BestRunResponse Pydantic schema
+    # Returns history tracking logs via 
+    # BestRunResponse Pydantic schema
     \end{lstlisting}
 \end{frame}
 
-% ---------------------------------------------------------
-% CONTAINERIZED DEPLOYMENT
-% ---------------------------------------------------------
+% ---------------- Containerized Deployment ----------------
 \begin{frame}{Containerized Deployment Architecture}
     \begin{block}{Reproducible Ecosystem Environment}
         The application is packaged inside a lightweight \texttt{python:3.12-slim} container, ensuring quick start-up times and isolation.
     \end{block}
-    \begin{itemize}
+    \begin{itemize}\scriptsize
         \item \textbf{FastAPI Application Container (\texttt{hop\_api}):} Exposes internal operational processing functions via port \texttt{8000}.
         \item \textbf{MLflow Dashboard Service (\texttt{hop\_mlflow}):} Mounts unified workspace directory binds to expose the visualization engine UI on port \texttt{5000}.
         \item \textbf{Persistent Storage Layer:} Mounts localized shared system volumes to maintain tracking information inside \texttt{mlflow.db} and model plots under \texttt{mlartifacts/}.
     \end{itemize}
 \end{frame}
 
-% ---------------------------------------------------------
-% PRODUCTION MONITORING
-% ---------------------------------------------------------
+% ---------------- Production Monitoring ----------------
 \begin{frame}{Production Monitoring}
     \begin{block}{Automated Drift Detection Framework}
         Production monitoring services detect data and target distribution shifts before model performance degradation becomes significant.
     \end{block}
-
-    \begin{itemize}
+    \begin{itemize}\scriptsize
         \item \textbf{Feature Drift Detection:} KS tests for numerical variables and Chi-Square tests for categorical variables.
         \item \textbf{Pipeline-Aware Monitoring:} Drift evaluated after feature engineering and preprocessing transformations.
         \item \textbf{Target Drift Analysis:} Monitoring of churn-rate shifts and class distribution changes.
@@ -122,29 +103,29 @@ def get_best_runs():
     \end{itemize}
 \end{frame}
 
-% ---------------------------------------------------------
-% MONITORING INTERFACE ROUTING (FASTAPI)
-% ---------------------------------------------------------
+% ---------------- Monitoring Interface Routing ----------------
 \begin{frame}[fragile]{Monitoring Service Endpoints}
     The observability layer exposes statistical drift monitoring services for production model governance.
+    \scriptsize
     \begin{lstlisting}[language=Python]
 # Feature Distribution Monitoring
 @app.post("/monitor/feature-drift")
-async def monitor_drift(reference_file: UploadFile, current_file: UploadFile, run_id: str):
+async def monitor_drift(reference_file: UploadFile, 
+                        current_file: UploadFile, run_id: str):
     # Executes KS and Chi-Square drift tests
     # across transformed production features
 
 # Target Distribution Monitoring
 @app.post("/monitor/target-drift")
-async def monitor_target_drift(reference_file: UploadFile, current_file: UploadFile, target_column: str = "Exited"):
+async def monitor_target_drift(reference_file: UploadFile, 
+                                current_file: UploadFile, 
+                                target_column: str = "Exited"):
     # Evaluates churn-rate shifts and
     # class distribution drift statistics
     \end{lstlisting}
 \end{frame}
 
-% ---------------------------------------------------------
-% END-TO-END MLOPS PIPELINE
-% ---------------------------------------------------------
+% ---------------- End-to-End MLOps Pipeline ----------------
 \begin{frame}{End-to-End MLOps Pipeline}
     \begin{exampleblock}{Continuous Integration \& Training Loop}
         Unified architectural lifecycle mapping feedback dependencies from collection to iteration.

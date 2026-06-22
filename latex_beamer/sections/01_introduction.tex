@@ -1,51 +1,38 @@
+% =============================================================================
+% SECTION 1: BUSINESS CASE & EXECUTIVE OVERVIEW
+% =============================================================================
+\section{Business Case \& Executive Overview}
+
 % ---------------- 1 EXEC SUMMARY ----------------
 \begin{frame}{Executive Summary}
-
-    \scriptsize
+\scriptsize
 \begin{itemize}
-\item \textbf{Problem:} Predict customer churn in a retail banking environment.
-
-\item \textbf{Objective:} Identify customers at risk of closing their accounts to support proactive retention strategies.
-
-\item \textbf{Best Model:} XGBoost optimized using Bayesian hyperparameter tuning (Optuna TPE).
-
-\item \textbf{Optimization Metric:} Average Precision (PR-AUC) = 0.698 (5-Fold Cross-Validation).
-
-\item \textbf{Test Performance:} PR-AUC = 0.734, ROC-AUC = 0.874, Accuracy = 87.3\%.
-
-\item \textbf{Best Configuration:}
-RobustScaler, 1,403 trees, learning rate = 0.028,
-subsample = 0.97, column sample rate = 0.52,
-scale\_pos\_weight = 1.19.
-
-\item \textbf{Production System:}
-End-to-end ML pipeline with feature engineering,
-MLflow experiment tracking, (model deployment API,
-and monitoring framework - PENDING).
-
+    \item \textbf{Business Problem:} High-risk customer churn in a retail banking environment requires predictive containment.
+    \item \textbf{Objective:} Build an automated system to flag at-risk clients and inform proactive customer retention campaigns.
+    \item \textbf{Champion Model:} XGBoost optimized via Bayesian hyperparameter sequential optimization (Optuna TPE).
+    \item \textbf{Validation Metric:} 5-Fold Stratified Cross-Validation Average Precision (PR-AUC) = 0.698.
+    \item \textbf{Test Set Performance:} PR-AUC = 0.734, ROC-AUC = 0.874, Overall Accuracy = 87.3\%.
+    \item \textbf{Optimal Configuration:} RobustScaler, 1,403 trees, learning rate = 0.028, subsample = 0.97, column sample rate = 0.52, scale\_pos\_weight = 1.19.
+    \item \textbf{MLOps Architecture:} Integrated end-to-end pipeline covering dynamic feature engineering, MLflow experiment state tracking, FastAPI serving layers, and automated non-parametric statistical drift monitoring.
 \end{itemize}
-
 \end{frame}
 
-
 % ---------------- 2 BUSINESS PROBLEM ----------------
-\begin{frame}{Business Problem}
+\begin{frame}{The Churn Problem in Banking}
 \begin{itemize}
-    \item Customer churn in banking leads to significant revenue loss and higher acquisition costs
-    \item Losing customers reduces deposits, transaction volume, and product cross-sell opportunities
-    \item Early detection enables targeted retention strategies (offers, engagement, support)
-    \item Objective: Predict probability of customer churn (\textit{Exited})
+    \item Customer attrition directly drives revenue erosion, depresses total deposit volumes, and increases overall customer acquisition costs (CAC).
+    \item Attrition disrupts downstream product cross-selling strategies and transaction counts.
+    \item Early risk identification enables automated, targeted retention campaigns (incentives, customer care outreach).
+    \item \textbf{Analytical Target:} Predict the individual conditional probability of customer departure (\textit{Exited}).
 \end{itemize}
 \end{frame}
 
 % ---------------- 3 CRISP-DM ----------------
-\begin{frame}{CRISP-DM Methodology}
+\begin{frame}{CRISP-DM Operational Framework}
     \begin{exampleblock}{Cross-Industry Standard Process for Data Mining}
-        Structured lifecycle for transforming business problems into deployable analytical solutions.
+        A structured, iterative lifecycle utilized to transform abstract business problems into verifiable production services.
     \end{exampleblock}
-
     \vspace{0.3cm}
-
     \begin{center}
         \small
         \colorbox{gray!15}{\textbf{\strut Business Understanding}} $\rightarrow$

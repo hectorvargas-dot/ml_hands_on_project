@@ -1,15 +1,19 @@
 \frametitle{Monitoring Service Endpoints}
 The observability layer exposes statistical drift monitoring services for production model governance.
+    \scriptsize
     \begin{lstlisting}[language=Python]
 # Feature Distribution Monitoring
 @app.post("/monitor/feature-drift")
-async def monitor_drift(reference_file: UploadFile, current_file: UploadFile, run_id: str):
+async def monitor_drift(reference_file: UploadFile,
+                        current_file: UploadFile, run_id: str):
     # Executes KS and Chi-Square drift tests
     # across transformed production features
 
 # Target Distribution Monitoring
 @app.post("/monitor/target-drift")
-async def monitor_target_drift(reference_file: UploadFile, current_file: UploadFile, target_column: str = "Exited"):
+async def monitor_target_drift(reference_file: UploadFile,
+                                current_file: UploadFile,
+                                target_column: str = "Exited"):
     # Evaluates churn-rate shifts and
     # class distribution drift statistics
     \end{lstlisting}
