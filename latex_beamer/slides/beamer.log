@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  22 JUN 2026 14:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  22 JUN 2026 16:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -956,15 +956,21 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
 
 ] [7
 
-] [8
+]
+\openout4 = `beamer.vrb'.
 
-]) (./sections/05_conclusion.tex [9
+ (slides/beamer.vrb) [8
 
-] [10
+] [9
 
-] [11
+]) (./sections/05_conclusion.tex [10
+
+]
+[11
 
 ] [12
+
+] [13
 
 ])
 \tf@nav=\write6
@@ -976,8 +982,7 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
 \tf@snm=\write8
 \openout8 = `beamer.snm'.
 
-
-(slides/beamer.aux)
+ (slides/beamer.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-05-26>
@@ -986,10 +991,10 @@ Package rerunfilecheck Info: File `beamer.out' has not changed.
 (rerunfilecheck)             Checksum: DFD12AD30D58000BDC7D678F8DEB10B1;342.
  ) 
 Here is how much of TeX's memory you used:
- 23687 strings out of 467167
- 446894 string characters out of 5409448
- 1152264 words of memory out of 5000000
- 52453 multiletter control sequences out of 15000+600000
+ 23698 strings out of 467167
+ 447060 string characters out of 5409448
+ 1152302 words of memory out of 5000000
+ 52460 multiletter control sequences out of 15000+600000
  640390 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,14n,123p,381b,1386s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1002,10 +1007,10 @@ usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
 sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></us
 r/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/
 local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on slides/beamer.pdf (12 pages, 133602 bytes).
+Output written on slides/beamer.pdf (13 pages, 136963 bytes).
 PDF statistics:
- 454 PDF objects out of 1000 (max. 8388607)
- 363 compressed objects within 4 object streams
- 27 named destinations out of 1000 (max. 500000)
+ 489 PDF objects out of 1000 (max. 8388607)
+ 390 compressed objects within 4 object streams
+ 29 named destinations out of 1000 (max. 500000)
  59 words of extra memory for PDF output out of 10000 (max. 10000000)
 

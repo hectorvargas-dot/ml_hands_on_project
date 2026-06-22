@@ -110,15 +110,36 @@ def get_best_runs():
 % PRODUCTION MONITORING
 % ---------------------------------------------------------
 \begin{frame}{Production Monitoring}
-    \begin{block}{System Health \& Observability Metrics}
-        Proactive telemetry strategy deployed across the serving instance to protect model health over time.
+    \begin{block}{Automated Drift Detection Framework}
+        Production monitoring services detect data and target distribution shifts before model performance degradation becomes significant.
     \end{block}
+
     \begin{itemize}
-        \item \textbf{API Performance Tracking:} Real-time latency profiling, hardware footprint utilization, and HTTP error code tracking.
-        \item \textbf{Data Drift Detection:} Baseline distribution auditing to capture shifting inputs before performance degradation occurs.
-        \item \textbf{Prediction Profiling:} Continuous logging of predicted churn probabilities to catch out-of-bounds score skews.
-        \item \textbf{Automated Alerting Engine:} Model performance degradation thresholds configured to dispatch infrastructure operational notices.
+        \item \textbf{Feature Drift Detection:} KS tests for numerical variables and Chi-Square tests for categorical variables.
+        \item \textbf{Pipeline-Aware Monitoring:} Drift evaluated after feature engineering and preprocessing transformations.
+        \item \textbf{Target Drift Analysis:} Monitoring of churn-rate shifts and class distribution changes.
+        \item \textbf{Monitoring APIs:} Real-time drift assessment endpoints returning statistical reports and drift alerts.
     \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------
+% MONITORING INTERFACE ROUTING (FASTAPI)
+% ---------------------------------------------------------
+\begin{frame}[fragile]{Monitoring Service Endpoints}
+    The observability layer exposes statistical drift monitoring services for production model governance.
+    \begin{lstlisting}[language=Python]
+# Feature Distribution Monitoring
+@app.post("/monitor/feature-drift")
+async def monitor_drift(reference_file: UploadFile, current_file: UploadFile, run_id: str):
+    # Executes KS and Chi-Square drift tests
+    # across transformed production features
+
+# Target Distribution Monitoring
+@app.post("/monitor/target-drift")
+async def monitor_target_drift(reference_file: UploadFile, current_file: UploadFile, target_column: str = "Exited"):
+    # Evaluates churn-rate shifts and
+    # class distribution drift statistics
+    \end{lstlisting}
 \end{frame}
 
 % ---------------------------------------------------------

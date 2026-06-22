@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1782160160.73451 "beamer.tex" "slides/beamer.pdf" "beamer" 1782160161.63163 0
+["pdflatex"] 1782166807.13174 "beamer.tex" "slides/beamer.pdf" "beamer" 1782166808.10811 0
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -204,12 +204,12 @@
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1781465213 3656606 2e0f8e190dca8db927a9b0a2dd4673c8 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
   "beamer.tex" 1782160155.94463 830 7ef658682ab8e1499d8f67291d87aaa6 ""
-  "sections/04_deployment.tex" 1782159071.74983 7620 2c43cccc2fcb0516865637c2f49a51c3 ""
+  "sections/04_deployment.tex" 1782166805.10811 8488 f45bd449db7da4d0e472a706c867b01e ""
   "sections/05_conclusion.tex" 1781730656.7794 975 522897a2845fa40a1ae13b6389bd7e1e ""
-  "slides/beamer.aux" 1782160161.56215 2604 6084fe2ec49be0c7d27b805a27b43596 "pdflatex"
-  "slides/beamer.nav" 1782160161.56284 1654 bcff966fbda4f75b7368712029eda848 "pdflatex"
-  "slides/beamer.out" 1782160161.56265 342 dfd12ad30d58000bdc7d678f8deb10b1 "pdflatex"
-  "slides/beamer.vrb" 1782160161.39 651 9e295f2370b43a3b830a5898b4845350 "pdflatex"
+  "slides/beamer.aux" 1782166808.04074 2736 31389159228fc729a9f95f1be618a212 "pdflatex"
+  "slides/beamer.nav" 1782166808.04161 1749 1f6fcbe97b4143fd5ad5e7847874ca39 "pdflatex"
+  "slides/beamer.out" 1782166808.04141 342 dfd12ad30d58000bdc7d678f8deb10b1 "pdflatex"
+  "slides/beamer.vrb" 1782166807.91183 724 0262990e266be786e64319e60b0e926c "pdflatex"
   (generated)
   "slides/beamer.aux"
   "slides/beamer.log"
