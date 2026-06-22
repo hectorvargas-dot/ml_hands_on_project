@@ -441,6 +441,7 @@ INPUT ./sections/04_modeling.tex
 INPUT ./sections/04_modeling.tex
 INPUT sections/04_modeling.tex
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmssi8.tfm
 INPUT ./sections/05_performance.tex
 INPUT ./sections/05_performance.tex
 INPUT sections/05_performance.tex
@@ -481,7 +482,6 @@ INPUT slides/beamer.vrb
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmssi8.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcsi0800.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 OUTPUT slides/beamer.vrb

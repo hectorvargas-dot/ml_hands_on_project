@@ -50,6 +50,81 @@ Optuna's Tree-structured Parzen Estimator (TPE) sampler ran a intensive \textbf{
 \end{itemize}
 \end{frame}
 
+
+% ---------------------------------------------------------
+% OPTUNA TPE EXPLANATION
+% ---------------------------------------------------------
+\begin{frame}{Smart Hyperparameter Optimization with Optuna}
+\begin{block}{Tree-structured Parzen Estimator (TPE)}
+Optuna automatically searches thousands of model configurations by learning from previous experiments and prioritizing the settings that produce better results.
+\end{block}
+\scriptsize
+\begin{itemize}
+    \item \textbf{Automated Experimentation:}
+    Tests different combinations of model settings instead of relying on manual tuning.
+
+    \item \textbf{Learning from Results:}
+    Each experiment provides feedback, allowing Optuna to identify which configurations perform better.
+
+    \item \textbf{Focused Search:}
+    More trials are allocated to promising parameter combinations while still exploring new possibilities.
+
+    \item \textbf{Efficient Model Improvement:}
+    Finds high-performing configurations faster than testing parameters randomly.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\begin{center}
+\scriptsize
+\textit{Result: 5,000 automated trials were evaluated to identify the optimal model configuration.}
+\end{center}
+
+\end{frame}
+
+
+% ---------------------------------------------------------
+% BAYESIAN VS TPE
+% ---------------------------------------------------------
+\begin{frame}{TPE vs Traditional Bayesian Optimization}
+\begin{block}{Different Strategies for Learning the Search Space}
+Both approaches use previous experiments to guide future trials, but they model the optimization problem differently.
+\end{block}
+
+\begin{table}
+\scriptsize
+\centering
+\begin{tabular}{p{0.28\textwidth}p{0.30\textwidth}p{0.30\textwidth}}
+\toprule
+& \textbf{Classic Bayesian Optimization} & \textbf{Optuna TPE} \\
+\midrule
+
+Function Model
+& Models the objective function directly
+& Models parameter distributions based on trial outcomes \\
+
+Common Method
+& Gaussian Process surrogate model
+& Probability density estimation \\
+
+Decision Rule
+& Selects points with high expected improvement
+& Selects points where good configurations are more likely \\
+
+Scalability
+& Can become expensive with many dimensions
+& Handles many hyperparameters efficiently \\
+
+Best Use Case
+& Small search spaces with expensive evaluations
+& Large ML pipelines with many mixed parameters \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+
 % ---------------- 19 EXPERIMENT TRACKING BACKEND ----------------
 \begin{frame}{Auditability via MLflow Experiment Tracking}
 \begin{block}{Reproducible Pipeline State Governance}

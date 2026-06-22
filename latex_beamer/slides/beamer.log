@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  22 JUN 2026 17:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  22 JUN 2026 17:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1011,71 +1011,104 @@ t line 44.
 
 ] [18
 
-] [19
+]
+Underfull \hbox (badness 5147) in paragraph at lines 125--125
+[]\OT1/cmss/bx/n/8 Classic Bayesian Op-ti-
+ []
 
-])
-(./sections/05_performance.tex
+
+Underfull \hbox (badness 2189) in paragraph at lines 125--125
+[]\OT1/cmss/m/n/8 Gaussian Pro-cess sur-ro-
+ []
+
+
+Underfull \hbox (badness 2875) in paragraph at lines 125--125
+[]\OT1/cmss/m/n/8 Probability den-sity es-ti-
+ []
+
+
+Underfull \hbox (badness 3148) in paragraph at lines 125--125
+\OT1/cmss/m/n/8 con-fig-u-ra-tions are more
+ []
+
+
+Underfull \hbox (badness 7963) in paragraph at lines 125--125
+[]\OT1/cmss/m/n/8 Can be-come ex-pen-sive
+ []
+
+
+Underfull \hbox (badness 2735) in paragraph at lines 125--125
+[]\OT1/cmss/m/n/8 Handles many hy-per-pa-
+ []
+
+[19
+
+] [20
+
+] [21
+
+]) (./sections/05_performance.tex
 Overfull \hbox (2.05247pt too wide) in paragraph at lines 28--28
  [][] 
  []
 
-[20
+[22
 
 ]
-<figures/pr_auc_curve_best_model.png, id=723, 570.933pt x 426.393pt>
+<figures/pr_auc_curve_best_model.png, id=787, 570.933pt x 426.393pt>
 File: figures/pr_auc_curve_best_model.png Graphic file (type png)
 <use figures/pr_auc_curve_best_model.png>
 Package pdftex.def Info: figures/pr_auc_curve_best_model.png  used on input lin
 e 54.
 (pdftex.def)             Requested size: 143.81184pt x 107.40475pt.
- [21
+ [23
 
- <./figures/pr_auc_curve_best_model.png>] [22
+ <./figures/pr_auc_curve_best_model.png>] [24
 
 ]
-<figures/shap_xgboost.png, id=788, 565.1514pt x 620.7993pt>
+<figures/shap_xgboost.png, id=851, 565.1514pt x 620.7993pt>
 File: figures/shap_xgboost.png Graphic file (type png)
 <use figures/shap_xgboost.png>
 Package pdftex.def Info: figures/shap_xgboost.png  used on input line 110.
 (pdftex.def)             Requested size: 138.2795pt x 151.8935pt.
- [23
+ [25
 
  <./figures/shap_xgboost.png>]
-<figures/shap_dependence_num_age.png, id=821, 506.6127pt x 354.123pt>
+<figures/shap_dependence_num_age.png, id=885, 506.6127pt x 354.123pt>
 File: figures/shap_dependence_num_age.png Graphic file (type png)
 <use figures/shap_dependence_num_age.png>
 Package pdftex.def Info: figures/shap_dependence_num_age.png  used on input lin
 e 120.
 (pdftex.def)             Requested size: 215.10196pt x 150.35709pt.
- [24
+ [26
 
- <./figures/shap_dependence_num_age.png>] [25
+ <./figures/shap_dependence_num_age.png>] [27
 
 ]
-<figures/final_model_shap.png, id=889, 645.3711pt x 537.6888pt>
+<figures/final_model_shap.png, id=952, 645.3711pt x 537.6888pt>
 File: figures/final_model_shap.png Graphic file (type png)
 <use figures/final_model_shap.png>
 Package pdftex.def Info: figures/final_model_shap.png  used on input line 163.
 (pdftex.def)             Requested size: 178.22868pt x 148.49251pt.
- [26
+ [28
 
  <./figures/final_model_shap.png>]
-<figures/explain_customer_0.png, id=923, 751.608pt x 573.1011pt>
+<figures/explain_customer_0.png, id=985, 751.608pt x 573.1011pt>
 File: figures/explain_customer_0.png Graphic file (type png)
 <use figures/explain_customer_0.png>
 Package pdftex.def Info: figures/explain_customer_0.png  used on input line 196
 .
 (pdftex.def)             Requested size: 153.64493pt x 117.15417pt.
- [27
+ [29
 
- <./figures/explain_customer_0.png>] [28
+ <./figures/explain_customer_0.png>] [30
 
 ])
-(./sections/06_deployment.tex [29
+(./sections/06_deployment.tex [31
 
-] [30
+] [32
 
-] [31
+] [33
 
 ]
 \openout4 = `beamer.vrb'.
@@ -1083,15 +1116,15 @@ Package pdftex.def Info: figures/explain_customer_0.png  used on input line 196
  (slides/beamer.vrb
 (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-)) [32
+)) [34
 
 {/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 91.
 
-[33
+[35
 
-] [34
+] [36
 
 ]
 \openout4 = `beamer.vrb'.
@@ -1106,19 +1139,19 @@ Overfull \hbox (14.01724pt too wide) in paragraph at lines 16--17
 [][][][][][][][][][][][][][] 
  []
 
-) [35
-
-] [36
-
-]) (./sections/07_conclusion.tex [37
+) [37
 
 ] [38
 
-] [39
+]) (./sections/07_conclusion.tex [39
 
 ] [40
 
 ] [41
+
+] [42
+
+] [43
 
 ])
 \tf@nav=\write6
@@ -1140,10 +1173,10 @@ Package rerunfilecheck Info: File `beamer.out' has not changed.
 (rerunfilecheck)             Checksum: EDF7B77252FEBB8A0BC081D18DE1B1F2;3266.
  ) 
 Here is how much of TeX's memory you used:
- 24037 strings out of 467167
- 453725 string characters out of 5409448
- 1038054 words of memory out of 5000000
- 52705 multiletter control sequences out of 15000+600000
+ 24045 strings out of 467167
+ 453799 string characters out of 5409448
+ 1038180 words of memory out of 5000000
+ 52709 multiletter control sequences out of 15000+600000
  645210 words of font info for 103 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,14n,123p,381b,1341s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1166,10 +1199,10 @@ live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texli
 ve/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/t
 exlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi0800.pfb></usr/local/tex
 live/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb>
-Output written on slides/beamer.pdf (41 pages, 916550 bytes).
+Output written on slides/beamer.pdf (43 pages, 922255 bytes).
 PDF statistics:
- 1504 PDF objects out of 1728 (max. 8388607)
- 1214 compressed objects within 13 object streams
- 96 named destinations out of 1000 (max. 500000)
+ 1568 PDF objects out of 1728 (max. 8388607)
+ 1268 compressed objects within 13 object streams
+ 100 named destinations out of 1000 (max. 500000)
  202 words of extra memory for PDF output out of 10000 (max. 10000000)
 
