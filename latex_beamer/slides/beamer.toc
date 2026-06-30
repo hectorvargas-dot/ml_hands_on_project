@@ -11,3 +11,5 @@
 \beamer@sectionintoc {11}{6. Production Deployment \& Monitoring MLOps}{31}{0}{11}
 \beamer@sectionintoc {12}{Production Deployment \& Monitoring MLOps}{31}{0}{12}
 \beamer@sectionintoc {13}{7. Conclusion \& Outlook}{39}{0}{13}
+\beamer@sectionintoc {14}{8. Data Bricks Platform}{43}{0}{14}
+\beamer@sectionintoc {15}{9. Final Slide}{61}{0}{15}

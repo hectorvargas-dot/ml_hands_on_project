@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  22 JUN 2026 17:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.14)  30 JUN 2026 12:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -945,7 +945,7 @@ thkerncmss.
 ] [6
 
 ]
-<figures/churn_distribution.png, id=265, 601.24625pt x 469.755pt>
+<figures/churn_distribution.png, id=273, 601.24625pt x 469.755pt>
 File: figures/churn_distribution.png Graphic file (type png)
 <use figures/churn_distribution.png>
 Package pdftex.def Info: figures/churn_distribution.png  used on input line 72.
@@ -954,7 +954,7 @@ Package pdftex.def Info: figures/churn_distribution.png  used on input line 72.
  [7
 
  <./figures/churn_distribution.png>]
-<figures/complain_churn.png, id=302, 982.872pt x 354.123pt>
+<figures/complain_churn.png, id=310, 982.872pt x 354.123pt>
 File: figures/complain_churn.png Graphic file (type png)
 <use figures/complain_churn.png>
 Package pdftex.def Info: figures/complain_churn.png  used on input line 90.
@@ -962,7 +962,7 @@ Package pdftex.def Info: figures/complain_churn.png  used on input line 90.
  [8
 
  <./figures/complain_churn.png>]
-<figures/products_churn.png, id=335, 982.872pt x 354.123pt>
+<figures/products_churn.png, id=343, 982.872pt x 354.123pt>
 File: figures/products_churn.png Graphic file (type png)
 <use figures/products_churn.png>
 Package pdftex.def Info: figures/products_churn.png  used on input line 108.
@@ -970,7 +970,7 @@ Package pdftex.def Info: figures/products_churn.png  used on input line 108.
  [9
 
  <./figures/products_churn.png>]
-<figures/geography_churn.png, id=368, 983.5947pt x 354.123pt>
+<figures/geography_churn.png, id=376, 983.5947pt x 354.123pt>
 File: figures/geography_churn.png Graphic file (type png)
 <use figures/geography_churn.png>
 Package pdftex.def Info: figures/geography_churn.png  used on input line 126.
@@ -978,7 +978,7 @@ Package pdftex.def Info: figures/geography_churn.png  used on input line 126.
  [10
 
  <./figures/geography_churn.png>]
-<figures/active_churn.png, id=400, 983.5947pt x 354.123pt>
+<figures/active_churn.png, id=408, 983.5947pt x 354.123pt>
 File: figures/active_churn.png Graphic file (type png)
 <use figures/active_churn.png>
 Package pdftex.def Info: figures/active_churn.png  used on input line 144.
@@ -992,7 +992,7 @@ Overfull \hbox (57.8099pt too wide) in paragraph at lines 44--44
 [] 
  []
 
-<figures/sequential_feature_selection.png, id=466, 783.4068pt x 458.1918pt>
+<figures/sequential_feature_selection.png, id=474, 783.4068pt x 458.1918pt>
 File: figures/sequential_feature_selection.png Graphic file (type png)
 <use figures/sequential_feature_selection.png>
 Package pdftex.def Info: figures/sequential_feature_selection.png  used on inpu
@@ -1055,7 +1055,7 @@ Overfull \hbox (2.05247pt too wide) in paragraph at lines 28--28
 [22
 
 ]
-<figures/pr_auc_curve_best_model.png, id=787, 570.933pt x 426.393pt>
+<figures/pr_auc_curve_best_model.png, id=795, 570.933pt x 426.393pt>
 File: figures/pr_auc_curve_best_model.png Graphic file (type png)
 <use figures/pr_auc_curve_best_model.png>
 Package pdftex.def Info: figures/pr_auc_curve_best_model.png  used on input lin
@@ -1066,7 +1066,7 @@ e 54.
  <./figures/pr_auc_curve_best_model.png>] [24
 
 ]
-<figures/shap_xgboost.png, id=851, 565.1514pt x 620.7993pt>
+<figures/shap_xgboost.png, id=859, 565.1514pt x 620.7993pt>
 File: figures/shap_xgboost.png Graphic file (type png)
 <use figures/shap_xgboost.png>
 Package pdftex.def Info: figures/shap_xgboost.png  used on input line 110.
@@ -1074,7 +1074,7 @@ Package pdftex.def Info: figures/shap_xgboost.png  used on input line 110.
  [25
 
  <./figures/shap_xgboost.png>]
-<figures/shap_dependence_num_age.png, id=885, 506.6127pt x 354.123pt>
+<figures/shap_dependence_num_age.png, id=893, 506.6127pt x 354.123pt>
 File: figures/shap_dependence_num_age.png Graphic file (type png)
 <use figures/shap_dependence_num_age.png>
 Package pdftex.def Info: figures/shap_dependence_num_age.png  used on input lin
@@ -1085,7 +1085,7 @@ e 120.
  <./figures/shap_dependence_num_age.png>] [27
 
 ]
-<figures/final_model_shap.png, id=952, 645.3711pt x 537.6888pt>
+<figures/final_model_shap.png, id=960, 645.3711pt x 537.6888pt>
 File: figures/final_model_shap.png Graphic file (type png)
 <use figures/final_model_shap.png>
 Package pdftex.def Info: figures/final_model_shap.png  used on input line 163.
@@ -1093,7 +1093,7 @@ Package pdftex.def Info: figures/final_model_shap.png  used on input line 163.
  [28
 
  <./figures/final_model_shap.png>]
-<figures/explain_customer_0.png, id=985, 751.608pt x 573.1011pt>
+<figures/explain_customer_0.png, id=993, 751.608pt x 573.1011pt>
 File: figures/explain_customer_0.png Graphic file (type png)
 <use figures/explain_customer_0.png>
 Package pdftex.def Info: figures/explain_customer_0.png  used on input line 196
@@ -1151,7 +1151,212 @@ Overfull \hbox (14.01724pt too wide) in paragraph at lines 16--17
 
 ] [42
 
-] [43
+])
+(./sections/08_databrics.tex
+<figures/databrics_figures/db_workspace.png, id=1442, 393.47pt x 776.9025pt>
+File: figures/databrics_figures/db_workspace.png Graphic file (type png)
+<use figures/databrics_figures/db_workspace.png>
+Package pdftex.def Info: figures/databrics_figures/db_workspace.png  used on in
+put line 5.
+(pdftex.def)             Requested size: 106.72462pt x 210.73064pt.
+
+Overfull \vbox (0.4574pt too high) detected at line 5
+ []
+
+[43
+
+ <./figures/databrics_figures/db_workspace.png>]
+<figures/databrics_figures/db_github.png, id=1477, 631.35875pt x 395.4775pt>
+File: figures/databrics_figures/db_github.png Graphic file (type png)
+<use figures/databrics_figures/db_github.png>
+Package pdftex.def Info: figures/databrics_figures/db_github.png  used on input
+ line 12.
+(pdftex.def)             Requested size: 307.28987pt x 192.48221pt.
+ [44
+
+ <./figures/databrics_figures/db_github.png>]
+<figures/databrics_figures/db_catalog.png, id=1510, 1622.06pt x 707.64375pt>
+File: figures/databrics_figures/db_catalog.png Graphic file (type png)
+<use figures/databrics_figures/db_catalog.png>
+Package pdftex.def Info: figures/databrics_figures/db_catalog.png  used on inpu
+t line 18.
+(pdftex.def)             Requested size: 307.28987pt x 134.05418pt.
+ [45
+
+ <./figures/databrics_figures/db_catalog.png>]
+<figures/databrics_figures/db_jobs_pipelines.png, id=1544, 1620.0525pt x 421.57
+5pt>
+File: figures/databrics_figures/db_jobs_pipelines.png Graphic file (type png)
+<use figures/databrics_figures/db_jobs_pipelines.png>
+Package pdftex.def Info: figures/databrics_figures/db_jobs_pipelines.png  used 
+on input line 25.
+(pdftex.def)             Requested size: 307.28987pt x 79.95856pt.
+
+[46
+
+ <./figures/databrics_figures/db_jobs_pipelines.png>]
+<figures/databrics_figures/db_job_training_runs.png, id=1577, 1624.0675pt x 751
+.80875pt>
+File: figures/databrics_figures/db_job_training_runs.png Graphic file (type png
+)
+<use figures/databrics_figures/db_job_training_runs.png>
+Package pdftex.def Info: figures/databrics_figures/db_job_training_runs.png  us
+ed on input line 31.
+(pdftex.def)             Requested size: 307.28987pt x 142.24861pt.
+ [47
+
+ <./figures/databrics_figures/db_job_training_runs.png>]
+<figures/databrics_figures/db_job_training_tasks.png, id=1610, 983.675pt x 937.
+5025pt>
+File: figures/databrics_figures/db_job_training_tasks.png Graphic file (type pn
+g)
+<use figures/databrics_figures/db_job_training_tasks.png>
+Package pdftex.def Info: figures/databrics_figures/db_job_training_tasks.png  u
+sed on input line 38.
+(pdftex.def)             Requested size: 307.28987pt x 292.86867pt.
+
+Overfull \vbox (82.59543pt too high) detected at line 38
+ []
+
+[48
+
+ <./figures/databrics_figures/db_job_training_tasks.png>]
+<figures/databrics_figures/db_job_predict_tasks.png, id=1643, 773.89125pt x 919
+.435pt>
+File: figures/databrics_figures/db_job_predict_tasks.png Graphic file (type png
+)
+<use figures/databrics_figures/db_job_predict_tasks.png>
+Package pdftex.def Info: figures/databrics_figures/db_job_predict_tasks.png  us
+ed on input line 44.
+(pdftex.def)             Requested size: 177.36539pt x 210.73064pt.
+
+Overfull \vbox (0.4574pt too high) detected at line 44
+ []
+
+[49
+
+ <./figures/databrics_figures/db_job_predict_tasks.png>]
+<figures/databrics_figures/db_sql_query.png, id=1678, 1252.68pt x 520.94624pt>
+File: figures/databrics_figures/db_sql_query.png Graphic file (type png)
+<use figures/databrics_figures/db_sql_query.png>
+Package pdftex.def Info: figures/databrics_figures/db_sql_query.png  used on in
+put line 51.
+(pdftex.def)             Requested size: 307.28987pt x 127.78795pt.
+ [50
+
+ <./figures/databrics_figures/db_sql_query.png>]
+<figures/databrics_figures/db_dashboard_1.png, id=1711, 1553.805pt x 867.24pt>
+File: figures/databrics_figures/db_dashboard_1.png Graphic file (type png)
+<use figures/databrics_figures/db_dashboard_1.png>
+Package pdftex.def Info: figures/databrics_figures/db_dashboard_1.png  used on 
+input line 57.
+(pdftex.def)             Requested size: 307.28987pt x 171.49968pt.
+ [51
+
+ <./figures/databrics_figures/db_dashboard_1.png>]
+<figures/databrics_figures/db_dashboard_2.png, id=1744, 1370.11874pt x 1004.753
+75pt>
+File: figures/databrics_figures/db_dashboard_2.png Graphic file (type png)
+<use figures/databrics_figures/db_dashboard_2.png>
+Package pdftex.def Info: figures/databrics_figures/db_dashboard_2.png  used on 
+input line 64.
+(pdftex.def)             Requested size: 287.35712pt x 210.73064pt.
+
+Overfull \vbox (0.4574pt too high) detected at line 64
+ []
+
+[52
+
+ <./figures/databrics_figures/db_dashboard_2.png>]
+<figures/databrics_figures/db_experiments.png, id=1777, 1242.6425pt x 337.26pt>
+
+File: figures/databrics_figures/db_experiments.png Graphic file (type png)
+<use figures/databrics_figures/db_experiments.png>
+Package pdftex.def Info: figures/databrics_figures/db_experiments.png  used on 
+input line 70.
+(pdftex.def)             Requested size: 307.28987pt x 83.39877pt.
+ [53
+
+ <./figures/databrics_figures/db_experiments.png>]
+<figures/databrics_figures/db_register_model_1.png, id=1811, 1458.44875pt x 309
+.155pt>
+File: figures/databrics_figures/db_register_model_1.png Graphic file (type png)
+
+<use figures/databrics_figures/db_register_model_1.png>
+Package pdftex.def Info: figures/databrics_figures/db_register_model_1.png  use
+d on input line 77.
+(pdftex.def)             Requested size: 307.28987pt x 65.13673pt.
+ [54
+
+ <./figures/databrics_figures/db_register_model_1.png>]
+<figures/databrics_figures/db_register_model_2.png, id=1844, 1382.16376pt x 621
+.32124pt>
+File: figures/databrics_figures/db_register_model_2.png Graphic file (type png)
+
+<use figures/databrics_figures/db_register_model_2.png>
+Package pdftex.def Info: figures/databrics_figures/db_register_model_2.png  use
+d on input line 86.
+(pdftex.def)             Requested size: 307.28987pt x 138.13214pt.
+ [55
+
+ <./figures/databrics_figures/db_register_model_2.png>]
+<figures/databrics_figures/db_register_model_3.png, id=1878, 618.31pt x 284.061
+25pt>
+File: figures/databrics_figures/db_register_model_3.png Graphic file (type png)
+
+<use figures/databrics_figures/db_register_model_3.png>
+Package pdftex.def Info: figures/databrics_figures/db_register_model_3.png  use
+d on input line 95.
+(pdftex.def)             Requested size: 307.28987pt x 141.17638pt.
+ [56
+
+ <./figures/databrics_figures/db_register_model_3.png>]
+<figures/databrics_figures/db_model_serving_1.png, id=1912, 1645.14626pt x 376.
+40625pt>
+File: figures/databrics_figures/db_model_serving_1.png Graphic file (type png)
+<use figures/databrics_figures/db_model_serving_1.png>
+Package pdftex.def Info: figures/databrics_figures/db_model_serving_1.png  used
+ on input line 104.
+(pdftex.def)             Requested size: 307.28987pt x 70.30605pt.
+ [57
+
+ <./figures/databrics_figures/db_model_serving_1.png>]
+<figures/databrics_figures/db_model_serving_2.png, id=1945, 1255.69125pt x 821.
+0675pt>
+File: figures/databrics_figures/db_model_serving_2.png Graphic file (type png)
+<use figures/databrics_figures/db_model_serving_2.png>
+Package pdftex.def Info: figures/databrics_figures/db_model_serving_2.png  used
+ on input line 112.
+(pdftex.def)             Requested size: 307.28987pt x 200.91899pt.
+ [58
+
+ <./figures/databrics_figures/db_model_serving_2.png>]
+<figures/databrics_figures/db_serving_model_prediction_11.png, id=1978, 823.075
+pt x 172.645pt>
+File: figures/databrics_figures/db_serving_model_prediction_11.png Graphic file
+ (type png)
+<use figures/databrics_figures/db_serving_model_prediction_11.png>
+Package pdftex.def Info: figures/databrics_figures/db_serving_model_prediction_
+11.png  used on input line 182.
+(pdftex.def)             Requested size: 245.83282pt x 51.5647pt.
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <6> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 182.
+ [59
+
+ <./figures/databrics_figures/db_serving_model_prediction_11.png>]
+<figures/databrics_figures/db_serving_model_prediction_2.png, id=2011, 847.165p
+t x 176.66pt>
+File: figures/databrics_figures/db_serving_model_prediction_2.png Graphic file 
+(type png)
+<use figures/databrics_figures/db_serving_model_prediction_2.png>
+Package pdftex.def Info: figures/databrics_figures/db_serving_model_prediction_
+2.png  used on input line 188.
+(pdftex.def)             Requested size: 307.28987pt x 64.07736pt.
+
+[60
+
+ <./figures/databrics_figures/db_serving_model_prediction_2.png>])
+(./sections/09_final_slide.tex [61
 
 ])
 \tf@nav=\write6
@@ -1163,21 +1368,20 @@ Overfull \hbox (14.01724pt too wide) in paragraph at lines 16--17
 \tf@snm=\write8
 \openout8 = `beamer.snm'.
 
-
-(slides/beamer.aux)
+ (slides/beamer.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-05-26>
  ***********
 Package rerunfilecheck Info: File `beamer.out' has not changed.
-(rerunfilecheck)             Checksum: EDF7B77252FEBB8A0BC081D18DE1B1F2;3266.
+(rerunfilecheck)             Checksum: 78E61FA005BBDA77C524980632BC790D;3556.
  ) 
 Here is how much of TeX's memory you used:
- 24045 strings out of 467167
- 453799 string characters out of 5409448
- 1038180 words of memory out of 5000000
- 52709 multiletter control sequences out of 15000+600000
- 645210 words of font info for 103 fonts, out of 8000000 for 9000
+ 24268 strings out of 467167
+ 461800 string characters out of 5409448
+ 1038991 words of memory out of 5000000
+ 52888 multiletter control sequences out of 15000+600000
+ 645672 words of font info for 105 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,14n,123p,381b,1341s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pf
@@ -1197,12 +1401,13 @@ texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/t
 exlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/tex
 live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texli
 ve/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/t
-exlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi0800.pfb></usr/local/tex
-live/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb>
-Output written on slides/beamer.pdf (43 pages, 922255 bytes).
+exlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/loca
+l/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi0800.pfb></usr/local/
+texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb>
+Output written on slides/beamer.pdf (61 pages, 3738464 bytes).
 PDF statistics:
- 1568 PDF objects out of 1728 (max. 8388607)
- 1268 compressed objects within 13 object streams
- 100 named destinations out of 1000 (max. 500000)
- 202 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2190 PDF objects out of 2487 (max. 8388607)
+ 1757 compressed objects within 18 object streams
+ 138 named destinations out of 1000 (max. 500000)
+ 308 words of extra memory for PDF output out of 10000 (max. 10000000)
 
