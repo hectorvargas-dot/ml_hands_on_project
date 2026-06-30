@@ -107,9 +107,12 @@ def optimize_model_multi_stage(
     """
     stages = [
         (200, "Base Phase"),
-        (100, "Phase 2 Adaptive Step"),
-        (50, "Phase 3 Adaptive Step"),
-        (25, "Phase 4 Adaptive Step"),
+        (200, "Phase 2 Adaptive Step"),
+        (100, "Phase 3 Adaptive Step"),
+        (100, "Phase 4 Adaptive Step"),
+        (50, "Phase 5 Adaptive Step"),
+        (50, "Phase 6 Adaptive Step"),
+        (30, "Phase 7 Adaptive Step"),
     ]
 
     current_override_ranges = {}
@@ -189,9 +192,12 @@ def verify_and_promote_model(
     # Query all past non-nested runs inside this experiment
     all_runs = mlflow.search_runs(
         experiment_ids=[experiment_id],
-        filter_string="tags.mlflow.parentRunId IS NULL",
         order_by=["metrics.test_pr_auc DESC"],
     )
+
+    # Filter out nested runs (those with a parent run ID)
+    if not all_runs.empty and "tags.mlflow.parentRunId" in all_runs.columns:
+        all_runs = all_runs[all_runs["tags.mlflow.parentRunId"].isna()]
 
     is_champion = True
     historical_best = 0.0
@@ -212,8 +218,11 @@ def verify_and_promote_model(
         mlflow.set_tag("model_status", "Production_Champion")
         mlflow.log_param("promoted_to_production", "True")
         
-        # Note: If utilizing the MLflow Model Registry, execute the call below:
-        # mlflow.register_model(model_uri=new_model_uri, name="CustomerChurnXGBClassifier")
+        # Register the champion model in Unity Catalog Model Registry
+        mlflow.register_model(
+            model_uri=new_model_uri,
+            name="datacartel_dbx.havg_data.CustomerChurnXGBClassifier",
+        )
     else:
         logger.info(f" Candidate model ({candidate_score:.5f}) failed to outperform the historical champion ({historical_best:.5f}). Model skipped promotion.")
         mlflow.set_tag("model_status", "Candidate_Rejected")
@@ -274,5 +283,8 @@ def run_model_optimization(experiment_name: str) -> None:
         )
 
 
+import sys
+
 if __name__ == "__main__":
-    run_model_optimization()
+    experiment_name = sys.argv[1]
+    run_model_optimization(experiment_name)

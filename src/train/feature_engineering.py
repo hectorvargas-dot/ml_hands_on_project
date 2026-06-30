@@ -1,10 +1,14 @@
-from sqlalchemy.engine import result
+#from sqlalchemy.engine import result
 import json
 import logging
+import sys
 from pathlib import Path
 
 import pandas as pd
 from xgboost import XGBClassifier
+
+# Ensure project root is in path for module imports
+sys.path.insert(0, '/Workspace/Users/hector.vargas@wizeline.com/ml_hands_on_project')
 
 from src.utils import feature_engineering_utils as fe
 
@@ -12,12 +16,12 @@ from src.utils import feature_engineering_utils as fe
 logger = logging.getLogger(__name__)
 
 
-# Project paths
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# Volume path
+VOLUME_PATH = Path("/Volumes/datacartel_dbx/havg_data/volumen")
 
-RAW_FEATURES_PATH = PROJECT_ROOT / "data" / "processed" / "raw_features"
-TARGET_PATH = PROJECT_ROOT / "data" / "processed" / "target"
-FEATURE_REGISTRY_PATH = PROJECT_ROOT / "src" / "selected_features.json"
+RAW_FEATURES_PATH = VOLUME_PATH
+TARGET_PATH = VOLUME_PATH
+FEATURE_REGISTRY_PATH = VOLUME_PATH / "selected_features.json"
 
 
 def run_feature_engineering() -> None:
@@ -36,10 +40,10 @@ def run_feature_engineering() -> None:
         # ------------------------------------------------------------------
         # Load datasets
         # ------------------------------------------------------------------
-        logger.info("Loading processed datasets.")
+        logger.info("Loading processed datasets from Volume.")
 
-        X_train = pd.read_csv(RAW_FEATURES_PATH / "X_train.csv")
-        y_train = pd.read_csv(TARGET_PATH / "y_train.csv").squeeze()
+        X_train = pd.read_csv(VOLUME_PATH / "X_train.csv")
+        y_train = pd.read_csv(VOLUME_PATH / "y_train.csv").squeeze()
 
         logger.info(
             "Datasets loaded successfully. X_train=%s",
@@ -57,17 +61,17 @@ def run_feature_engineering() -> None:
         ]
 
         dummyfy_columns = [
-            "Card Type",
+            "card_type",
             "Gender",
         ]
 
         norm_std_columns = [
             "Balance",
-            "Point Earned",
+            "point_earned",
             "CreditScore",
             "Age",
             "Tenure",
-            "Satisfaction Score",
+            "satisfaction_score",
             "EstimatedSalary",
         ]
 
@@ -155,7 +159,7 @@ def run_feature_engineering() -> None:
                     direction_label,
                 )
 
-                for target_features in range(14, 16):
+                for target_features in range(14, 17):
 
                     logger.info(
                         "Evaluating subset size=%s",
@@ -255,3 +259,8 @@ def run_feature_engineering() -> None:
             "Feature engineering pipeline failed."
         )
         raise
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    run_feature_engineering()

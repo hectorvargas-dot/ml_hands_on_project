@@ -1,6 +1,7 @@
 import logging
 import os
 import shutil
+import sys
 from pathlib import Path
 from typing import Dict, Tuple
 
@@ -11,6 +12,9 @@ import pandas as pd
 import shap
 from sklearn.metrics import average_precision_score, precision_recall_curve
 from sklearn.pipeline import Pipeline
+
+# Ensure project root is in path for module imports
+sys.path.insert(0, '/Workspace/Users/hector.vargas@wizeline.com/ml_hands_on_project')
 
 from src.utils import mlflow_utils as mlf_utils
 
@@ -31,26 +35,32 @@ def find_project_root() -> Path:
     raise FileNotFoundError("Could not find project root (pyproject.toml)")
 
 
+# Unity Catalog Volume path for data artifacts
+VOLUME_PATH = Path("/Volumes/datacartel_dbx/havg_data/volumen")
+
+
 def setup_paths() -> Dict[str, Path]:
-    """Generates and maps absolute paths required for the optimization workflow."""
-    logger.info("Initializing system directory mappings.")
-    project_root = find_project_root()
+    """Generates and maps absolute paths required for the optimization workflow.
+
+    Uses the UC Volume for data artifacts (features, targets, registry)
+    instead of local project paths.
+    """
+    logger.info("Initializing system directory mappings (UC Volume).")
     return {
-        "project_root": project_root,
-        "db_path": project_root / "mlflow.db",
-        "artifacts_dir": project_root / "mlartifacts",
-        "raw_features": project_root / "data" / "processed" / "raw_features",
-        "target": project_root / "data" / "processed" / "target",
-        "feature_registry": project_root / "src" / "selected_features.json",
+        "project_root": VOLUME_PATH,
+        "raw_features": VOLUME_PATH,
+        "target": VOLUME_PATH,
+        "feature_registry": VOLUME_PATH / "selected_features.json",
     }
 
 
-def get_or_create_experiment(experiment_name: str, artifact_location: Path) -> str:
-    """Retrieves an existing MLflow experiment ID or creates a new one with a custom artifact store.
+def get_or_create_experiment(experiment_name: str) -> str:
+    """Retrieves an existing MLflow experiment ID or creates a new one.
+
+    On Databricks, artifact storage is managed automatically by the platform.
 
     Args:
         experiment_name (str): Name of the experiment.
-        artifact_location (Path): Target local directory path for saving file artifacts.
 
     Returns:
         str: The registered experiment ID string.
@@ -61,23 +71,20 @@ def get_or_create_experiment(experiment_name: str, artifact_location: Path) -> s
     if experiment is not None:
         return experiment.experiment_id
 
-    # Convert the Path object to a file URI so MLflow registers it correctly
-    artifact_uri = artifact_location.as_uri()
-
-    return client.create_experiment(
-        name=experiment_name,
-        artifact_location=artifact_uri
-    )
+    return client.create_experiment(name=experiment_name)
 
 
 def initialize_mlflow(paths: Dict[str, Path], experiment_name: str) -> str:
-    """Initializes the MLflow tracking environment and backend storage tables."""
-    tracking_uri = f"sqlite:///{paths['db_path']}"
-    
-    logger.info(f"Setting MLflow tracking URI backend to: {tracking_uri}")
-    mlflow.set_tracking_uri(tracking_uri)
+    """Initializes the MLflow tracking environment using Databricks-managed backend.
 
-    experiment_id = get_or_create_experiment(experiment_name, paths["artifacts_dir"])
+    On Databricks, the tracking URI defaults to the workspace MLflow server.
+    Artifacts are stored in the managed artifact store (DBFS/Unity Catalog).
+    """
+    # Use Databricks-managed tracking server (do NOT set to SQLite)
+    mlflow.set_tracking_uri("databricks")
+    logger.info("MLflow tracking URI set to Databricks workspace server.")
+
+    experiment_id = get_or_create_experiment(experiment_name)
     mlflow.set_experiment(experiment_name)
 
     logger.info(

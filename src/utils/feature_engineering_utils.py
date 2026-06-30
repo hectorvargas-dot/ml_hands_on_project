@@ -126,7 +126,7 @@ class DynamicFeatureEngineer(BaseEstimator, TransformerMixin):
         ]
 
     # BINARY FLAGS
-    def _compute_bin_is_silver(self, X): return X["Card Type"] == "SILVER"
+    def _compute_bin_is_silver(self, X): return X["card_type"] == "SILVER"
     def _compute_bin_is_germany(self, X): return X["Geography"] == "Germany"
     def _compute_bin_is_spain(self, X): return X["Geography"] == "Spain"
     def _compute_bin_is_france(self, X): return X["Geography"] == "France"

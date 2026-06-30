@@ -81,3 +81,54 @@ def save_target_splits(
 
     if y_val is not None:
         y_val.to_csv(os.path.join(base_path, "y_val.csv"), index=False)
+
+
+VOLUME_PATH = "/Volumes/datacartel_dbx/havg_data/volumen"
+
+
+def save_feature_splits_to_volume(
+    X_train: pd.DataFrame,
+    X_test: pd.DataFrame,
+    X_val: pd.DataFrame | None = None,
+    volume_path: str = VOLUME_PATH,
+) -> None:
+    """Saves feature splits to a Unity Catalog Volume.
+
+    Writes X_train.csv and X_test.csv (and optionally X_val.csv) to the
+    specified UC Volume path, overwriting any existing files.
+
+    Args:
+        X_train: Training feature DataFrame.
+        X_test: Test feature DataFrame.
+        X_val: Optional validation feature DataFrame.
+        volume_path: UC Volume path to write to.
+    """
+    X_train.to_csv(os.path.join(volume_path, "X_train.csv"), index=False)
+    X_test.to_csv(os.path.join(volume_path, "X_test.csv"), index=False)
+
+    if X_val is not None:
+        X_val.to_csv(os.path.join(volume_path, "X_val.csv"), index=False)
+
+
+def save_target_splits_to_volume(
+    y_train: pd.Series,
+    y_test: pd.Series,
+    y_val: pd.Series | None = None,
+    volume_path: str = VOLUME_PATH,
+) -> None:
+    """Saves target splits to a Unity Catalog Volume.
+
+    Writes y_train.csv and y_test.csv (and optionally y_val.csv) to the
+    specified UC Volume path, overwriting any existing files.
+
+    Args:
+        y_train: Training target Series.
+        y_test: Test target Series.
+        y_val: Optional validation target Series.
+        volume_path: UC Volume path to write to.
+    """
+    y_train.to_csv(os.path.join(volume_path, "y_train.csv"), index=False)
+    y_test.to_csv(os.path.join(volume_path, "y_test.csv"), index=False)
+
+    if y_val is not None:
+        y_val.to_csv(os.path.join(volume_path, "y_val.csv"), index=False)

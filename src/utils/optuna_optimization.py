@@ -1,4 +1,5 @@
 import logging
+import os
 
 import mlflow
 import mlflow.sklearn
@@ -255,10 +256,13 @@ def evaluate_and_log_best_model(
     logger.info("Final test PR-AUC %.5f", test_pr_auc)
 
     mlflow.log_metric("test_pr_auc", test_pr_auc)
+    signature = mlflow.models.infer_signature(X_test, y_test_proba)
     mlflow.sklearn.log_model(
-        best_pipeline,
+        sk_model=best_pipeline,
         artifact_path="best_model",
         serialization_format="cloudpickle",
+        signature=signature,
+        code_paths=[os.path.dirname(os.path.dirname(os.path.abspath(__file__)))],
     )
     logger.info("Model artifact logged successfully")
 
